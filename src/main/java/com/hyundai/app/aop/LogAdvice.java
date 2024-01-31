@@ -14,7 +14,7 @@ import java.util.Date;
 @Component
 public class LogAdvice {
 
-    @Around("execution(* com.livarter.app.controller.*.*())")
+    @Around("execution(* com.hyundai.app.controller.*.*())")
     public Object logInController(ProceedingJoinPoint pjp) {
 
         log.debug("--------------컨트롤러 시작--------------" + new Date());
@@ -31,7 +31,7 @@ public class LogAdvice {
         return result;
     }
 
-    @Around("execution(* com.livarter.app.service.*.*())")
+    @Around("execution(* com.hyundai.app.service.*.*())")
     public Object logInService(ProceedingJoinPoint pjp) {
         log.debug("--------------서비스 시작--------------" + new Date());
         long startTime = System.currentTimeMillis();
