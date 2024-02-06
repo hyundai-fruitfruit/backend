@@ -19,7 +19,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     protected Class<?>[] getServletConfigClasses() {
         return new Class[] {
                 ServletContextConfig.class,
-                CorsConfig.class
+                CorsConfig.class,
+                SwaggerConfig.class
         };
     }
 
