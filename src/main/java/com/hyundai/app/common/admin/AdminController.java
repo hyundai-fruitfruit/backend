@@ -1,4 +1,4 @@
-package com.hyundai.app.admin;
+package com.hyundai.app.common.admin;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

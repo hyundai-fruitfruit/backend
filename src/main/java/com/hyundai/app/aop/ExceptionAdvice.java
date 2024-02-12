@@ -5,6 +5,11 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author 황수영
+ * @since 2024/02/10
+ * 예외 로그 설정
+ */
 @Log4j
 @Aspect
 @Component

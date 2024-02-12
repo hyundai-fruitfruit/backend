@@ -9,6 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * @author 황수영
+ * @since 2024/02/10
+ * 로그 일괄 설정
+ */
 @Log4j
 @Aspect
 @Component
