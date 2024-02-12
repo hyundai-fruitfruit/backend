@@ -5,6 +5,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.Filter;
 
+/**
+ * @author 황수영
+ * @since 2024/02/12
+ * web.xml 파일 설정
+ */
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

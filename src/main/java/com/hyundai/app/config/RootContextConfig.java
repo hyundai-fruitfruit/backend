@@ -16,6 +16,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
+/**
+ * @author 황수영
+ * @since 2024/02/10
+ * root-context.xml 설정
+ */
 //@Configuration
 //@MapperScan(value = "com.hyundai.app.mapper")
 //@PropertySource("classpath:application.properties")
