@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     public LoginResDto login(LoginReqDto loginReqDto) {
         String email = oAuthClient.getEmail(loginReqDto);
         OauthType oauthType = OauthType.valueOf(loginReqDto.getOauthType().toUpperCase());
-        String oauthId = loginReqDto.getOauthType() + "-" + email;
+        String oauthId = oauthType.createOauthIdWithEmail(email);
         log.debug("로그인 OauthId : " + oauthId);
 
         Member findMember = memberMapper.findByOauthId(oauthId);

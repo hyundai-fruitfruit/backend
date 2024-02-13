@@ -16,6 +16,6 @@ public enum OauthType {
     private final String oauthIdHeader;
 
     public String createOauthIdWithEmail(String email) {
-        return this.getOauthIdHeader() + "-" + email;
+        return this.getOauthIdHeader() + email;
     }
 }
