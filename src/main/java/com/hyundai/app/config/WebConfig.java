@@ -5,12 +5,17 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import javax.servlet.Filter;
 
+/**
+ * @author 황수영
+ * @since 2024/02/12
+ * web.xml 파일 설정
+ */
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                // RootContextConfig.class, // 이후 DB 설정 추가 필요
+                RootContextConfig.class, // 이후 DB 설정 추가 필요
                 AopConfig.class
         };
     }
@@ -20,6 +25,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         return new Class[] {
                 ServletContextConfig.class,
                 CorsConfig.class,
+                SecurityConfig.class,
                 SwaggerConfig.class
         };
     }

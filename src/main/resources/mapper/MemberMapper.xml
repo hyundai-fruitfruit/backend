@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.member.mapper.MemberMapper">
+
+    <!--    @author 황수영  -->
+    <!--    @since 2024/02/12  -->
+    <!--    회원 관련 mapper  -->
+
+    <insert id="saveMember" parameterType="com.hyundai.app.member.domain.Member" >
+        INSERT INTO member ( id
+                            , email
+                            , nickname
+                            , role
+                            , oauth_id
+                            , refresh_token
+        )
+        VALUES ( member_id_seq.nextval
+                , #{email}
+                , #{nickname}
+                , #{role, typeHandler=com.hyundai.app.config.DatabaseEnumTypeHandler}
+                , #{oauthId}
+                , #{refreshToken}
+               )
+    </insert>
+
+    <select id="findById" resultType="com.hyundai.app.member.domain.Member" >
+        SELECT id AS id
+            , email AS email
+            , nickname AS nickname
+            , role AS role
+            , refresh_token AS refreshToken
+            , oauth_id AS OAuthId
+        FROM   MEMBER
+        WHERE  id = #{id}
+    </select>
+
+    <select id="findByOauthId" resultType="com.hyundai.app.member.domain.Member" >
+        SELECT id AS id
+            , email AS email
+            , nickname AS nickname
+            , role AS role
+            , refresh_token AS refreshToken
+            , oauth_id AS oauthId
+        FROM   MEMBER
+        WHERE  oauth_id = #{oauthId}
+    </select>
+</mapper>

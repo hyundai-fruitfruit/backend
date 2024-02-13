@@ -8,6 +8,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author 황수영
+ * @since 2024/02/10
+ * servlet-context.xml 설정
+ */
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.hyundai.app")
