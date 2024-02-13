@@ -11,5 +11,5 @@ public interface MemberMapper {
 
     void saveMember(Member member);
     Member findById(int id);
-    Member findByOauthId(String oAuthId);
+    Member findByOauthId(String oauthId);
 }

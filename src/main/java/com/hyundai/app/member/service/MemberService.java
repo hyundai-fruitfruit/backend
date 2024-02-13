@@ -3,6 +3,7 @@ package com.hyundai.app.member.service;
 import com.hyundai.app.member.dto.LoginReqDto;
 import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.member.dto.MemberResDto;
+import com.hyundai.app.member.enumType.OauthType;
 
 /**
  * @author 황수영
@@ -15,5 +16,5 @@ public interface MemberService {
 
     LoginResDto login(LoginReqDto loginReqDto);
 
-    LoginResDto joinByOauthId(String email, String type);
+    LoginResDto joinByOauthId(String email, OauthType oauthType);
 }

@@ -6,6 +6,7 @@ import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.member.dto.MemberResDto;
 import com.hyundai.app.member.enumType.Header;
 import com.hyundai.app.member.enumType.Nickname;
+import com.hyundai.app.member.enumType.OauthType;
 import com.hyundai.app.member.enumType.Role;
 import com.hyundai.app.member.mapper.MemberMapper;
 import com.hyundai.app.member.oauth.kakao.KakaoOauthClient;
@@ -39,6 +40,7 @@ public class MemberServiceImpl implements MemberService {
 
     public LoginResDto login(LoginReqDto loginReqDto) {
         String email = oAuthClient.getEmail(loginReqDto);
+        OauthType oauthType = OauthType.valueOf(loginReqDto.getOauthType().toUpperCase());
         String oauthId = loginReqDto.getOauthType() + "-" + email;
         log.debug("로그인 OauthId : " + oauthId);
 
@@ -46,10 +48,8 @@ public class MemberServiceImpl implements MemberService {
         if (findMember != null) {
             return getUpdatedToken(findMember);
         }
-        return joinByOauthId(email, loginReqDto.getOauthType());
+        return joinByOauthId(email, oauthType);
     }
-
-
 
     private String updateAccessToken(Member member) {
         String memberId = String.valueOf(member.getId());
@@ -66,21 +66,21 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
-    public LoginResDto joinByOauthId(String email, String type) {
-        String oauthId = type + "-" + email;
+    public LoginResDto joinByOauthId(String email, OauthType oauthType) {
+        String oauthId = oauthType.createOauthIdWithEmail(email);
+        LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
 
         Member member = Member.builder()
                 .email(email)
                 .nickname(Nickname.getRandomNickname())
                 .role(Role.ROLE_MEMBER)
                 .oauthId(oauthId)
+                .refreshToken(loginResDto.getRefreshToken())
                 .build();
         log.debug("joinByEmail member" + member.toString());
-
         memberMapper.saveMember(member);
 
         Member savedMember = memberMapper.findByOauthId(oauthId);
-        LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
         log.debug("joinByEmail savedMember" + savedMember);
         return loginResDto;
     }

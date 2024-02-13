@@ -13,12 +13,14 @@
                             , nickname
                             , role
                             , oauth_id
+                            , refresh_token
         )
         VALUES ( member_id_seq.nextval
                 , #{email}
                 , #{nickname}
                 , #{role, typeHandler=com.hyundai.app.config.DatabaseEnumTypeHandler}
                 , #{oauthId}
+                , #{refreshToken}
                )
     </insert>
 
