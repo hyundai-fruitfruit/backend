@@ -1,12 +1,9 @@
 package com.hyundai.app.store.controller;
 
-import com.hyundai.app.store.dto.ReviewReqDto;
 import com.hyundai.app.store.dto.StoreResDto;
 import com.hyundai.app.store.service.StoreService;
-import com.hyundai.app.store.service.StoreServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
