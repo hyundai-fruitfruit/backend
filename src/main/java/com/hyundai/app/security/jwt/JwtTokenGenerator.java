@@ -4,6 +4,7 @@ import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.security.AuthDetailsService;
+import com.hyundai.app.security.AuthUserDetails;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 import java.util.Date;
+
+import static com.hyundai.app.member.enumType.Header.BEARER;
 
 /**
  * @author 황수영
@@ -42,7 +45,7 @@ public class JwtTokenGenerator implements InitializingBean {
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = getClaims(accessToken);
-        UserDetails userDetails = authDetailsService.loadUserByUsername(claims.getSubject());
+        AuthUserDetails userDetails = authDetailsService.loadUserByUsername(claims.getSubject());
         log.debug("AuthTokenGenerator getAuthentication() userDetails : " + userDetails);
 
         return new UsernamePasswordAuthenticationToken(
@@ -54,8 +57,8 @@ public class JwtTokenGenerator implements InitializingBean {
         String refreshToken = createJwtToken(id, refreshValidity);
 
         return LoginResDto.builder()
-                .accessToken(com.hyundai.app.member.enumType.Header.BEARER.getValue() + accessToken)
-                .refreshToken(com.hyundai.app.member.enumType.Header.BEARER.getValue() + refreshToken)
+                .accessToken(BEARER.getValue() + accessToken)
+                .refreshToken(BEARER.getValue() + refreshToken)
                 .build();
     }
 
@@ -83,7 +86,7 @@ public class JwtTokenGenerator implements InitializingBean {
         }
     }
 
-    public void isTokenValidate(String token) throws Exception {
+    public void isTokenValidate(String token) {
         try {
             Jwts.parser()
                 .setSigningKey(jwtSecret)
