@@ -1,5 +1,6 @@
 package com.hyundai.app.config;
 
+import com.hyundai.app.security.AuthDetailsService;
 import com.hyundai.app.security.filter.AuthTokenFilterConfigurer;
 import com.hyundai.app.security.handler.AuthTokenAccessDeniedHandler;
 import com.hyundai.app.security.handler.AuthTokenAuthenticationEntryPoint;
@@ -28,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenGenerator authTokenGenerator;
+    private final AuthDetailsService authUserDetailsService;
     private final AuthTokenAccessDeniedHandler authTokenAccessDeniedHandler;
     private final AuthTokenAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -59,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/v1/members/**").authenticated()
                     .anyRequest().permitAll()
                 .and()
-                    .apply(new AuthTokenFilterConfigurer(authTokenGenerator));
+                    .apply(new AuthTokenFilterConfigurer(authTokenGenerator, authUserDetailsService));
     }
 
     @Bean

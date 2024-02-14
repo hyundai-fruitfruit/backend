@@ -12,7 +12,7 @@ import com.hyundai.app.member.enumType.OauthType;
  */
 public interface MemberService {
 
-    MemberResDto getMember(String id);
+    MemberResDto getMemberInfo(int id);
 
     LoginResDto login(LoginReqDto loginReqDto);
 
