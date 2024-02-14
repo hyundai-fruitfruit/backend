@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.store.mapper.StoreMapper">
+
+    <!--    @author 황수영  -->
+    <!--    @since 2024/02/13  -->
+    <!--    매장 관련 mapper  -->
+
+    <select id="getStoreDetail" resultType="com.hyundai.app.store.domain.Store" >
+        SELECT id AS id
+            , name AS name
+            , contact_number AS contactNumber
+            , main_category AS mainCategory
+            , sub_category AS subCategory
+            , floor AS floor
+            , description AS description
+            , avg_score AS avgScore
+        FROM store
+        WHERE id = #{storeId}
+    </select>
+
+    <select id="getPopularHashtagsOfStore" resultType="com.hyundai.app.store.domain.Hashtag">
+        SELECT hashtag.id AS id
+             , hashtag.name AS name
+             , hashtag.category AS category
+        FROM hashtag
+        INNER JOIN store_hashtag
+        ON hashtag.id = store_hashtag.hashtag_id
+        WHERE store_hashtag.store_id = #{storeId}
+        ORDER BY store_hashtag.count DESC
+        FETCH FIRST 5 ROWS ONLY
+    </select>
+
+</mapper>
