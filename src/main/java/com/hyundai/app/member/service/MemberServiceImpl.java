@@ -33,8 +33,8 @@ public class MemberServiceImpl implements MemberService {
     private final KakaoOauthClient oAuthClient;
     private final JwtTokenGenerator authTokenGenerator;
 
-    public MemberResDto getMember(String id) {
-        Member member = memberMapper.findById(Integer.parseInt(id));
+    public MemberResDto getMemberInfo(int id) {
+        Member member = memberMapper.findById(id);
         return MemberResDto.of(member);
     }
 
