@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * @author 황수영
  * @since 2024/02/14
- * (설명)
+ * 시큐리티의 UserDetails 자체 구현, Authentication에 Member저장
  */
 
 @Getter
