@@ -1,6 +1,6 @@
 package com.hyundai.app.friend.service;
 
-import com.hyundai.app.friend.domain.Member;
+import com.hyundai.app.member.domain.Member;
 import com.hyundai.app.friend.domain.MemberConnection;
 import com.hyundai.app.friend.dto.FriendDetailResponse;
 import com.hyundai.app.friend.dto.FriendDto;
@@ -10,7 +10,7 @@ import com.hyundai.app.friend.enumType.GameStatus;
 import com.hyundai.app.friend.mapper.FriendMapper;
 import com.hyundai.app.friend.mapper.GameMapper;
 import com.hyundai.app.friend.mapper.MbtiMapper;
-import com.hyundai.app.friend.mapper.MemberMapper;
+import com.hyundai.app.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
