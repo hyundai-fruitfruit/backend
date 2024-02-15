@@ -16,6 +16,6 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class FriendListResponse {
-    private List<FriendDetailResponse> members;
+public class FriendListResDto {
+    private List<FriendDetailResDto> members;
 }

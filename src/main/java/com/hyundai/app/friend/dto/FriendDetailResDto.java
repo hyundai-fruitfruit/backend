@@ -13,7 +13,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FriendDetailResponse {
+public class FriendDetailResDto {
     private int id;
     private String nickname;
     private String imgUrl;

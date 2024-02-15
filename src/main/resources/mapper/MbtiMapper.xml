@@ -7,7 +7,7 @@
     <!--    @since 2024/02/10  -->
     <!--    친구 MBTI mapper  -->
 
-    <select id="findIdByMbtiScore" parameterType="com.hyundai.app.friend.dto.MbtiSaveRequest" resultType="String">
+    <select id="findIdByMbtiScore" parameterType="com.hyundai.app.friend.dto.MbtiSaveReqDto" resultType="String">
         SELECT  id
         FROM    mbti
         WHERE   energy = CASE WHEN #{scoreI} > #{scoreE} THEN 1 ELSE 0 END

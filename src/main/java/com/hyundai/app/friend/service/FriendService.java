@@ -2,10 +2,10 @@ package com.hyundai.app.friend.service;
 
 import com.hyundai.app.member.domain.Member;
 import com.hyundai.app.friend.domain.MemberConnection;
-import com.hyundai.app.friend.dto.FriendDetailResponse;
+import com.hyundai.app.friend.dto.FriendDetailResDto;
 import com.hyundai.app.friend.dto.FriendDto;
-import com.hyundai.app.friend.dto.MbtiSaveRequest;
-import com.hyundai.app.friend.dto.FriendListResponse;
+import com.hyundai.app.friend.dto.MbtiSaveReqDto;
+import com.hyundai.app.friend.dto.FriendListResDto;
 import com.hyundai.app.friend.enumType.GameStatus;
 import com.hyundai.app.friend.mapper.FriendMapper;
 import com.hyundai.app.friend.mapper.GameMapper;
@@ -31,13 +31,13 @@ public class FriendService {
     private final MbtiMapper mbtiMapper;
     private final GameMapper gameMapper;
 
-    public FriendListResponse findFriendList(int memberId) {
-        List<FriendDetailResponse> friendDetailResponse = friendMapper.findFriendList(memberId);
-        FriendListResponse friendListResponse = new FriendListResponse(friendDetailResponse);
-        return friendListResponse;
+    public FriendListResDto findFriendList(int memberId) {
+        List<FriendDetailResDto> friendDetailResDto = friendMapper.findFriendList(memberId);
+        FriendListResDto friendListResDto = new FriendListResDto(friendDetailResDto);
+        return friendListResDto;
     }
 
-    public FriendDetailResponse findFriend(int memberId, int friendId) {
+    public FriendDetailResDto findFriend(int memberId, int friendId) {
         FriendDto friendDto = new FriendDto(memberId, friendId);
         if (!isFriend(friendDto)) {
             saveConnection(friendDto);
@@ -45,7 +45,7 @@ public class FriendService {
         Member friend = memberMapper.findById(friendId);
         String mbtiContent = findMbtiByFriend(friendDto);
         GameStatus gameStatus = findGameStatus(friendDto);
-        return FriendDetailResponse.builder()
+        return FriendDetailResDto.builder()
                 .id(friend.getId())
                 .nickname(friend.getNickname())
                 .imgUrl(friend.getImgUrl())
@@ -89,8 +89,8 @@ public class FriendService {
         return mbtiMapper.findMbtiByFriend(friendDto);
     }
 
-    public String updateMbti(int memberId, int friendId, MbtiSaveRequest mbtiSaveRequest) {
-        String mbtiId = mbtiMapper.findIdByMbtiScore(mbtiSaveRequest);
+    public String updateMbti(int memberId, int friendId, MbtiSaveReqDto mbtiSaveReqDto) {
+        String mbtiId = mbtiMapper.findIdByMbtiScore(mbtiSaveReqDto);
         MemberConnection savedMemberConnection = new MemberConnection(
                 memberId,
                 friendId,

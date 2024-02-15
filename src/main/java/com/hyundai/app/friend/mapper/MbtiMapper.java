@@ -1,7 +1,7 @@
 package com.hyundai.app.friend.mapper;
 
 import com.hyundai.app.friend.dto.FriendDto;
-import com.hyundai.app.friend.dto.MbtiSaveRequest;
+import com.hyundai.app.friend.dto.MbtiSaveReqDto;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface MbtiMapper {
-    String findIdByMbtiScore(MbtiSaveRequest mbtiSaveRequest);
+    String findIdByMbtiScore(MbtiSaveReqDto mbtiSaveReqDto);
     String findMbtiByFriend(FriendDto friendDto);
 }

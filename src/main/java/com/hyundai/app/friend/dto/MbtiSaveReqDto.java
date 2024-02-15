@@ -11,7 +11,7 @@ import javax.validation.constraints.PositiveOrZero;
  */
 @Getter
 @NoArgsConstructor
-public class MbtiSaveRequest {
+public class MbtiSaveReqDto {
     @PositiveOrZero
     private int scoreI;
 

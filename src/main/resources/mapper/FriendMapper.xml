@@ -7,7 +7,7 @@
     <!--    @since 2024/02/10  -->
     <!--    친구 관련 mapper  -->
 
-    <select id="findFriendList" parameterType="Integer" resultType="com.hyundai.app.friend.dto.FriendDetailResponse">
+    <select id="findFriendList" parameterType="Integer" resultType="com.hyundai.app.friend.dto.FriendDetailResDto">
         SELECT  id
                 , nickname
                 , img_url AS imgUrl

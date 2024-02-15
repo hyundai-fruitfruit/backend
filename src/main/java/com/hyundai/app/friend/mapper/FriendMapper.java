@@ -1,7 +1,7 @@
 package com.hyundai.app.friend.mapper;
 
 import com.hyundai.app.friend.domain.MemberConnection;
-import com.hyundai.app.friend.dto.FriendDetailResponse;
+import com.hyundai.app.friend.dto.FriendDetailResDto;
 import com.hyundai.app.friend.dto.FriendDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,6 +16,6 @@ import java.util.List;
 public interface FriendMapper {
     MemberConnection findConnection(FriendDto friendDto);
     int save(MemberConnection memberConnection);
-    List<FriendDetailResponse> findFriendList(int memberId);
+    List<FriendDetailResDto> findFriendList(int memberId);
     int updateMbti(MemberConnection savedMemberConnection);
 }
