@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.friend.mapper.FriendMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/10  -->
+    <!--    친구 관련 mapper  -->
+
+    <select id="findFriendList" parameterType="Integer" resultType="com.hyundai.app.friend.dto.FriendDetailResponse">
+        SELECT  id
+                , nickname
+                , img_url AS imgUrl
+        FROM    member
+        WHERE   id  IN  (SELECT from_member_id
+                         FROM   member_connection
+                         WHERE  to_member_id = #{memberId}
+                         AND    is_deleted = 0)
+        AND     is_deleted = 0
+    </select>
+
+    <select id="findConnection" parameterType="com.hyundai.app.friend.dto.FriendDto" resultType="com.hyundai.app.friend.domain.MemberConnection">
+        SELECT  id
+                , from_member_id AS fromMemberId
+                , to_member_id AS toMemberId
+                , mbti_id AS mbtiId
+        FROM    member_connection
+        WHERE   from_member_id = #{memberId}
+        AND     to_member_id = #{friendId}
+        AND     is_deleted = 0
+    </select>
+
+    <insert id="save" parameterType="com.hyundai.app.friend.domain.MemberConnection">
+        INSERT  INTO member_connection (from_member_id
+                                       , to_member_id)
+        VALUES  (#{fromMemberId}
+                , #{toMemberId})
+    </insert>
+
+    <update id="updateMbti" parameterType="com.hyundai.app.friend.domain.MemberConnection">
+        UPDATE  member_connection
+        SET     mbti_id = #{mbtiId}
+                , updated_at = sysdate
+        WHERE   from_member_id = #{fromMemberId}
+        AND     to_member_id = #{toMemberId}
+    </update>
+</mapper>
