@@ -1,8 +1,7 @@
 package com.hyundai.app.friend.domain;
 
+import com.hyundai.app.common.entity.BaseEntity;
 import lombok.*;
-
-import java.util.Date;
 
 /**
  * @author : 엄상은
@@ -12,13 +11,11 @@ import java.util.Date;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberConnection {
+public class MemberConnection extends BaseEntity {
     private int id;
     private int fromMemberId;
     private int toMemberId;
     private int isDeleted;
-    private Date createdAt;
-    private Date updatedAt;
     private String mbtiId;
 
     @Builder
