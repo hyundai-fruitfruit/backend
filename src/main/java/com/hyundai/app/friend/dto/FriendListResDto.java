@@ -13,7 +13,6 @@ import java.util.List;
  * 친구 전체 정보 조회 응답 객체
  */
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class FriendListResDto {

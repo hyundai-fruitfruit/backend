@@ -9,7 +9,6 @@ import lombok.*;
  * 친구 정보 조회 시 응답 객체
  */
 @Getter
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -9,7 +9,6 @@ import lombok.*;
  * 친구 관계 관련 엔티티
  */
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberConnection extends BaseEntity {
     private int id;
