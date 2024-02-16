@@ -3,11 +3,10 @@ package com.hyundai.app.common;
 import lombok.Getter;
 
 /**
- * @author : 엄상은
- * @since : 2024/02/08
+ * @author 엄상은
+ * @since 2024/02/08
  * 공통 응답 객체 설정
  */
-
 @Getter
 public class AdventureOfHeendyResponse<T> {
     private boolean success;

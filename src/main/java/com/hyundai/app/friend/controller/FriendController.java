@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * @author : 엄상은
- * @since : 2024/02/09
+ * @author 엄상은
+ * @since 2024/02/09
  * 친구 관련 API
  */
 @RequiredArgsConstructor

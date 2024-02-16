@@ -4,8 +4,8 @@ import com.hyundai.app.common.entity.BaseEntity;
 import lombok.*;
 
 /**
- * @author : 엄상은
- * @since : 2024/02/09
+ * @author 엄상은
+ * @since 2024/02/09
  * 친구 관계 관련 엔티티
  */
 @Getter
