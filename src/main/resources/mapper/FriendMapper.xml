@@ -7,10 +7,10 @@
     <!--    @since 2024/02/10  -->
     <!--    친구 관련 mapper  -->
 
-    <select id="findFriendList" parameterType="Integer" resultType="com.hyundai.app.friend.dto.FriendDetailResDto">
+    <select id="findFriendList" parameterType="Integer" resultType="frienddetailresdto">
         SELECT  id
                 , nickname
-                , img_url AS imgUrl
+                , img_url
         FROM    member
         WHERE   id  IN  (SELECT from_member_id
                          FROM   member_connection
@@ -19,25 +19,25 @@
         AND     is_deleted = 0
     </select>
 
-    <select id="findConnection" parameterType="com.hyundai.app.friend.dto.FriendDto" resultType="com.hyundai.app.friend.domain.MemberConnection">
+    <select id="findConnection" parameterType="frienddto" resultType="memberconnection">
         SELECT  id
-                , from_member_id AS fromMemberId
-                , to_member_id AS toMemberId
-                , mbti_id AS mbtiId
+                , from_member_id
+                , to_member_id
+                , mbti_id
         FROM    member_connection
         WHERE   from_member_id = #{memberId}
         AND     to_member_id = #{friendId}
         AND     is_deleted = 0
     </select>
 
-    <insert id="save" parameterType="com.hyundai.app.friend.domain.MemberConnection">
+    <insert id="save" parameterType="memberconnection">
         INSERT  INTO member_connection (from_member_id
                                        , to_member_id)
         VALUES  (#{fromMemberId}
                 , #{toMemberId})
     </insert>
 
-    <update id="updateMbti" parameterType="com.hyundai.app.friend.domain.MemberConnection">
+    <update id="updateMbti" parameterType="memberconnection">
         UPDATE  member_connection
         SET     mbti_id = #{mbtiId}
                 , updated_at = sysdate

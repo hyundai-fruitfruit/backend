@@ -7,7 +7,7 @@
     <!--    @since 2024/02/14  -->
     <!--    친구 게임 관련 mapper  -->
 
-    <select id="findGameStatus" parameterType="com.hyundai.app.friend.dto.FriendDto" resultType="com.hyundai.app.friend.enumType.GameStatus">
+    <select id="findGameStatus" parameterType="frienddto" resultType="gamestatus">
         SELECT CASE WHEN    (SELECT COUNT(*)
                             FROM    connection_game
                             WHERE   from_member_id = #{friendId} AND to_member_id = #{memberId}

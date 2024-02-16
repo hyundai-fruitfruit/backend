@@ -49,6 +49,8 @@ public class RootContextConfig {
         Resource[] resources = new PathMatchingResourcePatternResolver()
                 .getResources("classpath:mapper/*.xml");
         sessionFactoryBean.setMapperLocations(resources);
+        sessionFactoryBean.setConfigLocation(new PathMatchingResourcePatternResolver()
+                .getResource("classpath:mybatis-config.xml"));
         return sessionFactoryBean.getObject();
     }
 
