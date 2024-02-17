@@ -1,6 +1,7 @@
 package com.hyundai.app.store.domain;
 
 import com.hyundai.app.common.entity.BaseEntity;
+import com.hyundai.app.store.dto.ReviewReqDto;
 import lombok.*;
 
 /**
@@ -15,6 +16,19 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
-    private int id;
+    private String id;
+    private int memberId;
+    private int storeId;
+    private int isDeleted;
+    private int score;
     private String content;
+
+    public static Review from(ReviewReqDto reviewReqDto, int storeId, int memberId) {
+        return Review.builder()
+                .score(reviewReqDto.getScore())
+                .content(reviewReqDto.getContent())
+                .memberId(memberId)
+                .storeId(storeId)
+                .build();
+    }
 }

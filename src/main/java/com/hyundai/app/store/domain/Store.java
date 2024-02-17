@@ -7,7 +7,6 @@ import lombok.*;
  * @since 2024/02/13
  * 매장 도메인
  */
-
 @Getter
 @Builder
 @ToString
@@ -21,7 +20,7 @@ public class Store {
     private String subCategory;
     private int floor;
     private String description;
-    private int avgScore;
-
+    private float avgScore;
+    private int reviewCount;
     // 오픈시간 / 끝나는 시간 일단 제외
 }

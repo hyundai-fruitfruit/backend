@@ -1,5 +1,6 @@
 package com.hyundai.app.store.service;
 
+import com.hyundai.app.store.dto.ReviewReqDto;
 import com.hyundai.app.store.dto.StoreResDto;
 
 /**
@@ -10,4 +11,5 @@ import com.hyundai.app.store.dto.StoreResDto;
 public interface StoreService {
 
     StoreResDto getStoreDetail(int storeId);
+    void createReview(int storeId, int memberId, ReviewReqDto reviewReqDto);
 }

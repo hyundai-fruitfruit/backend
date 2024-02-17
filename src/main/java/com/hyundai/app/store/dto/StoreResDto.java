@@ -24,9 +24,9 @@ public class StoreResDto {
     private String description;
     private int phone;
     private int floor;
-    private int avgScore;
+    private float avgScore;
 
-    private List<Hashtag> popularHashtags; // 사실 이름만 필요함!
+    private List<Hashtag> popularHashtags;
     private List<ReviewResDto> reviews;
 
     public static StoreResDto of(Store store) {
