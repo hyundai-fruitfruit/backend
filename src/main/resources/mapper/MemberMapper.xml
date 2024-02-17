@@ -31,6 +31,7 @@
             , role AS role
             , refresh_token AS refreshToken
             , oauth_id AS OAuthId
+            , img_url AS imgUrl
         FROM   MEMBER
         WHERE  id = #{id}
     </select>

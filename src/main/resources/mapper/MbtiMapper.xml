@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.friend.mapper.MbtiMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/10  -->
+    <!--    친구 MBTI mapper  -->
+
+    <select id="findIdByMbtiScore" parameterType="mbtisavereqdto" resultType="String">
+        SELECT  id
+        FROM    mbti
+        WHERE   energy = CASE WHEN #{scoreI} > #{scoreE} THEN 1 ELSE 0 END
+        AND     information = CASE WHEN #{scoreS} > #{scoreN} THEN 1 ELSE 0 END
+        AND     decision = CASE WHEN #{scoreF} > #{scoreT} THEN 1 ELSE 0 END
+        AND     lifestyle = CASE WHEN #{scoreP} > #{scoreJ} THEN 1 ELSE 0 END
+    </select>
+
+    <select id="findMbtiByFriend" parameterType="frienddto" resultType="String">
+        SELECT  mbti_id
+        FROM    member_connection
+        WHERE   from_member_id = #{memberId}
+        AND     to_member_id = #{friendId}
+    </select>
+</mapper>
