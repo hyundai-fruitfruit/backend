@@ -16,6 +16,6 @@ public interface StoreMapper {
     Store getStoreDetail(@Param("storeId") int storeId);
     List<Hashtag> getPopularHashtagsOfStore(@Param("storeId") int storeId);
     void saveReview(@Param("review") Review review);
-    void updateAvgScore(@Param("storeId") int storeId, @Param("avgScore") float avgScore);
+    void updateAvgScore(@Param("storeId") int storeId, @Param("avgScore") double avgScore);
     void updateReviewCount(@Param("storeId") int storeId);
 }

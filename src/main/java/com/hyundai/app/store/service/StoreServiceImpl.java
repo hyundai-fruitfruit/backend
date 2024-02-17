@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import static com.hyundai.app.exception.ErrorCode.*;
@@ -64,7 +65,7 @@ public class StoreServiceImpl implements StoreService {
         createStoreHashtag(storeId, reviewReqDto.getHashtagIds());
         log.debug("리뷰 작성" + review);
 
-        float newAvgScore = calcAvgScore(storeId, reviewReqDto.getScore());
+        double newAvgScore = calcAvgScore(storeId, reviewReqDto.getScore());
         storeMapper.updateAvgScore(storeId, newAvgScore);
         storeMapper.updateReviewCount(storeId);
     }
@@ -74,15 +75,16 @@ public class StoreServiceImpl implements StoreService {
      * @since 2024/02/14
      * 평점 업데이트 계산
      */
-    private float calcAvgScore(int storeId, int newScore) {
+    private double calcAvgScore(int storeId, int newScore) {
         Store store = storeMapper.getStoreDetail(storeId);
         int reviewCount = store.getReviewCount();
         float avgScore = store.getAvgScore();
         log.debug("별점 업데이트 => reviewCount : " + reviewCount + ", avgScore : " + avgScore);
 
-        float resultScore = ((avgScore * reviewCount) + newScore) / (reviewCount + 1);
-        log.debug("별점 결과" + resultScore);
-        return resultScore;
+        double resultScore = ((avgScore * reviewCount) + newScore) / (reviewCount + 1);
+        double formattedScore = Math.round(resultScore * 10.0) / 10.0;
+        log.debug("별점 결과 : " + formattedScore);
+        return formattedScore;
     }
 
     /**
