@@ -23,7 +23,7 @@ public class Review extends BaseEntity {
     private int score;
     private String content;
 
-    public static Review from(ReviewReqDto reviewReqDto, int storeId, int memberId) {
+    public static Review create(ReviewReqDto reviewReqDto, int storeId, int memberId) {
         return Review.builder()
                 .score(reviewReqDto.getScore())
                 .content(reviewReqDto.getContent())

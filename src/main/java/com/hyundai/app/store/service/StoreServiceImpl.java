@@ -59,7 +59,7 @@ public class StoreServiceImpl implements StoreService {
     @Transactional(rollbackFor = Exception.class)
     public void createReview(int storeId, int memberId, ReviewReqDto reviewReqDto) {
         validateReviewRequest(reviewReqDto);
-        Review review = Review.from(reviewReqDto, storeId, memberId);
+        Review review = Review.create(reviewReqDto, storeId, memberId);
         storeMapper.saveReview(review);
         createStoreHashtag(storeId, reviewReqDto.getHashtagIds());
         log.debug("리뷰 작성" + review);
