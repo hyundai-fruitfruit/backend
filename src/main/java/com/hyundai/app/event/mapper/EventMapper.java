@@ -16,4 +16,6 @@ public interface EventMapper {
     EventDetailResDto find(EventType eventType);
 
     List<EventDetailResDto> findEventList(int storeId);
+
+    EventDetailResDto findById(int eventId);
 }

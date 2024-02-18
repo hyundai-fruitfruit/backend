@@ -38,4 +38,20 @@
         WHERE   store_id = #{storeId}
         AND     is_deleted = 0
     </select>
+
+    <select id="findById" resultType="eventdetailresdto">
+        SELECT  id
+                , title
+                , content
+                , event_type
+                , store_id
+                , reward_type
+                , reward
+                , started_at
+                , finished_at
+                , max_count
+                , visited_count
+        FROM    event
+        WHERE   id = #{eventId}
+    </select>
 </mapper>

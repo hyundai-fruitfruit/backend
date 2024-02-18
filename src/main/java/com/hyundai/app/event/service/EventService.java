@@ -28,4 +28,15 @@ public class EventService {
         EventListResDto eventListResDto = new EventListResDto(eventDetailResDto);
         return eventListResDto;
     }
+
+    public EventDetailResDto find(int storeId, int eventId) {
+        EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
+        if (eventDetailResDto == null) {
+            throw new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.");
+        }
+        else if (eventDetailResDto.getStoreId() != storeId) {
+            throw new IllegalArgumentException("해당 지점의 이벤트가 아닙니다.");
+        }
+        return eventDetailResDto;
+    }
 }
