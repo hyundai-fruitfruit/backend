@@ -11,7 +11,6 @@ import java.util.List;
  */
 @Getter
 public class ReviewReqDto {
-    private int id;
     private int score;
     private String content;
     private List<Integer> hashtagIds;

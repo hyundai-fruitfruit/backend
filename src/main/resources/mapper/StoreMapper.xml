@@ -16,6 +16,7 @@
             , floor AS floor
             , description AS description
             , avg_score AS avgScore
+            , review_count AS reviewCount
         FROM store
         WHERE id = #{storeId}
     </select>
@@ -32,4 +33,32 @@
         FETCH FIRST 5 ROWS ONLY
     </select>
 
+    <insert id="saveReview" parameterType="com.hyundai.app.store.domain.Review" >
+        INSERT INTO review (
+            id
+            , member_id
+            , store_id
+            , score
+            , content
+        )
+        VALUES (
+            review_id_seq.nextval
+            , #{review.memberId}
+            , #{review.storeId}
+            , #{review.score}
+            , #{review.content}
+        )
+    </insert>
+
+    <update id="updateAvgScore">
+        UPDATE store
+        SET avg_score = #{avgScore}
+        WHERE id = #{storeId}
+    </update>
+
+    <update id="updateReviewCount">
+        UPDATE store
+        SET review_count = review_count + 1
+        WHERE id = #{storeId}
+    </update>
 </mapper>

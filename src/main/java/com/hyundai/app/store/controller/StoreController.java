@@ -1,5 +1,7 @@
 package com.hyundai.app.store.controller;
 
+import com.hyundai.app.security.methodparam.MemberId;
+import com.hyundai.app.store.dto.ReviewReqDto;
 import com.hyundai.app.store.dto.StoreResDto;
 import com.hyundai.app.store.service.StoreService;
 import io.swagger.annotations.Api;
@@ -35,5 +37,21 @@ public class StoreController {
             @PathVariable int storeId) {
         StoreResDto storeResDto = storeService.getStoreDetail(storeId);
         return new ResponseEntity<>(storeResDto, HttpStatus.ACCEPTED);
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * 매장 리뷰 작성
+     */
+    @PostMapping("/{storeId}/reviews")
+    @ApiOperation("매장 리뷰 작성 API")
+    public ResponseEntity<Void> createReview(
+            @PathVariable int storeId,
+            @RequestBody ReviewReqDto reviewReqDto,
+            @MemberId int memberId
+    ) {
+        storeService.createReview(storeId, memberId, reviewReqDto);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }

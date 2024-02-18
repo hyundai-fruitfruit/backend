@@ -34,10 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthTokenAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/resources/**", "/", "/swagger-ui/**"
-                , "/api/v1/auth/**"
-                , "/api/v1/stores/**");
+        web.ignoring().antMatchers(
+                "/resources/**", "/",
+                "/swagger-ui/**"
+                , "/api/v1/auth/**");
     }
+
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
@@ -57,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/api/v1/auth/**").permitAll()
-                    .antMatchers("/api/v1/stores/**").permitAll()
+                    .antMatchers("/api/v1/stores/**").authenticated()
                     .antMatchers("/api/v1/members/**").authenticated()
                     .anyRequest().permitAll()
                 .and()

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.store.mapper.HashtagMapper">
+
+    <!--    @author 황수영  -->
+    <!--    @since 2024/02/17  -->
+    <!--    해시 태그 관련 mapper  -->
+
+    <select id="getHashtag" resultType="com.hyundai.app.store.domain.Hashtag" >
+        SELECT
+            id AS id
+            , name AS name
+            , category AS category
+        FROM hashtag
+        WHERE id = #{hashtagId}
+    </select>
+
+    <insert id="createStoreHashtag">
+        INSERT INTO store_hashtag (
+            id
+            , hashtag_id
+            , store_id
+            , count
+        )
+        VALUES (
+            store_hashtag_id_seq.nextval
+            , #{hashtagId}
+            , #{storeId}
+            , 1
+        )
+    </insert>
+
+    <select id="getStoreHashtag" resultType="com.hyundai.app.store.domain.StoreHashtag" >
+        SELECT
+            id AS id
+            , hashtag_id AS hashtagId
+            , store_id AS storeId
+            , count AS count
+        FROM store_hashtag
+        WHERE hashtag_id = #{hashtagId}
+        AND store_id = #{storeId}
+    </select>
+
+    <update id="updateStoreHashtag">
+        UPDATE store_hashtag
+        SET count = count + 1
+        WHERE hashtag_id = #{hashtagId}
+        AND store_id = #{storeId}
+    </update>
+
+</mapper>
