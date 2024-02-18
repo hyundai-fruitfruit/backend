@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
  * @author 엄상은
  * @since 2024/02/18
@@ -22,4 +24,8 @@ public class EventDetailResDto {
     private int storeId;
     private RewardType rewardType;
     private String reward;
+    private LocalDate startedAt;
+    private LocalDate finishedAt;
+    private int maxCount;
+    private int visitedCount;
 }

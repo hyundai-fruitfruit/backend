@@ -4,6 +4,8 @@ import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.enumType.EventType;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author 엄상은
  * @since 2024/02/18
@@ -12,4 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface EventMapper {
     EventDetailResDto find(EventType eventType);
+
+    List<EventDetailResDto> findEventList(int storeId);
 }

@@ -24,4 +24,18 @@
         AND     is_deleted = 0
         FETCH   FIRST 1 ROWS ONLY
     </select>
+
+    <select id="findEventList" resultType="eventdetailresdto">
+        SELECT  id
+                , title
+                , event_type
+                , started_at
+                , finished_at
+                , reward_type
+                , max_count
+                , visited_count
+        FROM    event
+        WHERE   store_id = #{storeId}
+        AND     is_deleted = 0
+    </select>
 </mapper>
