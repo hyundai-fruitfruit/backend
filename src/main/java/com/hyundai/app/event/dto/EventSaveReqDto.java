@@ -36,6 +36,10 @@ public class EventSaveReqDto {
         }
     }
 
+    public void setId(int eventId) {
+        this.id = eventId;
+    }
+
     public void setStoreId(int storeId) {
         this.storeId = storeId;
     }

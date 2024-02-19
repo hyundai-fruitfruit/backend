@@ -43,6 +43,22 @@ public class EventAdminController {
     public AdventureOfHeendyResponse<EventDetailResDto> findEvent(@PathVariable final int eventId) {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
-        return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.findEvent(storeId, eventId));
+        return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.find(storeId, eventId));
+    }
+
+    @PatchMapping("/{eventId}")
+    @ApiOperation("어드민용 이벤트 수정 API")
+    public AdventureOfHeendyResponse<EventSaveReqDto> update(@PathVariable final int eventId, @RequestBody EventSaveReqDto eventSaveReqDto) {
+        // TODO: 지점 ID 받아오는 부분 수정
+        int storeId = 1;
+        return AdventureOfHeendyResponse.success("이벤트를 수정했습니다.", eventService.update(storeId, eventId, eventSaveReqDto));
+    }
+
+    @DeleteMapping("/{eventId}")
+    @ApiOperation("어드민용 이벤트 삭제 API")
+    public AdventureOfHeendyResponse<Void> delete(@PathVariable final int eventId) {
+        // TODO: 지점 ID 받아오는 부분 수정
+        int storeId = 1;
+        return AdventureOfHeendyResponse.success("이벤트를 삭제했습니다.", eventService.delete(storeId, eventId));
     }
 }
