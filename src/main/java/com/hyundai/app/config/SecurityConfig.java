@@ -33,10 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthTokenAccessDeniedHandler authTokenAccessDeniedHandler;
     private final AuthTokenAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(
-                "/resources/**", "/",
-                "/swagger-ui/**"
+                "/resources/**",
+                "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui.html","/webjars/**", "/swagger/**",   // swagger
+                "/",
+                "/swagger-ui.html"
                 , "/api/v1/auth/**");
     }
 
