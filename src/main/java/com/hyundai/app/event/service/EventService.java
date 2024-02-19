@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author 엄상은
  * @since 2024/02/18
- * 이벤트 서비스
+ * 사용자용 + 어드민용 이벤트 서비스
  */
 @RequiredArgsConstructor
 @Service
@@ -23,8 +23,8 @@ public class EventService {
     private final EventMapper eventMapper;
     private final EventActiveTimeMapper eventActiveTimeMapper;
 
-    public EventDetailResDto find(EventType eventType) {
-        EventDetailResDto eventDetailResDto = eventMapper.find(eventType);
+    public EventDetailResDto findCurrentEventByEventType(EventType eventType) {
+        EventDetailResDto eventDetailResDto = eventMapper.findCurrentEventByEventType(eventType);
         int eventId = eventDetailResDto.getId();
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
         eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
@@ -41,15 +41,16 @@ public class EventService {
         }
 
         EventListResDto eventListResDto = new EventListResDto(eventDetailResDtoList);
+
         return eventListResDto;
     }
 
-    public EventDetailResDto find(int storeId, int eventId) {
+    public EventDetailResDto findEvent(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
         if (eventDetailResDto == null) {
             throw new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.");
         }
-        else if (eventDetailResDto.getStoreId() != storeId) {
+        if (eventDetailResDto.getStoreId() != storeId) {
             throw new IllegalArgumentException("해당 지점의 이벤트가 아닙니다.");
         }
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
@@ -65,7 +66,7 @@ public class EventService {
     public EventDetailResDto save(int storeId, EventSaveReqDto eventSaveReqDto) {
         int eventId = saveEvent(storeId, eventSaveReqDto);
         saveEventActiveTime(eventId, eventSaveReqDto);
-        return find(storeId, eventId);
+        return findEvent(storeId, eventId);
     }
 
     private int saveEvent(int storeId, EventSaveReqDto eventSaveReqDto) {

@@ -23,8 +23,7 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping
-    public AdventureOfHeendyResponse<EventDetailResDto> find(@MemberId Integer memberId,
-                                                             @RequestParam EventType eventType) {
-        return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.find(eventType));
+    public AdventureOfHeendyResponse<EventDetailResDto> findCurrentEventByEventType(@RequestParam EventType eventType) {
+        return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.findCurrentEventByEventType(eventType));
     }
 }

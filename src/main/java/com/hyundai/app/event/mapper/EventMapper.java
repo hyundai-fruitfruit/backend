@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Mapper
 public interface EventMapper {
-    EventDetailResDto find(EventType eventType);
+    EventDetailResDto findCurrentEventByEventType(EventType eventType);
 
     List<EventDetailResDto> findEventList(int storeId);
 

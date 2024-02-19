@@ -34,9 +34,9 @@ public class EventAdminController {
     }
 
     @GetMapping("/{eventId}")
-    public AdventureOfHeendyResponse<EventDetailResDto> find(@PathVariable final int eventId) {
+    public AdventureOfHeendyResponse<EventDetailResDto> findEvent(@PathVariable final int eventId) {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
-        return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.find(storeId, eventId));
+        return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.findEvent(storeId, eventId));
     }
 }
