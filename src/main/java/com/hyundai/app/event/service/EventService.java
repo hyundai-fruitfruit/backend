@@ -57,7 +57,7 @@ public class EventService {
         return eventDetailResDto;
     }
 
-    public List<EventActiveTimeZoneDto> findEventActiveTime(int eventId) {
+    private List<EventActiveTimeZoneDto> findEventActiveTime(int eventId) {
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = eventActiveTimeMapper.findByEventId(eventId);
         return eventActiveTimeZoneDto;
     }
@@ -68,14 +68,14 @@ public class EventService {
         return find(storeId, eventId);
     }
 
-    public int saveEvent(int storeId, EventSaveReqDto eventSaveReqDto) {
+    private int saveEvent(int storeId, EventSaveReqDto eventSaveReqDto) {
         eventSaveReqDto.setStoreId(storeId);
         eventMapper.save(eventSaveReqDto);
         int eventId = eventSaveReqDto.getId();
         return eventId;
     }
 
-    public void saveEventActiveTime(int eventId, EventSaveReqDto eventSaveReqDto) {
+    private void saveEventActiveTime(int eventId, EventSaveReqDto eventSaveReqDto) {
         eventSaveReqDto.setDefaultActiveTimeIfEmpty();
         eventSaveReqDto.getActiveTimeList().forEach(eventActiveTime -> {
             eventActiveTime.setEventId(eventId);
