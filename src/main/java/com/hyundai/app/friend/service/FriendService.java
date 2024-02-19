@@ -54,11 +54,11 @@ public class FriendService {
                 .build();
     }
 
-    public MemberConnection findConnection(FriendDto friendDto) {
+    private MemberConnection findConnection(FriendDto friendDto) {
         return friendMapper.findConnection(friendDto);
     }
 
-    public void saveConnection(FriendDto friendDto) {
+    private void saveConnection(FriendDto friendDto) {
         MemberConnection originMemberConnection = new MemberConnection(
                 friendDto.getMemberId(),
                 friendDto.getFriendId()
@@ -75,7 +75,7 @@ public class FriendService {
         }
     }
 
-    public Boolean isFriend(FriendDto friendDto) {
+    private Boolean isFriend(FriendDto friendDto) {
         if (memberMapper.findById(friendDto.getFriendId()) == null) {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
         }
@@ -85,7 +85,7 @@ public class FriendService {
         return true;
     }
 
-    public String findMbtiByFriend(FriendDto friendDto) {
+    private String findMbtiByFriend(FriendDto friendDto) {
         return mbtiMapper.findMbtiByFriend(friendDto);
     }
 
@@ -102,7 +102,7 @@ public class FriendService {
         return findMbtiByFriend(new FriendDto(memberId, friendId));
     }
 
-    public GameStatus findGameStatus(FriendDto friendDto){
+    private GameStatus findGameStatus(FriendDto friendDto){
         GameStatus gameStatus = gameMapper.findGameStatus(friendDto);
         return gameStatus;
     }

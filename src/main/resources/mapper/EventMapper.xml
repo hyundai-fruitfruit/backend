@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.event.mapper.EventMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/18  -->
+    <!--    이벤트 mapper  -->
+    <select id="find" parameterType="eventtype" resultType="eventdetailresdto">
+        SELECT  id
+                , title
+                , content
+                , event_type
+                , store_id
+                , reward_type
+                , reward
+        FROM    event
+        WHERE   sysdate BETWEEN started_at AND finished_at
+        AND     id  IN  (SELECT event_id
+                        FROM    event_active_time
+                        WHERE   TO_NUMBER(TO_CHAR(sysdate, 'HH24')) BETWEEN openned_at AND closed_at)
+        AND     (#{eventType} IS NULL OR event_type = #{eventType})
+        AND     max_count >= visited_count
+        AND     is_deleted = 0
+        FETCH   FIRST 1 ROWS ONLY
+    </select>
+
+    <select id="findEventList" resultType="eventdetailresdto">
+        SELECT  id
+                , title
+                , event_type
+                , started_at
+                , finished_at
+                , reward_type
+                , max_count
+                , visited_count
+        FROM    event
+        WHERE   store_id = #{storeId}
+        AND     is_deleted = 0
+    </select>
+
+    <select id="findById" resultType="eventdetailresdto">
+        SELECT  id
+                , title
+                , content
+                , event_type
+                , store_id
+                , reward_type
+                , reward
+                , started_at
+                , finished_at
+                , max_count
+                , visited_count
+        FROM    event
+        WHERE   id = #{eventId}
+    </select>
+
+    <insert id="save" parameterType="eventsavereqdto">
+        INSERT  INTO event (title
+                           , started_at
+                           , finished_at
+                           , max_count
+                           , event_type
+                           , store_id
+                           , reward_type
+                           , reward
+                           , content)
+        VALUES  (#{title}
+                , #{startedAt}
+                , #{finishedAt}
+                , #{maxCount}
+                , #{eventType}
+                , #{storeId}
+                , #{rewardType}
+                , #{reward}
+                , #{content})
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT  MAX(id)
+            FROM    event
+        </selectKey>
+    </insert>
+</mapper>
