@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 /**
  * @author 엄상은
  * @since 2024/02/19
- * (설명)
+ * 이벤트 활성화 시작, 종료 시간 DTO
  */
 @Getter
 @NoArgsConstructor
