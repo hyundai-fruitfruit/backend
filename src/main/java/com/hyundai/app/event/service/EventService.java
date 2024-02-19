@@ -40,8 +40,7 @@ public class EventService {
             eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDtoList);
         }
 
-        EventListResDto eventListResDto = new EventListResDto(eventDetailResDtoList);
-
+        EventListResDto eventListResDto = EventListResDto.of(eventDetailResDtoList);
         return eventListResDto;
     }
 

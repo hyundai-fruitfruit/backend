@@ -16,4 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class EventListResDto {
     private List<EventDetailResDto> events;
+
+    public static EventListResDto of(List<EventDetailResDto> eventDetailResDtoList) {
+        return new EventListResDto(eventDetailResDtoList);
+    }
 }
