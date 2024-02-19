@@ -1,5 +1,6 @@
 package com.hyundai.app.event.service;
 
+import com.hyundai.app.event.dto.EventActiveTimeZoneDto;
 import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.dto.EventListResDto;
 import com.hyundai.app.event.dto.EventSaveReqDto;
@@ -23,12 +24,23 @@ public class EventService {
     private final EventActiveTimeMapper eventActiveTimeMapper;
 
     public EventDetailResDto find(EventType eventType) {
-        return eventMapper.find(eventType);
+        EventDetailResDto eventDetailResDto = eventMapper.find(eventType);
+        int eventId = eventDetailResDto.getId();
+        List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
+        eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
+        return eventDetailResDto;
     }
 
     public EventListResDto findEventList(int storeId) {
-        List<EventDetailResDto> eventDetailResDto = eventMapper.findEventList(storeId);
-        EventListResDto eventListResDto = new EventListResDto(eventDetailResDto);
+        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findEventList(storeId);
+
+        for (EventDetailResDto eventDetailResDto : eventDetailResDtoList) {
+            int eventId = eventDetailResDto.getId();
+            List<EventActiveTimeZoneDto> eventActiveTimeZoneDtoList = findEventActiveTime(eventId);
+            eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDtoList);
+        }
+
+        EventListResDto eventListResDto = new EventListResDto(eventDetailResDtoList);
         return eventListResDto;
     }
 
@@ -40,7 +52,14 @@ public class EventService {
         else if (eventDetailResDto.getStoreId() != storeId) {
             throw new IllegalArgumentException("해당 지점의 이벤트가 아닙니다.");
         }
+        List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
+        eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
         return eventDetailResDto;
+    }
+
+    public List<EventActiveTimeZoneDto> findEventActiveTime(int eventId) {
+        List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = eventActiveTimeMapper.findByEventId(eventId);
+        return eventActiveTimeZoneDto;
     }
 
     public EventDetailResDto save(int storeId, EventSaveReqDto eventSaveReqDto) {

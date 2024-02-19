@@ -14,4 +14,11 @@
                , #{opennedAt}
                , #{closedAt})
     </insert>
+
+    <select id="findByEventId" parameterType="int" resultType="eventactivetimezonedto">
+        SELECT  openned_at
+                , closed_at
+        FROM    event_active_time
+        WHERE   event_id = #{eventId}
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.hyundai.app.event.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hyundai.app.event.enumType.EventType;
 import com.hyundai.app.event.enumType.RewardType;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author 엄상은
@@ -24,8 +26,15 @@ public class EventDetailResDto {
     private int storeId;
     private RewardType rewardType;
     private String reward;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startedAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate finishedAt;
     private int maxCount;
     private int visitedCount;
+    private List<EventActiveTimeZoneDto> eventActiveTimeZoneDto;
+
+    public void setActiveTimeList(List<EventActiveTimeZoneDto> eventActiveTimeZoneDto) {
+        this.eventActiveTimeZoneDto = eventActiveTimeZoneDto;
+    }
 }
