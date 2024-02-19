@@ -3,6 +3,7 @@ package com.hyundai.app.event.controller;
 import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.dto.EventListResDto;
+import com.hyundai.app.event.dto.EventSaveReqDto;
 import com.hyundai.app.event.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,13 @@ public class EventAdminController {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
         return AdventureOfHeendyResponse.success("지점의 이벤트 목록을 가져왔습니다.", eventService.findEventList(storeId));
+    }
+
+    @PostMapping
+    public AdventureOfHeendyResponse<EventDetailResDto> save(@RequestBody EventSaveReqDto eventSaveReqDto) {
+        // TODO: 지점 ID 받아오는 부분 수정
+        int storeId = 1;
+        return AdventureOfHeendyResponse.success("이벤트를 저장했습니다.", eventService.save(storeId, eventSaveReqDto));
     }
 
     @GetMapping("/{eventId}")

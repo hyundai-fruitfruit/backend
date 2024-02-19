@@ -1,6 +1,7 @@
 package com.hyundai.app.event.mapper;
 
 import com.hyundai.app.event.dto.EventDetailResDto;
+import com.hyundai.app.event.dto.EventSaveReqDto;
 import com.hyundai.app.event.enumType.EventType;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,6 @@ public interface EventMapper {
     List<EventDetailResDto> findEventList(int storeId);
 
     EventDetailResDto findById(int eventId);
+
+    int save(EventSaveReqDto eventSaveReqDto);
 }

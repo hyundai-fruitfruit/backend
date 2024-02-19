@@ -54,4 +54,29 @@
         FROM    event
         WHERE   id = #{eventId}
     </select>
+
+    <insert id="save" parameterType="eventsavereqdto">
+        INSERT  INTO event (title
+                           , started_at
+                           , finished_at
+                           , max_count
+                           , event_type
+                           , store_id
+                           , reward_type
+                           , reward
+                           , content)
+        VALUES  (#{title}
+                , #{startedAt}
+                , #{finishedAt}
+                , #{maxCount}
+                , #{eventType}
+                , #{storeId}
+                , #{rewardType}
+                , #{reward}
+                , #{content})
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            SELECT  MAX(id)
+            FROM    event
+        </selectKey>
+    </insert>
 </mapper>

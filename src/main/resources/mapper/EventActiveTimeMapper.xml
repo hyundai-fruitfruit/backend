@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.event.mapper.EventActiveTimeMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/19  -->
+    <!--    이벤트 활성화 시간대 mapper  -->
+    <insert id="save" parameterType="eventactivetime">
+        INSERT  INTO event_active_time (event_id
+                                      , openned_at
+                                      , closed_at)
+        VALUES  (#{eventId}
+               , #{opennedAt}
+               , #{closedAt})
+    </insert>
+</mapper>
