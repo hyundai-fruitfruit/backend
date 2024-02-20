@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin/events")
 @RestController
-public class EventAdminController {
+public class AdminEventController {
     private final EventService eventService;
 
     @GetMapping
