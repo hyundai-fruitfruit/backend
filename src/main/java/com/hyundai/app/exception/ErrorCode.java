@@ -36,6 +36,10 @@ public enum ErrorCode {
     HASHTAG_ID_INVALID(BAD_REQUEST, "해당하는 해시태그 id가 없습니다."),
     MEMBER_ID_INVALID(BAD_REQUEST, "해당하는 회원 id가 없습니다."),
 
+    // 이벤트
+    EVENT_NOT_EXIST(BAD_REQUEST, "해당하는 이벤트가 존재하지 않습니다."),
+
+
     // 500 에러
     SERVER_UNAVAILABLE(SERVICE_UNAVAILABLE, "서버에 오류가 발생하였습니다."),
 

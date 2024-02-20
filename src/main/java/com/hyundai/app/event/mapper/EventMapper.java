@@ -25,4 +25,6 @@ public interface EventMapper {
     void update(EventSaveReqDto eventSaveReqDto);
 
     void delete(int eventId);
+
+    List<EventDetailResDto> findEventAllByEventType(EventType eventType);
 }
