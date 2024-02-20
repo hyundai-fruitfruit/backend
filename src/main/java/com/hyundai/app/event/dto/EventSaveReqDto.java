@@ -29,6 +29,7 @@ public class EventSaveReqDto {
     private String reward;
     private String content;
     private int storeId;
+    private int couponId;
 
     public void setDefaultActiveTimeIfEmpty() {
         if (this.activeTimeList == null || this.activeTimeList.isEmpty()) {
