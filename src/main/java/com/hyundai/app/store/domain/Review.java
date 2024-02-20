@@ -4,6 +4,8 @@ import com.hyundai.app.common.entity.BaseEntity;
 import com.hyundai.app.store.dto.ReviewReqDto;
 import lombok.*;
 
+import java.util.List;
+
 /**
  * @author 황수영
  * @since 2024/02/13
@@ -16,12 +18,13 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
-    private String id;
+    private int id;
     private int memberId;
     private int storeId;
     private int isDeleted;
     private int score;
     private String content;
+    private List<Integer> hashtags;
 
     public static Review create(ReviewReqDto reviewReqDto, int storeId, int memberId) {
         return Review.builder()
@@ -29,6 +32,7 @@ public class Review extends BaseEntity {
                 .content(reviewReqDto.getContent())
                 .memberId(memberId)
                 .storeId(storeId)
+                .hashtags(reviewReqDto.getHashtagIds())
                 .build();
     }
 }

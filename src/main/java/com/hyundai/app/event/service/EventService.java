@@ -7,7 +7,10 @@ import com.hyundai.app.event.dto.EventSaveReqDto;
 import com.hyundai.app.event.enumType.EventType;
 import com.hyundai.app.event.mapper.EventActiveTimeMapper;
 import com.hyundai.app.event.mapper.EventMapper;
+import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
  * @since 2024/02/18
  * 사용자용 + 어드민용 이벤트 서비스
  */
+@Log4j
 @RequiredArgsConstructor
 @Service
 public class EventService {
@@ -25,6 +29,10 @@ public class EventService {
 
     public EventDetailResDto findCurrentEventByEventType(EventType eventType) {
         EventDetailResDto eventDetailResDto = eventMapper.findCurrentEventByEventType(eventType);
+        if (eventDetailResDto != null) {
+            log.error("해당 타입의 이벤트가 존재하지 않습니다.");
+            throw new AdventureOfHeendyException(ErrorCode.EVENT_NOT_EXIST);
+        }
         int eventId = eventDetailResDto.getId();
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
         eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
@@ -101,5 +109,26 @@ public class EventService {
         findEventAndValidate(storeId, eventId);
         eventMapper.delete(eventId);
         return null;
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/20
+     * 이벤트 종류에 따른 랜덤 스팟 조회
+     */
+    public EventDetailResDto getRandomSpotDetail(String eventType) {
+        EventType randomSpotType = EventType.of(eventType);
+        List<EventDetailResDto> events = eventMapper.findEventAllByEventType(randomSpotType);
+        log.debug("입력된 이벤트 타입 : " + eventType + " => " + " 랜덤 스팟 타입 : " + randomSpotType);
+
+        if (events.isEmpty()) {
+            log.error("해당 타입의 이벤트가 존재하지 않습니다.");
+            throw new AdventureOfHeendyException(ErrorCode.EVENT_NOT_EXIST);
+        }
+        EventDetailResDto eventDetailResDto = events.get(0); // TODO: 후에 로직 적용
+        List<EventActiveTimeZoneDto> activeTimeZoneList = eventActiveTimeMapper.findByEventId(eventDetailResDto.getId());
+        eventDetailResDto.setActiveTimeList(activeTimeZoneList);
+        log.debug("랜덤 스팟 상세 정보 조회 : " + eventDetailResDto);
+        return eventDetailResDto;
     }
 }

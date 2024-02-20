@@ -1,12 +1,14 @@
 package com.hyundai.app.store.dto;
 
 import com.hyundai.app.store.domain.Hashtag;
+import com.hyundai.app.store.domain.Review;
 import com.hyundai.app.store.domain.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,9 +42,13 @@ public class StoreResDto {
     }
 
     // TODO: 해당 매장의 리뷰들 조회
-//    public void updateReviews(List<ReviewResDto> reviews) {
-//        this.reviews = reviews;
-//    }
+    public void updateReviews(List<Review> reviews) {
+        List<ReviewResDto> reviewResDtos = new ArrayList<>();
+        for (Review review : reviews) {
+            reviewResDtos.add(ReviewResDto.of(review));
+        }
+        this.reviews = reviewResDtos;
+    }
 
     public void updatePopularHashtags(List<Hashtag> popularHashtags) {
         this.popularHashtags = popularHashtags;
