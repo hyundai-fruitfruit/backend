@@ -3,7 +3,6 @@ package com.hyundai.app.member.enumType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-
 /**
  * @author 황수영
  * @since 2024/02/12
