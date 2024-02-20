@@ -37,7 +37,7 @@ public class StoreServiceImpl implements StoreService {
     /**
      * @author 황수영
      * @since 2024/02/14
-     * 매장 상세 정보/해시태그/이미지 조회
+     * 매장 상세 정보/해시태그/이미지/리뷰 조회
      */
     @Override
     public StoreResDto getStoreDetail(int storeId) {
@@ -46,8 +46,12 @@ public class StoreServiceImpl implements StoreService {
         List<Hashtag> popularHashtags = storeMapper.getPopularHashtagsOfStore(storeId);
         log.debug("가장 많이 선택된 해시태그들 5개 조회 : " + popularHashtags.toString());
 
+        List<Review> reviews = storeMapper.getReviews(storeId);
+        log.debug("해당 매장의 전체 리뷰 조회 : " + reviews.toString());
+
         StoreResDto storeResDto = StoreResDto.of(store);
         storeResDto.updatePopularHashtags(popularHashtags);
+        storeResDto.updateReviews(reviews);
         return storeResDto;
     }
 
@@ -145,4 +149,6 @@ public class StoreServiceImpl implements StoreService {
             throw new AdventureOfHeendyException(HASHTAG_ID_INVALID);
         }
     }
+
+
 }

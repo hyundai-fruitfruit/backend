@@ -21,6 +21,19 @@
         WHERE id = #{storeId}
     </select>
 
+    <select id="getReviews" resultType="com.hyundai.app.store.domain.Review" >
+        SELECT id
+        , member_id
+        , store_id
+        , is_deleted
+        , created_at
+        , updated_at
+        , score
+        , content
+        FROM review
+        WHERE store_id = #{storeId}
+    </select>
+
     <select id="getPopularHashtagsOfStore" resultType="com.hyundai.app.store.domain.Hashtag">
         SELECT hashtag.id AS id
              , hashtag.name AS name

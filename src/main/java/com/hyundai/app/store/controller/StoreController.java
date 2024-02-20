@@ -54,4 +54,5 @@ public class StoreController {
         storeService.createReview(storeId, memberId, reviewReqDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
 }

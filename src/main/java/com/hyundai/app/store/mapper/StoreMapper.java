@@ -18,4 +18,5 @@ public interface StoreMapper {
     void saveReview(@Param("review") Review review);
     void updateAvgScore(@Param("storeId") int storeId, @Param("avgScore") double avgScore);
     void updateReviewCount(@Param("storeId") int storeId);
+    List<Review> getReviews(@Param("storeId") int storeId);
 }
