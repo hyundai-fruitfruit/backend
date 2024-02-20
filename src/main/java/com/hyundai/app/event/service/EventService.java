@@ -44,7 +44,14 @@ public class EventService {
         return eventListResDto;
     }
 
-    public EventDetailResDto findEvent(int storeId, int eventId) {
+    public EventDetailResDto find(int storeId, int eventId) {
+        EventDetailResDto eventDetailResDto = findEventAndValidate(storeId, eventId);
+        List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
+        eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
+        return eventDetailResDto;
+    }
+
+    public EventDetailResDto findEventAndValidate(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
         if (eventDetailResDto == null) {
             throw new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.");
@@ -65,7 +72,7 @@ public class EventService {
     public EventDetailResDto save(int storeId, EventSaveReqDto eventSaveReqDto) {
         int eventId = saveEvent(storeId, eventSaveReqDto);
         saveEventActiveTime(eventId, eventSaveReqDto);
-        return findEvent(storeId, eventId);
+        return find(storeId, eventId);
     }
 
     private int saveEvent(int storeId, EventSaveReqDto eventSaveReqDto) {
@@ -81,5 +88,18 @@ public class EventService {
             eventActiveTime.setEventId(eventId);
             eventActiveTimeMapper.save(eventActiveTime);
         });
+    }
+
+    public EventSaveReqDto update(int storeId, int eventId, EventSaveReqDto eventSaveReqDto) {
+        findEventAndValidate(storeId, eventId);
+        eventSaveReqDto.setId(eventId);
+        eventMapper.update(eventSaveReqDto);
+        return eventSaveReqDto;
+    }
+
+    public Void delete(int storeId, int eventId) {
+        findEventAndValidate(storeId, eventId);
+        eventMapper.delete(eventId);
+        return null;
     }
 }

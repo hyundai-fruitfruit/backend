@@ -6,7 +6,7 @@
     <!--    @author 엄상은  -->
     <!--    @since 2024/02/18  -->
     <!--    이벤트 mapper  -->
-    <select id="find" parameterType="eventtype" resultType="eventdetailresdto">
+    <select id="findCurrentEventByEventType" parameterType="eventtype" resultType="eventdetailresdto">
         SELECT  id
                 , title
                 , content
@@ -79,4 +79,25 @@
             FROM    event
         </selectKey>
     </insert>
+
+    <update id="update" parameterType="eventsavereqdto">
+        UPDATE  event
+        SET     title = #{title}
+                , started_at = #{startedAt}
+                , finished_at = #{finishedAt}
+                , max_count = #{maxCount}
+                , event_type = #{eventType}
+                , reward_type = #{rewardType}
+                , reward = #{reward}
+                , content = #{content}
+                , updated_at = SYSDATE
+        WHERE   id = #{id}
+    </update>
+
+    <delete id="delete">
+        UPDATE  event
+        SET     is_deleted = 1
+                , updated_at = SYSDATE
+        WHERE   id = #{eventId}
+    </delete>
 </mapper>

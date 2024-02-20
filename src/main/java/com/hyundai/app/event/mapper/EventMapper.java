@@ -21,4 +21,8 @@ public interface EventMapper {
     EventDetailResDto findById(int eventId);
 
     int save(EventSaveReqDto eventSaveReqDto);
+
+    void update(EventSaveReqDto eventSaveReqDto);
+
+    void delete(int eventId);
 }

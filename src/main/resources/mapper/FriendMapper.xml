@@ -40,7 +40,7 @@
     <update id="updateMbti" parameterType="memberconnection">
         UPDATE  member_connection
         SET     mbti_id = #{mbtiId}
-                , updated_at = sysdate
+                , updated_at = SYSDATE
         WHERE   from_member_id = #{fromMemberId}
         AND     to_member_id = #{toMemberId}
     </update>

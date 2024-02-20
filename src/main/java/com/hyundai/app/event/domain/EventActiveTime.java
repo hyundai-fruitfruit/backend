@@ -2,6 +2,7 @@ package com.hyundai.app.event.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
  * @since 2024/02/18
  * 이벤트 활성화 시간 엔티티
  */
+@Getter
 @RequiredArgsConstructor
 public class EventActiveTime {
     private int id;
