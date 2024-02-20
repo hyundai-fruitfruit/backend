@@ -116,8 +116,8 @@ public class EventService {
      * @since 2024/02/20
      * 이벤트 종류에 따른 랜덤 스팟 조회
      */
-    public EventDetailResDto getRandomSpotDetail(EventType eventType) {
-        EventType randomSpotType = EventType.getRandomEventType(eventType);
+    public EventDetailResDto getRandomSpotDetail(String eventType) {
+        EventType randomSpotType = EventType.of(eventType);
         List<EventDetailResDto> events = eventMapper.findEventAllByEventType(randomSpotType);
         log.debug("입력된 이벤트 타입 : " + eventType + " => " + " 랜덤 스팟 타입 : " + randomSpotType);
 

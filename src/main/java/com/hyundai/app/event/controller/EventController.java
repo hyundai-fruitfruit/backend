@@ -42,7 +42,7 @@ public class EventController {
      */
     @GetMapping("/random-spot")
     @ApiOperation("이벤트 종류에 따른 랜덤 스팟 조회")
-    public ResponseEntity<EventDetailResDto> getRandomSpotByEventType(@RequestParam EventType eventType) {
+    public ResponseEntity<EventDetailResDto> getRandomSpotByEventType(@RequestParam String eventType) {
         EventDetailResDto eventDetailResDto = eventService.getRandomSpotDetail(eventType);
         return new ResponseEntity<>(eventDetailResDto, HttpStatus.ACCEPTED);
     }

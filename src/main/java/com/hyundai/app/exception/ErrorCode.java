@@ -38,6 +38,7 @@ public enum ErrorCode {
 
     // 이벤트
     EVENT_NOT_EXIST(BAD_REQUEST, "해당하는 이벤트가 존재하지 않습니다."),
+    EVENT_TYPE_NOT_EXIST(BAD_REQUEST, "이벤트 타입은 RESTAURANT, CAFE, SHOPPING, RANDOM 중 하나이어야 합니다."),
 
 
     // 500 에러
