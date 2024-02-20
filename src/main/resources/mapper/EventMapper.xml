@@ -6,7 +6,7 @@
     <!--    @author 엄상은  -->
     <!--    @since 2024/02/18  -->
     <!--    이벤트 mapper  -->
-    <select id="find" parameterType="eventtype" resultType="eventdetailresdto">
+    <select id="findCurrentEventByEventType" parameterType="eventtype" resultType="eventdetailresdto">
         SELECT  id
                 , title
                 , content
