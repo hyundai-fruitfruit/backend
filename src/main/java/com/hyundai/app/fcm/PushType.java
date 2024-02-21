@@ -2,6 +2,7 @@ package com.hyundai.app.fcm;
 
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import com.hyundai.app.fcm.dto.PushMessageDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
