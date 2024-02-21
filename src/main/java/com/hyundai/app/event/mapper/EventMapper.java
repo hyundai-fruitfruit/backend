@@ -1,5 +1,6 @@
 package com.hyundai.app.event.mapper;
 
+import com.hyundai.app.common.entity.IdWithCriteria;
 import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.dto.EventSaveReqDto;
 import com.hyundai.app.event.enumType.EventType;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface EventMapper {
     EventDetailResDto findCurrentEventByEventType(EventType eventType);
 
-    List<EventDetailResDto> findEventList(int storeId);
+    List<EventDetailResDto> findEventList(IdWithCriteria idWithCriteria);
 
     EventDetailResDto findById(int eventId);
 

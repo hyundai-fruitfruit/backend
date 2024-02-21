@@ -1,5 +1,7 @@
 package com.hyundai.app.event.dto;
 
+import com.hyundai.app.common.entity.IdWithCriteria;
+import com.hyundai.app.common.entity.PageInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 public class EventListResDto {
     private List<EventDetailResDto> events;
+    private PageInfo pageInfo;
 
-    public static EventListResDto of(List<EventDetailResDto> eventDetailResDtoList) {
-        return new EventListResDto(eventDetailResDtoList);
+    public static EventListResDto from(List<EventDetailResDto> eventDetailResDtoList, IdWithCriteria criteria) {
+        PageInfo pageInfo = new PageInfo(criteria, eventDetailResDtoList.size());
+        return new EventListResDto(eventDetailResDtoList, pageInfo);
     }
 }

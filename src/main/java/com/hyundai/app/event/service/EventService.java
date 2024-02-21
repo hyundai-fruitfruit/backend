@@ -1,9 +1,7 @@
 package com.hyundai.app.event.service;
 
-import com.hyundai.app.event.dto.EventActiveTimeZoneDto;
-import com.hyundai.app.event.dto.EventDetailResDto;
-import com.hyundai.app.event.dto.EventListResDto;
-import com.hyundai.app.event.dto.EventSaveReqDto;
+import com.hyundai.app.common.entity.IdWithCriteria;
+import com.hyundai.app.event.dto.*;
 import com.hyundai.app.event.enumType.EventType;
 import com.hyundai.app.event.mapper.EventActiveTimeMapper;
 import com.hyundai.app.event.mapper.EventMapper;
@@ -39,8 +37,9 @@ public class EventService {
         return eventDetailResDto;
     }
 
-    public EventListResDto findEventList(int storeId) {
-        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findEventList(storeId);
+    public EventListResDto findEventList(int storeId, int page, int size) {
+        IdWithCriteria idWithCriteria = IdWithCriteria.of(storeId, page, size);
+        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findEventList(idWithCriteria);
 
         for (EventDetailResDto eventDetailResDto : eventDetailResDtoList) {
             int eventId = eventDetailResDto.getId();
@@ -48,7 +47,7 @@ public class EventService {
             eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDtoList);
         }
 
-        EventListResDto eventListResDto = EventListResDto.of(eventDetailResDtoList);
+        EventListResDto eventListResDto = EventListResDto.from(eventDetailResDtoList, idWithCriteria);
         return eventListResDto;
     }
 

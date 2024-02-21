@@ -24,10 +24,11 @@ public class AdminEventController {
 
     @GetMapping
     @ApiOperation("어드민용 해당 지점 이벤트 전체 조회 API")
-    public AdventureOfHeendyResponse<EventListResDto> findEventList() {
+    public AdventureOfHeendyResponse<EventListResDto> findEventList(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                                    @RequestParam(value = "size", defaultValue = "10") int size) {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
-        return AdventureOfHeendyResponse.success("지점의 이벤트 목록을 가져왔습니다.", eventService.findEventList(storeId));
+        return AdventureOfHeendyResponse.success("지점의 이벤트 목록을 가져왔습니다.", eventService.findEventList(storeId, page, size));
     }
 
     @PostMapping
