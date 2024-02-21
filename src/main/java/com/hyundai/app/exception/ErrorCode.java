@@ -45,7 +45,10 @@ public enum ErrorCode {
     SERVER_UNAVAILABLE(SERVICE_UNAVAILABLE, "서버에 오류가 발생하였습니다."),
 
     // 400 에러
-    INVALID_PARAMETER(BAD_REQUEST, "입력값이 형식에 맞지 않습니다.");
+    INVALID_PARAMETER(BAD_REQUEST, "입력값이 형식에 맞지 않습니다."),
+
+    // Quartz 관련
+    PUSH_RANDOM_SPOT_UNAVAILABLE(SERVICE_UNAVAILABLE, "랜덤 스팟 푸시 예약 발송 중 오류가 발생하였습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;
