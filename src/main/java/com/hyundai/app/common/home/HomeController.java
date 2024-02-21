@@ -1,4 +1,4 @@
-package com.hyundai.app.common.admin;
+package com.hyundai.app.common.home;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/")
 @RestController
-public class AdminController {
+public class HomeController {
 
     @GetMapping
     public ResponseEntity<String> healthCheck() {

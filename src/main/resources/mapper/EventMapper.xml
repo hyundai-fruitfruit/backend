@@ -64,7 +64,8 @@
                            , store_id
                            , reward_type
                            , reward
-                           , content)
+                           , content
+                           , <if test="rewardType.toString()=='COUPON'">coupon_id</if>)
         VALUES  (#{title}
                 , #{startedAt}
                 , #{finishedAt}
@@ -73,7 +74,8 @@
                 , #{storeId}
                 , #{rewardType}
                 , #{reward}
-                , #{content})
+                , #{content}
+                , <if test="rewardType.toString()=='COUPON'">#{couponId}</if>)
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             SELECT  MAX(id)
             FROM    event

@@ -12,12 +12,15 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum RewardType {
     COUPON("COUPON"),
-    DISCOUNT("DISCOUNT"),
-    STAMP("STAMP"),
     POINT("POINT"),
     GIFT("GIFT"),
     EVENT("EVENT"),
     ETC("ETC");
 
     private final String description;
+
+    @Override
+    public String toString() {
+        return name();
+    }
 }
