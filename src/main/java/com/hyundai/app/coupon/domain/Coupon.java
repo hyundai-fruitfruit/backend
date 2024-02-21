@@ -27,4 +27,8 @@ public class Coupon {
     private LocalDate startedAt;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate finishedAt;
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
