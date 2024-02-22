@@ -27,4 +27,14 @@ public class CouponService {
         }
         return couponList;
     }
+
+    public List<Coupon> findMemberCouponList(Integer memberId) {
+        List<Coupon> couponList = couponMapper.findMemberCouponList(memberId);
+        for (Coupon coupon: couponList) {
+            CouponType couponType = coupon.getCouponType();
+            String description = couponType.getDescription(coupon);
+            coupon.updateContent(description);
+        }
+        return couponList;
+    }
 }
