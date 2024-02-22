@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author 황수영
@@ -49,7 +50,7 @@ public class StoreController {
     public ResponseEntity<Void> createReview(
             @PathVariable int storeId,
             @RequestBody ReviewReqDto reviewReqDto,
-            @MemberId int memberId
+            @ApiIgnore @MemberId int memberId
     ) {
         storeService.createReview(storeId, memberId, reviewReqDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
