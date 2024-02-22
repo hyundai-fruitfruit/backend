@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
@@ -28,20 +29,20 @@ public class FriendController {
 
     @GetMapping
     @ApiOperation("전체 친구 리스트 조회 API")
-    public AdventureOfHeendyResponse<FriendListResDto> findFriendList(@MemberId Integer memberId) {
+    public AdventureOfHeendyResponse<FriendListResDto> findFriendList(@ApiIgnore @MemberId Integer memberId) {
         return AdventureOfHeendyResponse.success("친구 목록을 가져왔습니다.", friendService.findFriendList(memberId));
     }
 
     @GetMapping("/{friendId}")
     @ApiOperation("특정 친구 조회 API")
-    public AdventureOfHeendyResponse<FriendDetailResDto> find(@MemberId Integer memberId,
+    public AdventureOfHeendyResponse<FriendDetailResDto> find(@ApiIgnore @MemberId Integer memberId,
                                                               @PathVariable final int friendId) {
         return AdventureOfHeendyResponse.success("친구 흰디에 방문했습니다.", friendService.findFriend(memberId, friendId));
     }
 
     @PostMapping("/{friendId}/mbti")
     @ApiOperation("친구 MBTI 작성 API")
-    public AdventureOfHeendyResponse<String> saveMbti(@MemberId Integer memberId,
+    public AdventureOfHeendyResponse<String> saveMbti(@ApiIgnore @MemberId Integer memberId,
                                                       @PathVariable final int friendId,
                                                       @Valid @RequestBody final MbtiSaveReqDto mbtiSaveReqDto) {
         return AdventureOfHeendyResponse.success("친구 MBTI를 저장했습니다.", friendService.updateMbti(memberId, friendId, mbtiSaveReqDto));
