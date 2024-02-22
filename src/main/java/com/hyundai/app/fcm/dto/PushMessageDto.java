@@ -1,5 +1,6 @@
-package com.hyundai.app.fcm;
+package com.hyundai.app.fcm.dto;
 
+import com.hyundai.app.fcm.PushType;
 import lombok.Getter;
 
 /**
