@@ -13,4 +13,6 @@ import java.util.List;
 @Mapper
 public interface CouponMapper {
     List<Coupon> findCouponList(int storeId);
+
+    Coupon findById(int couponId);
 }

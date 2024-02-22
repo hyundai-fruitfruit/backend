@@ -28,4 +28,6 @@ public interface EventMapper {
     void delete(int eventId);
 
     List<EventDetailResDto> findEventAllByEventType(EventType eventType);
+
+    void increaseVisitedCount(int eventId);
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.event.mapper.MemberEventMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/22  -->
+    <!--    이벤트에 참여한 멤버 mapper  -->
+    <insert id="saveMemberEvent" parameterType="memberevent">
+        INSERT  INTO member_event (member_id
+                                  , event_id)
+        VALUES  (#{memberId}
+                , #{eventId})
+    </insert>
+</mapper>

@@ -66,6 +66,7 @@
                 , finished_at
                 , max_count
                 , visited_count
+                , coupon_id
         FROM    event
         WHERE   id = #{eventId}
     </select>
@@ -139,4 +140,10 @@
         AND     max_count >= visited_count
         AND     is_deleted = 0
     </select>
+
+    <update id="increaseVisitedCount" parameterType="int">
+        UPDATE  event
+        SET     visited_count = visited_count + 1
+        WHERE   id = #{eventId}
+    </update>
 </mapper>

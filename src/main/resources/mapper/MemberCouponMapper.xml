@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.coupon.mapper.MemberCouponMapper">
+    <!--    @author 엄상은  -->
+    <!--    @since 2024/02/22  -->
+    <!--    쿠폰을 가진 멤버 mapper  -->
+    <insert id="saveMemberCoupon" parameterType="membercoupon">
+        INSERT  INTO member_coupon (member_id
+                                   , coupon_id
+                                   , channel_type)
+        VALUES  (#{memberId}
+                , #{couponId}
+                , #{channelType})
+    </insert>
+</mapper>

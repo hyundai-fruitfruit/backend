@@ -11,4 +11,13 @@ public class MemberEvent extends BaseEntity {
     private int id;
     private int eventId;
     private int memberId;
+
+    public MemberEvent(int eventId, int memberId) {
+        this.eventId = eventId;
+        this.memberId = memberId;
+    }
+
+    public static MemberEvent of(int eventId, int memberId) {
+        return new MemberEvent(eventId, memberId);
+    }
 }
