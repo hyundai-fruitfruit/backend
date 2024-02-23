@@ -2,17 +2,17 @@ package com.hyundai.app.event.controller;
 
 import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.event.dto.EventDetailResDto;
+import com.hyundai.app.event.dto.EventParticipateResDto;
 import com.hyundai.app.event.enumType.EventType;
 import com.hyundai.app.event.service.EventService;
+import com.hyundai.app.security.methodparam.MemberId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Random;
 
@@ -33,6 +33,13 @@ public class EventController {
     @ApiOperation("유저용 현재 열린 이벤트 조회 API")
     public AdventureOfHeendyResponse<EventDetailResDto> findCurrentEventByEventType(@RequestParam EventType eventType) {
         return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.findCurrentEventByEventType(eventType));
+    }
+
+    @PostMapping("{eventId}/participate")
+    @ApiOperation("유저용 이벤트 참여 API")
+    public AdventureOfHeendyResponse<EventParticipateResDto> participateEvent(@ApiIgnore @MemberId Integer memberId,
+                                                                              @PathVariable int eventId){
+        return AdventureOfHeendyResponse.success("이벤트 참여에 성공했습니다.", eventService.participateEvent(memberId, eventId));
     }
 
     /**

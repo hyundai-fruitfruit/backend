@@ -1,10 +1,17 @@
 package com.hyundai.app.event.service;
 
 import com.hyundai.app.common.entity.IdWithCriteria;
+import com.hyundai.app.coupon.domain.Coupon;
+import com.hyundai.app.coupon.domain.MemberCoupon;
+import com.hyundai.app.coupon.mapper.CouponMapper;
+import com.hyundai.app.coupon.mapper.MemberCouponMapper;
+import com.hyundai.app.event.domain.MemberEvent;
 import com.hyundai.app.event.dto.*;
 import com.hyundai.app.event.enumType.EventType;
+import com.hyundai.app.event.enumType.RewardType;
 import com.hyundai.app.event.mapper.EventActiveTimeMapper;
 import com.hyundai.app.event.mapper.EventMapper;
+import com.hyundai.app.event.mapper.MemberEventMapper;
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +31,9 @@ import java.util.List;
 public class EventService {
     private final EventMapper eventMapper;
     private final EventActiveTimeMapper eventActiveTimeMapper;
+    private final MemberEventMapper memberEventMapper;
+    private final MemberCouponMapper memberCouponMapper;
+    private final CouponMapper couponMapper;
 
     public EventDetailResDto findCurrentEventByEventType(EventType eventType) {
         EventDetailResDto eventDetailResDto = eventMapper.findCurrentEventByEventType(eventType);
@@ -71,6 +81,17 @@ public class EventService {
         return eventDetailResDto;
     }
 
+    private EventDetailResDto findAvailableEvent(int eventId) {
+        EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
+        if (eventDetailResDto == null) {
+            throw new IllegalArgumentException("해당 이벤트가 존재하지 않습니다.");
+        }
+        if (eventDetailResDto.getVisitedCount() >= eventDetailResDto.getMaxCount()) {
+            throw new IllegalArgumentException("이벤트 참여가 마감되었습니다.");
+        }
+        return eventDetailResDto;
+    }
+
     private List<EventActiveTimeZoneDto> findEventActiveTime(int eventId) {
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = eventActiveTimeMapper.findByEventId(eventId);
         return eventActiveTimeZoneDto;
@@ -108,6 +129,38 @@ public class EventService {
         findEventAndValidate(storeId, eventId);
         eventMapper.delete(eventId);
         return null;
+    }
+
+    public EventParticipateResDto participateEvent(Integer memberId, int eventId) {
+        EventDetailResDto eventDetailResDto = findAvailableEvent(eventId);
+        EventParticipateResDto eventVisitResDto = EventParticipateResDto.of(eventDetailResDto);
+        if (eventDetailResDto.getRewardType() == RewardType.COUPON) {
+            int couponId = eventDetailResDto.getCouponId();
+            Coupon coupon = findCoupon(couponId);
+            eventVisitResDto.updateCoupon(coupon);
+            saveMemberCoupon(memberId, couponId, "OFFLINE");
+        }
+        visitEvent(memberId, eventId);
+        return eventVisitResDto;
+    }
+
+    private Coupon findCoupon(int couponId) {
+        Coupon coupon = couponMapper.findById(couponId);
+        if (coupon == null) {
+            throw new IllegalArgumentException("해당 쿠폰이 존재하지 않습니다.");
+        }
+        return coupon;
+    }
+
+    private void saveMemberCoupon(int memberId, int couponId, String channelType) {
+        MemberCoupon memberCoupon = MemberCoupon.of(memberId, couponId, channelType);
+        memberCouponMapper.saveMemberCoupon(memberCoupon);
+    }
+
+    private void visitEvent(int memberId, int eventId) {
+        MemberEvent memberEvent = MemberEvent.of(eventId, memberId);
+        memberEventMapper.saveMemberEvent(memberEvent);
+        eventMapper.increaseVisitedCount(eventId);
     }
 
     /**

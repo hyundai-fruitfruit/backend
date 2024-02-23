@@ -17,4 +17,30 @@
         FROM    coupon
         WHERE   store_id = #{storeId}
     </select>
+
+    <select id="findById" parameterType="int" resultType="coupon">
+        SELECT  id
+             , coupon_type
+             , discount_rate
+             , discount_amount
+             , minimum_amount
+             , started_at
+             , finished_at
+        FROM    coupon
+        WHERE   id = #{couponId}
+    </select>
+
+    <select id="findMemberCouponList" parameterType="int" resultType="coupon">
+        SELECT  id
+                , coupon_type
+                , discount_rate
+                , discount_amount
+                , minimum_amount
+                , started_at
+                , finished_at
+        FROM    coupon
+        WHERE   id IN (SELECT    coupon_id
+                      FROM      member_coupon
+                      WHERE     member_id = #{memberId})
+    </select>
 </mapper>

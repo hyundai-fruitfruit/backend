@@ -32,6 +32,7 @@ public class EventDetailResDto {
     private LocalDate finishedAt;
     private int maxCount;
     private int visitedCount;
+    private int couponId;
     private List<EventActiveTimeZoneDto> eventActiveTimeZoneDto;
 
     public void setActiveTimeList(List<EventActiveTimeZoneDto> eventActiveTimeZoneDto) {
