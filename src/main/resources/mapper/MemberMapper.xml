@@ -15,7 +15,7 @@
                             , oauth_id
                             , refresh_token
         )
-        VALUES ( member_id_seq.nextval
+        VALUES ( #{id}
                 , #{email}
                 , #{nickname}
                 , #{role, typeHandler=com.hyundai.app.config.DatabaseEnumTypeHandler}

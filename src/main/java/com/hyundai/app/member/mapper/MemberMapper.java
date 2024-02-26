@@ -10,7 +10,7 @@ import com.hyundai.app.member.domain.Member;
 public interface MemberMapper {
 
     void saveMember(Member member);
-    Member findById(int id);
+    Member findById(String id);
     Member findByOauthId(String oauthId);
     void updateQrUrl(Member member);
 }

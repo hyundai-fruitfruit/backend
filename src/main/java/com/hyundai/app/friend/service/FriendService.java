@@ -31,13 +31,13 @@ public class FriendService {
     private final MbtiMapper mbtiMapper;
     private final GameMapper gameMapper;
 
-    public FriendListResDto findFriendList(int memberId) {
+    public FriendListResDto findFriendList(String memberId) {
         List<FriendDetailResDto> friendDetailResDto = friendMapper.findFriendList(memberId);
         FriendListResDto friendListResDto = new FriendListResDto(friendDetailResDto);
         return friendListResDto;
     }
 
-    public FriendDetailResDto findFriend(int memberId, int friendId) {
+    public FriendDetailResDto findFriend(String memberId, String friendId) {
         FriendDto friendDto = new FriendDto(memberId, friendId);
         if (!isFriend(friendDto)) {
             saveConnection(friendDto);
@@ -89,7 +89,7 @@ public class FriendService {
         return mbtiMapper.findMbtiByFriend(friendDto);
     }
 
-    public String updateMbti(int memberId, int friendId, MbtiSaveReqDto mbtiSaveReqDto) {
+    public String updateMbti(String memberId, String friendId, MbtiSaveReqDto mbtiSaveReqDto) {
         String mbtiId = mbtiMapper.findIdByMbtiScore(mbtiSaveReqDto);
         MemberConnection savedMemberConnection = new MemberConnection(
                 memberId,

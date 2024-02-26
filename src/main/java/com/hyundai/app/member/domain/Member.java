@@ -16,7 +16,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
-    private int id;
+    private String id;
     private String email;
     private String nickname;
     private Role role;

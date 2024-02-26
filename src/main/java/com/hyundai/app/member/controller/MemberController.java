@@ -33,7 +33,7 @@ public class MemberController {
 
     @GetMapping
     @ApiOperation("회원 정보 조회 API")
-    public ResponseEntity<MemberResDto> login(@ApiIgnore @MemberId Integer memberId) {
+    public ResponseEntity<MemberResDto> login(@ApiIgnore @MemberId String memberId) {
         log.debug("회원 정보 조회 : " + memberId);
         MemberResDto memberResDto = memberService.getMemberInfo(memberId);
         return new ResponseEntity<>(memberResDto, HttpStatus.ACCEPTED);
@@ -46,7 +46,7 @@ public class MemberController {
      */
     @GetMapping("/qr-test")
     @ApiOperation("QR 생성 테스트 API")
-    public AdventureOfHeendyResponse<String> test(@ApiIgnore @MemberId Integer memberId) {
+    public AdventureOfHeendyResponse<String> test(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("큐알 생성 성공", memberService.generateQrCodeAndUploadToS3(memberId));
     }
 }

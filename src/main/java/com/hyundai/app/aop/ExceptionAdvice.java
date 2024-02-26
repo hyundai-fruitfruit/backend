@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExceptionAdvice {
 
-    @AfterThrowing(pointcut = "execution(* com.livarter.app.service.*.*()) ", throwing = "e")
+    @AfterThrowing(pointcut = "execution(* com.hyundai.app.*.*()) ", throwing = "e")
     public void throwExceptionInService(Exception e) {
         log.error("Exception 발생 : " + e);
     }

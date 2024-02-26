@@ -16,6 +16,6 @@ import java.util.List;
 public interface FriendMapper {
     MemberConnection findConnection(FriendDto friendDto);
     int save(MemberConnection memberConnection);
-    List<FriendDetailResDto> findFriendList(int memberId);
+    List<FriendDetailResDto> findFriendList(String memberId);
     int updateMbti(MemberConnection savedMemberConnection);
 }

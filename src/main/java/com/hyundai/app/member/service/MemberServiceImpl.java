@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.UUID;
 
 /**
  * @author 황수영
@@ -37,7 +38,7 @@ public class MemberServiceImpl implements MemberService {
     private final AwsS3Config awsS3Config;
     private final MemberQrService memberQrService;
 
-    public MemberResDto getMemberInfo(int id) {
+    public MemberResDto getMemberInfo(String id) {
         Member member = memberMapper.findById(id);
         return MemberResDto.of(member);
     }
@@ -75,6 +76,7 @@ public class MemberServiceImpl implements MemberService {
         LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
 
         Member member = Member.builder()
+                .id(UUID.randomUUID().toString())
                 .email(email)
                 .nickname(Nickname.getRandomNickname())
                 .role(Role.ROLE_MEMBER)
@@ -109,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
      * @since 2024/02/26
      * 큐알코드 생성해 S3에 업로드
      */
-    public String generateQrCodeAndUploadToS3(Integer memberId) {
+    public String generateQrCodeAndUploadToS3(String memberId) {
         File qrFile = memberQrService.generateQrCode(memberId);
         String url = awsS3Config.uploadPngFile(qrFile.getName(), qrFile);
         log.debug("큐알코드 생성 및 업로드 완료 : " + url);

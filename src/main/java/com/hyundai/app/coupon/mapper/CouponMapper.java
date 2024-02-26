@@ -16,5 +16,5 @@ public interface CouponMapper {
 
     Coupon findById(int couponId);
 
-    List<Coupon> findMemberCouponList(Integer memberId);
+    List<Coupon> findMemberCouponList(String memberId);
 }

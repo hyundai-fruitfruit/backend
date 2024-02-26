@@ -10,14 +10,14 @@ import com.hyundai.app.common.entity.BaseEntity;
 public class MemberEvent extends BaseEntity {
     private int id;
     private int eventId;
-    private int memberId;
+    private String memberId;
 
-    public MemberEvent(int eventId, int memberId) {
+    public MemberEvent(int eventId, String memberId) {
         this.eventId = eventId;
         this.memberId = memberId;
     }
 
-    public static MemberEvent of(int eventId, int memberId) {
+    public static MemberEvent of(int eventId, String memberId) {
         return new MemberEvent(eventId, memberId);
     }
 }

@@ -23,7 +23,7 @@ import java.io.IOException;
 public class MemberQrService {
     private final int QR_CODE_SIZE = 300;
 
-    public File generateQrCode(Integer memberId) {
+    public File generateQrCode(String memberId) {
         BitMatrix bitMatrix = null;
         try {
             bitMatrix = new QRCodeWriter()

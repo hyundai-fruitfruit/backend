@@ -131,7 +131,7 @@ public class EventService {
         return null;
     }
 
-    public EventParticipateResDto participateEvent(Integer memberId, int eventId) {
+    public EventParticipateResDto participateEvent(String memberId, int eventId) {
         EventDetailResDto eventDetailResDto = findAvailableEvent(eventId);
         EventParticipateResDto eventVisitResDto = EventParticipateResDto.of(eventDetailResDto);
         if (eventDetailResDto.getRewardType() == RewardType.COUPON) {
@@ -152,12 +152,12 @@ public class EventService {
         return coupon;
     }
 
-    private void saveMemberCoupon(int memberId, int couponId, String channelType) {
+    private void saveMemberCoupon(String memberId, int couponId, String channelType) {
         MemberCoupon memberCoupon = MemberCoupon.of(memberId, couponId, channelType);
         memberCouponMapper.saveMemberCoupon(memberCoupon);
     }
 
-    private void visitEvent(int memberId, int eventId) {
+    private void visitEvent(String memberId, int eventId) {
         MemberEvent memberEvent = MemberEvent.of(eventId, memberId);
         memberEventMapper.saveMemberEvent(memberEvent);
         eventMapper.increaseVisitedCount(eventId);

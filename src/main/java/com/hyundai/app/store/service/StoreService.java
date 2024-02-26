@@ -13,6 +13,6 @@ import java.util.List;
 public interface StoreService {
 
     StoreResDto getStoreDetail(int storeId);
-    void createReview(int storeId, int memberId, ReviewReqDto reviewReqDto);
+    void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto);
     void createStoreHashtag(int storeId, List<Integer> hashtagIds);
 }

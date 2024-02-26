@@ -11,6 +11,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class FriendDto {
-    private int memberId;
-    private int friendId;
+    private String memberId;
+    private String friendId;
 }

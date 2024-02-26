@@ -30,7 +30,7 @@
         WHERE   id = #{couponId}
     </select>
 
-    <select id="findMemberCouponList" parameterType="int" resultType="coupon">
+    <select id="findMemberCouponList" parameterType="String" resultType="coupon">
         SELECT  id
                 , coupon_type
                 , discount_rate

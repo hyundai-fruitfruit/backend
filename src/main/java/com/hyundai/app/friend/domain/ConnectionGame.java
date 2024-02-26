@@ -9,8 +9,8 @@ import com.hyundai.app.common.entity.BaseEntity;
  */
 public class ConnectionGame extends BaseEntity {
     private int id;
-    private int fromMemberId;
-    private int toMemberId;
+    private String fromMemberId;
+    private String toMemberId;
     private int winnerId;
     private int diceToMember;
     private int diceFromMember;

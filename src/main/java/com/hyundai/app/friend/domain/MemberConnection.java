@@ -12,19 +12,19 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberConnection extends BaseEntity {
     private int id;
-    private int fromMemberId;
-    private int toMemberId;
+    private String fromMemberId;
+    private String toMemberId;
     private int isDeleted;
     private String mbtiId;
 
     @Builder
-    public MemberConnection(int fromMemberId, int toMemberId) {
+    public MemberConnection(String fromMemberId, String toMemberId) {
         this.fromMemberId = fromMemberId;
         this.toMemberId = toMemberId;
     }
 
     @Builder
-    public MemberConnection(int fromMemberId, int toMemberId, String mbtiId) {
+    public MemberConnection(String fromMemberId, String toMemberId, String mbtiId) {
         this.fromMemberId = fromMemberId;
         this.toMemberId = toMemberId;
         this.mbtiId = mbtiId;
