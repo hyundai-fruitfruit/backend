@@ -19,4 +19,6 @@ public interface MemberService {
     LoginResDto joinByOauthId(String email, OauthType oauthType);
 
     String generateQrCodeAndUploadToS3(String memberId);
+
+    String findQrUrl(String memberId);
 }

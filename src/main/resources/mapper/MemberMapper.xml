@@ -32,6 +32,7 @@
             , refresh_token AS refreshToken
             , oauth_id AS OAuthId
             , img_url AS imgUrl
+            , qr_url AS qrUrl
         FROM   MEMBER
         WHERE  id = #{id}
     </select>

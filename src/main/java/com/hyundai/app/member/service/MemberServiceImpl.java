@@ -117,4 +117,17 @@ public class MemberServiceImpl implements MemberService {
         log.debug("큐알코드 생성 및 업로드 완료 : " + url);
         return url;
     }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 큐알코드 조회
+     */
+    public String findQrUrl(String memberId) {
+        Member member = memberMapper.findById(memberId);
+        if (member != null) {
+            return member.getQrUrl();
+        }
+        return null;
+    }
 }

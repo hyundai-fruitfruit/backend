@@ -44,9 +44,20 @@ public class MemberController {
      * @since 2024/02/26
      * QR 생성 테스트 API
      */
-    @GetMapping("/qr-test")
-    @ApiOperation("QR 생성 테스트 API")
-    public AdventureOfHeendyResponse<String> test(@ApiIgnore @MemberId String memberId) {
+    @PostMapping("/qr")
+    @ApiOperation("QR 생성 테스트용 API")
+    public AdventureOfHeendyResponse<String> generateQr(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("큐알 생성 성공", memberService.generateQrCodeAndUploadToS3(memberId));
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * QR 조회 API
+     */
+    @GetMapping("/qr")
+    @ApiOperation("QR 조회 API")
+    public AdventureOfHeendyResponse<String> findQr(@ApiIgnore @MemberId String memberId) {
+        return AdventureOfHeendyResponse.success("QR코드 조회를 성공하였습니다", memberService.findQrUrl(memberId));
     }
 }
