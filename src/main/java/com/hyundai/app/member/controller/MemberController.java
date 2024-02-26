@@ -40,7 +40,7 @@ public class MemberController {
     }
 
     /**
-     * @author 황수영
+     * @author 엄상은
      * @since 2024/02/26
      * QR 생성 테스트 API
      */
