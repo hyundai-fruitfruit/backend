@@ -323,7 +323,17 @@
       <artifactId>spring-context-support</artifactId>
       <version>${org.springframework-version}</version>
     </dependency>
-
+    <!-- QR Code generator -->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>core</artifactId>
+      <version>3.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>javase</artifactId>
+      <version>3.5.0</version>
+    </dependency>
   </dependencies>
 
   <build>
