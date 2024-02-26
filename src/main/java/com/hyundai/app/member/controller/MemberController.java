@@ -1,11 +1,12 @@
 package com.hyundai.app.member.controller;
 
+import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.member.dto.MemberResDto;
 import com.hyundai.app.member.service.MemberService;
 import com.hyundai.app.security.methodparam.MemberId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Log4j
 @Api("회원 관련 API")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/members")
 public class MemberController {
@@ -35,5 +37,16 @@ public class MemberController {
         log.debug("회원 정보 조회 : " + memberId);
         MemberResDto memberResDto = memberService.getMemberInfo(memberId);
         return new ResponseEntity<>(memberResDto, HttpStatus.ACCEPTED);
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/26
+     * QR 생성 테스트 API
+     */
+    @GetMapping("/qr-test")
+    @ApiOperation("QR 생성 테스트 API")
+    public AdventureOfHeendyResponse<String> test(@ApiIgnore @MemberId Integer memberId) {
+        return AdventureOfHeendyResponse.success("큐알 생성 성공", memberService.generateQrCodeAndUploadToS3(memberId));
     }
 }

@@ -12,4 +12,5 @@ public interface MemberMapper {
     void saveMember(Member member);
     Member findById(int id);
     Member findByOauthId(String oauthId);
+    void updateQrUrl(Member member);
 }

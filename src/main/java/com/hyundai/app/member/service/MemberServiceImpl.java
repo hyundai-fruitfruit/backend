@@ -16,6 +16,8 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 /**
  * @author 황수영
  * @since 2024/02/13
@@ -32,6 +34,8 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
     private final KakaoOauthClient oAuthClient;
     private final JwtTokenGenerator authTokenGenerator;
+    private final AwsS3Config awsS3Config;
+    private final MemberQrService memberQrService;
 
     public MemberResDto getMemberInfo(int id) {
         Member member = memberMapper.findById(id);
@@ -82,6 +86,33 @@ public class MemberServiceImpl implements MemberService {
 
         Member savedMember = memberMapper.findByOauthId(oauthId);
         log.debug("joinByEmail savedMember" + savedMember);
+
+        String qrUrl = generateQrCodeAndUploadToS3(savedMember.getId());
+        updateQrUrl(savedMember, qrUrl);
+
         return loginResDto;
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 회원 DB에 큐알코드 업데이트
+     */
+    private void updateQrUrl(Member member, String qrUrl) {
+        member.updateQrUrl(qrUrl);
+        memberMapper.updateQrUrl(member);
+        log.debug("큐알코드 URL 업데이트 완료 : " + qrUrl);
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 큐알코드 생성해 S3에 업로드
+     */
+    public String generateQrCodeAndUploadToS3(Integer memberId) {
+        File qrFile = memberQrService.generateQrCode(memberId);
+        String url = awsS3Config.uploadPngFile(qrFile.getName(), qrFile);
+        log.debug("큐알코드 생성 및 업로드 완료 : " + url);
+        return url;
     }
 }
