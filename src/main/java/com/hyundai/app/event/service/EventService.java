@@ -37,7 +37,7 @@ public class EventService {
 
     public EventDetailResDto findCurrentEventByEventType(EventType eventType) {
         EventDetailResDto eventDetailResDto = eventMapper.findCurrentEventByEventType(eventType);
-        if (eventDetailResDto != null) {
+        if (eventDetailResDto == null) {
             log.error("해당 타입의 이벤트가 존재하지 않습니다.");
             throw new AdventureOfHeendyException(ErrorCode.EVENT_NOT_EXIST);
         }
