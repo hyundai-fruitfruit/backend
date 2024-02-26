@@ -1,7 +1,7 @@
 package com.hyundai.app.store.service;
 
 import com.hyundai.app.guide.dto.HashtagListResDto;
-import com.hyundai.app.store.domain.Store;
+import com.hyundai.app.store.dto.StoreResDto;
 
 import java.util.List;
 
@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface HashtagService {
     List<HashtagListResDto> getHashtagAllByGuideType(String guideType);
-    List<Store> findStoresByMostSavedHashtags(int hashtagId);
+    List<StoreResDto> findStoresByMostSavedHashtags(int hashtagId);
 }

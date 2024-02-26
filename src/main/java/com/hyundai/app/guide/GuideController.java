@@ -2,7 +2,7 @@ package com.hyundai.app.guide;
 
 import com.hyundai.app.guide.dto.GuideTypeResDto;
 import com.hyundai.app.guide.dto.HashtagListResDto;
-import com.hyundai.app.store.domain.Store;
+import com.hyundai.app.store.dto.StoreResDto;
 import com.hyundai.app.store.service.HashtagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -48,9 +48,9 @@ public class GuideController {
 
     @GetMapping("/hashtag")
     @ApiOperation("해시 태그 선택 시, 관련 식당들 조회")
-    public ResponseEntity<List<Store>> findStoresByHashtags(@RequestParam("hashtagId")int hashtagId) {
+    public ResponseEntity<List<StoreResDto>> findStoresByHashtags(@RequestParam("hashtagId")int hashtagId) {
         log.debug("해시 태그 선택 시, 관련 식당들 조회 => 해시 태그 : " + hashtagId);
-        List<Store> stores = hashtagService.findStoresByMostSavedHashtags(hashtagId);
+        List<StoreResDto> stores = hashtagService.findStoresByMostSavedHashtags(hashtagId);
         return new ResponseEntity<>(stores, HttpStatus.ACCEPTED);
     }
 }

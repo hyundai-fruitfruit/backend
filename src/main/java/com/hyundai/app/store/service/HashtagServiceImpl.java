@@ -4,6 +4,7 @@ import com.hyundai.app.guide.GuideType;
 import com.hyundai.app.guide.dto.HashtagListResDto;
 import com.hyundai.app.store.domain.Hashtag;
 import com.hyundai.app.store.domain.Store;
+import com.hyundai.app.store.dto.StoreResDto;
 import com.hyundai.app.store.mapper.HashtagMapper;
 import com.hyundai.app.store.mapper.StoreMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author 황수영
@@ -35,20 +37,18 @@ public class HashtagServiceImpl implements HashtagService{
     @Override
     public List<HashtagListResDto> getHashtagAllByGuideType(String guideType) {
         log.debug("분류별 해시태그 조회 분류 : " + guideType);
-        GuideType guideTypeEnum = GuideType.valueOf(guideType.toUpperCase()); // 식당 분류
+        GuideType guideTypeEnum = GuideType.valueOf(guideType.toUpperCase());
         log.debug("분류별 해시태그 조회 분류 : " + guideTypeEnum);
 
         // TODO: 캐싱 필요!
-        List<HashtagListResDto> result = new ArrayList<>(); // 식당의 모든 해시태그들 조회
+        List<HashtagListResDto> result = new ArrayList<>();
 
         for (String category : guideTypeEnum.getCategory()) {
-            log.debug("분류별 해시태그 조회 => category : " + category);
             List<Hashtag> hashtags = hashtagMapper.getHashtagByCategory(category);
             HashtagListResDto hashtagListResDto = new HashtagListResDto(category, hashtags);
             result.add(hashtagListResDto);
-            log.debug("분류별 해시태그 조회" + hashtagListResDto);
+            log.debug("분류별 해시태그 조회 => category : " + category + " : " + hashtagListResDto);
         }
-        // 정렬된 순서대로 조회
         return result;
     }
 
@@ -59,9 +59,10 @@ public class HashtagServiceImpl implements HashtagService{
      * 해당 해시태그가 가장 많이 저장된 매장들 조회
      */
     @Override
-    public List<Store> findStoresByMostSavedHashtags(int hashtagId) {
+    public List<StoreResDto> findStoresByMostSavedHashtags(int hashtagId) {
+        // TODO: 캐싱 필요!
         List<Store> stores = storeMapper.getStoresByHashtagId(hashtagId);
-        // 정렬된 순서대로 조회
-        return stores;
+        return stores.stream().map(StoreResDto::of)
+                .collect(Collectors.toList());
     }
 }
