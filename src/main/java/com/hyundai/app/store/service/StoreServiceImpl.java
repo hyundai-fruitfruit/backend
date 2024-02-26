@@ -62,7 +62,7 @@ public class StoreServiceImpl implements StoreService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void createReview(int storeId, int memberId, ReviewReqDto reviewReqDto) {
+    public void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto) {
         validateReviewRequest(reviewReqDto);
         Review review = Review.create(reviewReqDto, storeId, memberId);
         storeMapper.saveReview(review);

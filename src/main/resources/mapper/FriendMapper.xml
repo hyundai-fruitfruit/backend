@@ -7,7 +7,7 @@
     <!--    @since 2024/02/10  -->
     <!--    친구 관련 mapper  -->
 
-    <select id="findFriendList" parameterType="Integer" resultType="frienddetailresdto">
+    <select id="findFriendList" parameterType="String" resultType="frienddetailresdto">
         SELECT  id
                 , nickname
                 , img_url

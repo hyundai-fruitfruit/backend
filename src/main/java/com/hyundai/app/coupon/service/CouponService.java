@@ -28,7 +28,7 @@ public class CouponService {
         return couponList;
     }
 
-    public List<Coupon> findMemberCouponList(Integer memberId) {
+    public List<Coupon> findMemberCouponList(String memberId) {
         List<Coupon> couponList = couponMapper.findMemberCouponList(memberId);
         for (Coupon coupon: couponList) {
             CouponType couponType = coupon.getCouponType();

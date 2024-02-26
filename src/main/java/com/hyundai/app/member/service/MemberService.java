@@ -12,9 +12,13 @@ import com.hyundai.app.member.enumType.OauthType;
  */
 public interface MemberService {
 
-    MemberResDto getMemberInfo(int id);
+    MemberResDto getMemberInfo(String id);
 
     LoginResDto login(LoginReqDto loginReqDto);
 
     LoginResDto joinByOauthId(String email, OauthType oauthType);
+
+    String generateQrCodeAndUploadToS3(String memberId);
+
+    String findQrUrl(String memberId);
 }

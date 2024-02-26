@@ -16,11 +16,21 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
-    private int id;
+    private String id;
     private String email;
     private String nickname;
     private Role role;
     private String refreshToken;
     private String oauthId;
     private String imgUrl;
+    private String qrUrl;
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 회원 QR 업데이트
+     */
+    public void updateQrUrl(String qrUrl) {
+        this.qrUrl = qrUrl;
+    }
 }

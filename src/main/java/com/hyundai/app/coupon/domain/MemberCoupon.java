@@ -11,19 +11,19 @@ import java.time.LocalDate;
  */
 public class MemberCoupon extends BaseEntity {
     private int id;
-    private int memberId;
+    private String memberId;
     private int couponId;
     private int isUsed;
     private String channelType;
     private LocalDate expiredAt;
 
-    public MemberCoupon(int memberId, int couponId, String channelType) {
+    public MemberCoupon(String memberId, int couponId, String channelType) {
         this.memberId = memberId;
         this.couponId = couponId;
         this.channelType = channelType;
     }
 
-    public static MemberCoupon of(int memberId, int couponId, String channelType) {
+    public static MemberCoupon of(String memberId, int couponId, String channelType) {
         return new MemberCoupon(memberId, couponId, channelType);
     }
 }

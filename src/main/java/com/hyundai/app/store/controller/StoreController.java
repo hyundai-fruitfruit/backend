@@ -50,7 +50,7 @@ public class StoreController {
     public ResponseEntity<Void> createReview(
             @PathVariable int storeId,
             @RequestBody ReviewReqDto reviewReqDto,
-            @ApiIgnore @MemberId int memberId
+            @ApiIgnore @MemberId String memberId
     ) {
         storeService.createReview(storeId, memberId, reviewReqDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

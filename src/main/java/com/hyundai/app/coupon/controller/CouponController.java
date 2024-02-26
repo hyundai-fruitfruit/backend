@@ -28,7 +28,7 @@ public class CouponController {
 
     @ApiOperation("사용자용 쿠폰 전체 조회 API")
     @GetMapping
-    public AdventureOfHeendyResponse<List<Coupon>> findCouponList(@ApiIgnore @MemberId Integer memberId) {
+    public AdventureOfHeendyResponse<List<Coupon>> findCouponList(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("사용자의 쿠폰 목록을 가져왔습니다.", couponService.findMemberCouponList(memberId));
     }
 }

@@ -16,6 +16,9 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.util.UUID;
+
 /**
  * @author 황수영
  * @since 2024/02/13
@@ -32,8 +35,10 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
     private final KakaoOauthClient oAuthClient;
     private final JwtTokenGenerator authTokenGenerator;
+    private final AwsS3Config awsS3Config;
+    private final MemberQrService memberQrService;
 
-    public MemberResDto getMemberInfo(int id) {
+    public MemberResDto getMemberInfo(String id) {
         Member member = memberMapper.findById(id);
         return MemberResDto.of(member);
     }
@@ -69,19 +74,49 @@ public class MemberServiceImpl implements MemberService {
     public LoginResDto joinByOauthId(String email, OauthType oauthType) {
         String oauthId = oauthType.createOauthIdWithEmail(email);
         LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
+        String memberId = UUID.randomUUID().toString();
+        String qrUrl = generateQrCodeAndUploadToS3(memberId);
 
         Member member = Member.builder()
+                .id(memberId)
                 .email(email)
                 .nickname(Nickname.getRandomNickname())
                 .role(Role.ROLE_MEMBER)
                 .oauthId(oauthId)
                 .refreshToken(loginResDto.getRefreshToken())
+                .qrUrl(qrUrl)
                 .build();
         log.debug("joinByEmail member" + member.toString());
         memberMapper.saveMember(member);
 
         Member savedMember = memberMapper.findByOauthId(oauthId);
         log.debug("joinByEmail savedMember" + savedMember);
+
         return loginResDto;
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 큐알코드 생성해 S3에 업로드
+     */
+    public String generateQrCodeAndUploadToS3(String memberId) {
+        File qrFile = memberQrService.generateQrCode(memberId);
+        String url = awsS3Config.uploadPngFile(qrFile.getName(), qrFile);
+        log.debug("큐알코드 생성 및 업로드 완료 : " + url);
+        return url;
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/26
+     * 큐알코드 조회
+     */
+    public String findQrUrl(String memberId) {
+        Member member = memberMapper.findById(memberId);
+        if (member != null) {
+            return member.getQrUrl();
+        }
+        return null;
     }
 }

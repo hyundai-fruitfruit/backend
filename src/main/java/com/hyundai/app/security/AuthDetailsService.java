@@ -22,7 +22,7 @@ public class AuthDetailsService implements UserDetailsService {
 
     @Override
     public AuthUserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Member member = memberMapper.findById(Integer.parseInt(id));
+        Member member = memberMapper.findById(id);
         log.debug("loadUserByUsername() => member : " + member);
         return new AuthUserDetails(member);
     }

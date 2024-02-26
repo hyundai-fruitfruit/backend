@@ -29,21 +29,21 @@ public class FriendController {
 
     @GetMapping
     @ApiOperation("전체 친구 리스트 조회 API")
-    public AdventureOfHeendyResponse<FriendListResDto> findFriendList(@ApiIgnore @MemberId Integer memberId) {
+    public AdventureOfHeendyResponse<FriendListResDto> findFriendList(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("친구 목록을 가져왔습니다.", friendService.findFriendList(memberId));
     }
 
     @GetMapping("/{friendId}")
     @ApiOperation("특정 친구 조회 API")
-    public AdventureOfHeendyResponse<FriendDetailResDto> find(@ApiIgnore @MemberId Integer memberId,
-                                                              @PathVariable final int friendId) {
+    public AdventureOfHeendyResponse<FriendDetailResDto> find(@ApiIgnore @MemberId String memberId,
+                                                              @PathVariable final String friendId) {
         return AdventureOfHeendyResponse.success("친구 흰디에 방문했습니다.", friendService.findFriend(memberId, friendId));
     }
 
     @PostMapping("/{friendId}/mbti")
     @ApiOperation("친구 MBTI 작성 API")
-    public AdventureOfHeendyResponse<String> saveMbti(@ApiIgnore @MemberId Integer memberId,
-                                                      @PathVariable final int friendId,
+    public AdventureOfHeendyResponse<String> saveMbti(@ApiIgnore @MemberId String memberId,
+                                                      @PathVariable final String friendId,
                                                       @Valid @RequestBody final MbtiSaveReqDto mbtiSaveReqDto) {
         return AdventureOfHeendyResponse.success("친구 MBTI를 저장했습니다.", friendService.updateMbti(memberId, friendId, mbtiSaveReqDto));
     }

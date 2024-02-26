@@ -19,14 +19,14 @@ import java.util.List;
 public class Review extends BaseEntity {
 
     private int id;
-    private int memberId;
+    private String memberId;
     private int storeId;
     private int isDeleted;
     private int score;
     private String content;
     private List<Integer> hashtags;
 
-    public static Review create(ReviewReqDto reviewReqDto, int storeId, int memberId) {
+    public static Review create(ReviewReqDto reviewReqDto, int storeId, String memberId) {
         return Review.builder()
                 .score(reviewReqDto.getScore())
                 .content(reviewReqDto.getContent())

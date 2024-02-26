@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FriendDetailResDto {
-    private int id;
+    private String id;
     private String nickname;
     private String imgUrl;
     private String characterImgUrl;

@@ -14,13 +14,15 @@
                             , role
                             , oauth_id
                             , refresh_token
+                            , qr_url
         )
-        VALUES ( member_id_seq.nextval
+        VALUES ( #{id}
                 , #{email}
                 , #{nickname}
                 , #{role, typeHandler=com.hyundai.app.config.DatabaseEnumTypeHandler}
                 , #{oauthId}
                 , #{refreshToken}
+                , #{qrUrl}
                )
     </insert>
 
@@ -32,6 +34,7 @@
             , refresh_token AS refreshToken
             , oauth_id AS OAuthId
             , img_url AS imgUrl
+            , qr_url AS qrUrl
         FROM   MEMBER
         WHERE  id = #{id}
     </select>
