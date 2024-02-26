@@ -14,6 +14,7 @@
                             , role
                             , oauth_id
                             , refresh_token
+                            , qr_url
         )
         VALUES ( #{id}
                 , #{email}
@@ -21,6 +22,7 @@
                 , #{role, typeHandler=com.hyundai.app.config.DatabaseEnumTypeHandler}
                 , #{oauthId}
                 , #{refreshToken}
+                , #{qrUrl}
                )
     </insert>
 
@@ -47,13 +49,4 @@
         FROM   MEMBER
         WHERE  oauth_id = #{oauthId}
     </select>
-
-    <!--    @author 엄상은  -->
-    <!--    @since 2024/02/26  -->
-    <!--    회원 QR코드 업데이트  -->
-    <update id="updateQrUrl">
-        UPDATE  member
-        SET     qr_url = #{qrUrl}
-        WHERE   id = #{id}
-    </update>
 </mapper>

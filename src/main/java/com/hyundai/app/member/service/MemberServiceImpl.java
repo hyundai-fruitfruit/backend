@@ -74,14 +74,17 @@ public class MemberServiceImpl implements MemberService {
     public LoginResDto joinByOauthId(String email, OauthType oauthType) {
         String oauthId = oauthType.createOauthIdWithEmail(email);
         LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
+        String memberId = UUID.randomUUID().toString();
+        String qrUrl = generateQrCodeAndUploadToS3(memberId);
 
         Member member = Member.builder()
-                .id(UUID.randomUUID().toString())
+                .id(memberId)
                 .email(email)
                 .nickname(Nickname.getRandomNickname())
                 .role(Role.ROLE_MEMBER)
                 .oauthId(oauthId)
                 .refreshToken(loginResDto.getRefreshToken())
+                .qrUrl(qrUrl)
                 .build();
         log.debug("joinByEmail member" + member.toString());
         memberMapper.saveMember(member);
@@ -89,21 +92,7 @@ public class MemberServiceImpl implements MemberService {
         Member savedMember = memberMapper.findByOauthId(oauthId);
         log.debug("joinByEmail savedMember" + savedMember);
 
-        String qrUrl = generateQrCodeAndUploadToS3(savedMember.getId());
-        updateQrUrl(savedMember, qrUrl);
-
         return loginResDto;
-    }
-
-    /**
-     * @author 엄상은
-     * @since 2024/02/26
-     * 회원 DB에 큐알코드 업데이트
-     */
-    private void updateQrUrl(Member member, String qrUrl) {
-        member.updateQrUrl(qrUrl);
-        memberMapper.updateQrUrl(member);
-        log.debug("큐알코드 URL 업데이트 완료 : " + qrUrl);
     }
 
     /**
