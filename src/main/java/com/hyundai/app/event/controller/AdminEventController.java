@@ -3,6 +3,7 @@ package com.hyundai.app.event.controller;
 import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.dto.EventListResDto;
+import com.hyundai.app.event.dto.EventParticipateResDto;
 import com.hyundai.app.event.dto.EventSaveReqDto;
 import com.hyundai.app.event.service.EventService;
 import io.swagger.annotations.Api;
@@ -61,5 +62,17 @@ public class AdminEventController {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
         return AdventureOfHeendyResponse.success("이벤트를 삭제했습니다.", eventService.delete(storeId, eventId));
+    }
+
+    /**
+     * @author 엄상은
+     * @since 2024/02/27
+     * 어드민용 이벤트 참여 컨트롤러
+     */
+    @PostMapping("{eventId}/participate")
+    @ApiOperation("어드민용 이벤트 참여 API")
+    public AdventureOfHeendyResponse<EventParticipateResDto> participateEvent(@PathVariable int eventId,
+                                                                              @RequestParam String memberId){
+        return AdventureOfHeendyResponse.success("이벤트 참여에 성공했습니다.", eventService.participateEvent(memberId, eventId));
     }
 }
