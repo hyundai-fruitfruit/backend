@@ -11,6 +11,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginReqDto {
-    private String oauthType;
-    private String loginToken;
+    private String oauthType; // KAKAO
+    private String loginToken; // OAuth의 acceess token
 }

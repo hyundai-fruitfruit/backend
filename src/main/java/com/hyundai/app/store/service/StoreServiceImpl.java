@@ -42,7 +42,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreResDto getStoreDetail(int storeId) {
         Store store = storeMapper.getStoreDetail(storeId);
-        log.debug("매장 번호 :" + storeId + " 정보 조회 : " + store.toString());
+        if (store == null) {
+            throw new AdventureOfHeendyException(STORE_NOT_EXIST);
+        }
+        log.debug("매장 번호 :" + storeId + " 정보 조회 : " + store);
         List<Hashtag> popularHashtags = storeMapper.getPopularHashtagsOfStore(storeId);
         log.debug("가장 많이 선택된 해시태그들 5개 조회 : " + popularHashtags.toString());
 
@@ -149,6 +152,4 @@ public class StoreServiceImpl implements StoreService {
             throw new AdventureOfHeendyException(HASHTAG_ID_INVALID);
         }
     }
-
-
 }

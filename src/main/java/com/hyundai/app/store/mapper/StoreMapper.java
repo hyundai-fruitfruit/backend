@@ -19,4 +19,5 @@ public interface StoreMapper {
     void updateAvgScore(@Param("storeId") int storeId, @Param("avgScore") double avgScore);
     void updateReviewCount(@Param("storeId") int storeId);
     List<Review> getReviews(@Param("storeId") int storeId);
+    List<Store> getStoresByHashtagId(@Param("hashtagId") int hashtagId);
 }

@@ -22,14 +22,14 @@
     </select>
 
     <select id="getReviews" resultType="com.hyundai.app.store.domain.Review" >
-        SELECT id
-        , member_id
-        , store_id
-        , is_deleted
-        , created_at
-        , updated_at
-        , score
-        , content
+        SELECT  id
+                , member_id
+                , store_id
+                , is_deleted
+                , created_at
+                , updated_at
+                , score
+                , content
         FROM review
         WHERE store_id = #{storeId}
     </select>
@@ -74,4 +74,22 @@
         SET review_count = review_count + 1
         WHERE id = #{storeId}
     </update>
+
+    <select id="getStoresByHashtagId">
+        SELECT  store.id AS id
+                , store.name AS name
+                , store.contact_number AS contactNumber
+                , store.main_category AS mainCategory
+                , store.sub_category AS subCategory
+                , store.floor AS floor
+                , store.description AS description
+                , store.avg_score AS avgScore
+                , store.review_count AS reviewCount
+        FROM store
+        INNER JOIN store_hashtag
+        ON store.id = store_hashtag.store_id
+        WHERE store_hashtag.hashtag_id = #{hashtagId}
+        ORDER BY store_hashtag.count DESC
+        FETCH FIRST 5 ROWS ONLY
+    </select>
 </mapper>
