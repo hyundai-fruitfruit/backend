@@ -26,7 +26,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
                 ServletContextConfig.class,
                 CorsConfig.class,
                 SecurityConfig.class,
-                SwaggerConfig.class
+                SwaggerConfig.class,
+                WebSocketConfig.class
         };
     }
 
