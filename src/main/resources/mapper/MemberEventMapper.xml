@@ -21,7 +21,9 @@
             me.created_at AS eventParticipationDate,
             m.email AS memberEmail,
             m.birth AS memberBirth,
-            m.created_at AS memberJoinDate
+            m.created_at AS memberJoinDate,
+            m.nickname AS memberNickname,
+            m.name AS memberName
         FROM
             member_event me
                 JOIN

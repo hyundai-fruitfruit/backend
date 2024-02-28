@@ -79,5 +79,4 @@ public class AdminEventController {
         int storeId = 1;
         return AdventureOfHeendyResponse.success("이벤트의 참여자 상세 정보를 가져왔습니다.", eventService.findEventParticipants(eventId,storeId));
     }
-
 }

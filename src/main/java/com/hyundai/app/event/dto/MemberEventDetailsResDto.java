@@ -27,4 +27,8 @@ public class MemberEventDetailsResDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime memberJoinDate; // 멤버의 가입일
+
+    private String memberNickname;
+
+    private String memberName;
 }
