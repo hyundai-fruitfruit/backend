@@ -4,11 +4,14 @@ import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.event.dto.EventDetailResDto;
 import com.hyundai.app.event.dto.EventListResDto;
 import com.hyundai.app.event.dto.EventSaveReqDto;
+import com.hyundai.app.event.dto.MemberEventDetailsResDto;
 import com.hyundai.app.event.service.EventService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author 엄상은
@@ -61,5 +64,19 @@ public class AdminEventController {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
         return AdventureOfHeendyResponse.success("이벤트를 삭제했습니다.", eventService.delete(storeId, eventId));
+    }
+
+    /**
+     * @author 최성혁
+     * @since 2024/02/27
+     * 이벤트 참여자 회원 목록 조회
+     */
+
+    @GetMapping("/{eventId}/participants")
+    @ApiOperation("어드민용 이벤트 참여자 상세정보 조회 API")
+    public AdventureOfHeendyResponse<List<MemberEventDetailsResDto>> findEventParticipants(@PathVariable final int eventId) {
+        // TODO: 지점 ID 받아오는 부분 수정
+        int storeId = 1;
+        return AdventureOfHeendyResponse.success("이벤트의 참여자 상세 정보를 가져왔습니다.", eventService.findEventParticipants(eventId,storeId));
     }
 }

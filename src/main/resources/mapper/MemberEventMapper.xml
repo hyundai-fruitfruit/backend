@@ -12,4 +12,24 @@
         VALUES  (#{memberId}
                 , #{eventId})
     </insert>
+
+    <!--    @author 최성혁  -->
+    <!--    @since 2024/02/27  -->
+    <!--    이벤트에 참여한 멤버 mapper  -->
+    <select id="getMemberEventDetails">
+        SELECT
+            me.created_at AS eventParticipationDate,
+            m.email AS memberEmail,
+            m.birth AS memberBirth,
+            m.created_at AS memberJoinDate,
+            m.nickname AS memberNickname,
+            m.name AS memberName
+        FROM
+            member_event me
+                JOIN
+            member m ON me.member_id = m.id
+        WHERE
+            me.event_id = #{eventId}
+    </select>
+
 </mapper>

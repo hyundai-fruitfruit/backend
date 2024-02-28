@@ -183,4 +183,18 @@ public class EventService {
         log.debug("랜덤 스팟 상세 정보 조회 : " + eventDetailResDto);
         return eventDetailResDto;
     }
+
+    /**
+     * @author 최성혁
+     * @since 2024/02/27
+     * 특정 이벤트에 참여중인 회원 목록
+     */
+
+    public List<MemberEventDetailsResDto> findEventParticipants(int eventId, int id) {
+        List<MemberEventDetailsResDto> participants = memberEventMapper.getMemberEventDetails(eventId);
+
+        log.debug("Event ID " + eventId + "에 대한 참여자 상세 정보: " + participants);
+
+        return memberEventMapper.getMemberEventDetails(eventId);
+    }
 }
