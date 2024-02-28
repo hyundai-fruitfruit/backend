@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/", "/resources/**",
                 "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui.html","/webjars/**", "/swagger/**",   // swagger
-                "/api/v1/auth/**", "/api/v1/admin/**", "/api/v1/fcm-push/**", "/api/v1/heendy-guide/**", "/websocket-demo", "/websocket-demo/**");
+                "/api/v1/auth/**", "/api/v1/admin/**", "/api/v1/fcm-push/**", "/api/v1/heendy-guide/**", "/websocket/**");
     }
 
     @Override

@@ -12,12 +12,11 @@ import org.springframework.stereotype.Controller;
  */
 @Log4j
 @Controller
-public class GreetingController {
+public class SocketController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    public String greeting(String message) throws Exception {
-        Thread.sleep(1000);
-        log.debug("서버에서 요청 받음");
-        return "Hello from server!" + message;
+    public String getMessageAndSend(String message) {
+        log.debug("소켓으로부터 메세지 받음: " + message);
+        return "서버에서 소켓으로 메세지 날림" + message;
     }
 }
