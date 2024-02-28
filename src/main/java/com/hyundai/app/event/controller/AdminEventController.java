@@ -77,12 +77,13 @@ public class AdminEventController {
     public AdventureOfHeendyResponse<EventParticipateResDto> participateEvent(@PathVariable int eventId,
                                                                               @RequestParam String memberId){
         return AdventureOfHeendyResponse.success("이벤트 참여에 성공했습니다.", eventService.participateEvent(memberId, eventId));
+    }
 
+    /**
      * @author 최성혁
      * @since 2024/02/27
      * 이벤트 참여자 회원 목록 조회
      */
-
     @GetMapping("/{eventId}/participants")
     @ApiOperation("어드민용 이벤트 참여자 상세정보 조회 API")
     public AdventureOfHeendyResponse<List<MemberEventDetailsResDto>> findEventParticipants(@PathVariable final int eventId) {
