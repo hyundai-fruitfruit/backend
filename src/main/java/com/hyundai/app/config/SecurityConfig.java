@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(
                 "/", "/resources/**",
                 "/v2/api-docs", "/swagger-resources/**", "/swagger-ui/index.html", "/swagger-ui.html","/webjars/**", "/swagger/**",   // swagger
-                "/api/v1/auth/**", "/api/v1/fcm-push/**", "/api/v1/heendy-guide/**");
+                "/api/v1/auth/**", "/api/v1/admin/**", "/api/v1/fcm-push/**", "/api/v1/heendy-guide/**", "/websocket/**");
     }
 
     @Override
@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                     .antMatchers("/api/v1/auth/**").permitAll()
+                    .antMatchers("/api/v1/admin/**").permitAll()
                     .antMatchers("/api/v1/fcm/**").permitAll()
                     .antMatchers("/api/v1/stores/**").authenticated()
                     .antMatchers("/api/v1/members/**").authenticated()
