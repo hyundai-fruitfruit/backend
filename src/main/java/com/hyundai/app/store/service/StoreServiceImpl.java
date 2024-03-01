@@ -43,6 +43,7 @@ public class StoreServiceImpl implements StoreService {
     public StoreResDto getStoreDetail(int storeId) {
         Store store = storeMapper.getStoreDetail(storeId);
         if (store == null) {
+            log.error("해당하는 매장 번호가 존재하지 않습니다. storeId : " + storeId);
             throw new AdventureOfHeendyException(STORE_NOT_EXIST);
         }
         log.debug("매장 번호 :" + storeId + " 정보 조회 : " + store);
