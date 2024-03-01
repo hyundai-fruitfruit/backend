@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * @author 황수영
  * @since 2024/02/13
- * (설명)
+ * 회원 관련 서비스단
  */
 @Log4j
 @Service
@@ -31,18 +31,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Value("${jwt.access-validity}")
     private long accessValidity;
-
     private final MemberMapper memberMapper;
     private final KakaoOauthClient oAuthClient;
     private final JwtTokenGenerator authTokenGenerator;
     private final AwsS3Config awsS3Config;
     private final MemberQrService memberQrService;
 
-    public MemberResDto getMemberInfo(String id) {
-        Member member = memberMapper.findById(id);
-        return MemberResDto.of(member);
-    }
-
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * 회원가입/로그인 기능
+     */
     public LoginResDto login(LoginReqDto loginReqDto) {
         String email = oAuthClient.getEmail(loginReqDto);
         OauthType oauthType = OauthType.valueOf(loginReqDto.getOauthType().toUpperCase());
@@ -56,11 +55,21 @@ public class MemberServiceImpl implements MemberService {
         return joinByOauthId(email, oauthType);
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * access token 재발급
+     */
     private String updateAccessToken(Member member) {
         String memberId = String.valueOf(member.getId());
         return authTokenGenerator.createJwtToken(memberId, accessValidity);
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * token 갱신
+     */
     private LoginResDto getUpdatedToken(Member member) {
         String newAccessToken = updateAccessToken(member);
         String refreshToken = member.getRefreshToken();
@@ -71,6 +80,11 @@ public class MemberServiceImpl implements MemberService {
                 .build();
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * oauth id값으로 회원가입
+     */
     public LoginResDto joinByOauthId(String email, OauthType oauthType) {
         String oauthId = oauthType.createOauthIdWithEmail(email);
         LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
@@ -88,13 +102,20 @@ public class MemberServiceImpl implements MemberService {
                 .build();
         log.debug("joinByEmail member" + member.toString());
         memberMapper.saveMember(member);
-
-        Member savedMember = memberMapper.findByOauthId(oauthId);
-        log.debug("joinByEmail savedMember" + savedMember);
-
         return loginResDto;
     }
-
+    
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * 회원 정보 조회
+     */
+    public MemberResDto getMemberInfo(String id) {
+        log.debug("회원 정보 조회 : " + id);
+        Member member = memberMapper.findById(id);
+        return MemberResDto.of(member);
+    }
+    
     /**
      * @author 엄상은
      * @since 2024/02/26
