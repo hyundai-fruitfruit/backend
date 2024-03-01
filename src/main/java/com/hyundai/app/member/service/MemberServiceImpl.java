@@ -1,5 +1,7 @@
 package com.hyundai.app.member.service;
 
+import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.domain.Member;
 import com.hyundai.app.member.dto.LoginReqDto;
 import com.hyundai.app.member.dto.LoginResDto;
@@ -113,6 +115,10 @@ public class MemberServiceImpl implements MemberService {
     public MemberResDto getMemberInfo(String id) {
         log.debug("회원 정보 조회 : " + id);
         Member member = memberMapper.findById(id);
+        if (member == null) {
+            log.error("회원 id가 존재하지 않습니다. : " + id);
+            throw new AdventureOfHeendyException(ErrorCode.MEMBER_NOT_EXIST);
+        }
         return MemberResDto.of(member);
     }
     
