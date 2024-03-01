@@ -88,9 +88,8 @@ public class MemberServiceImpl implements MemberService {
      * oauth id값으로 회원가입
      */
     public LoginResDto joinByOauthId(String email, OauthType oauthType) {
-        String oauthId = oauthType.createOauthIdWithEmail(email);
-        LoginResDto loginResDto = authTokenGenerator.createLoginResDto(oauthId);
         String memberId = UUID.randomUUID().toString();
+        LoginResDto loginResDto = authTokenGenerator.createLoginResDto(memberId);
         String qrUrl = generateQrCodeAndUploadToS3(memberId);
 
         Member member = Member.builder()
@@ -98,7 +97,7 @@ public class MemberServiceImpl implements MemberService {
                 .email(email)
                 .nickname(Nickname.getRandomNickname())
                 .role(Role.ROLE_MEMBER)
-                .oauthId(oauthId)
+                .oauthId(oauthType.createOauthIdWithEmail(email))
                 .refreshToken(loginResDto.getRefreshToken())
                 .qrUrl(qrUrl)
                 .build();
