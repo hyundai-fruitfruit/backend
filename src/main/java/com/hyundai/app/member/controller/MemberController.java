@@ -31,6 +31,11 @@ public class MemberController {
     @Qualifier("memberServiceImpl")
     private MemberService memberService;
 
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * 회원 조회 API
+     */
     @GetMapping
     @ApiOperation("회원 정보 조회 API")
     public ResponseEntity<MemberResDto> login(@ApiIgnore @MemberId String memberId) {

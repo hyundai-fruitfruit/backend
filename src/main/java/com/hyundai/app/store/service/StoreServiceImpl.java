@@ -43,6 +43,7 @@ public class StoreServiceImpl implements StoreService {
     public StoreResDto getStoreDetail(int storeId) {
         Store store = storeMapper.getStoreDetail(storeId);
         if (store == null) {
+            log.error("해당하는 매장 번호가 존재하지 않습니다. storeId : " + storeId);
             throw new AdventureOfHeendyException(STORE_NOT_EXIST);
         }
         log.debug("매장 번호 :" + storeId + " 정보 조회 : " + store);
@@ -84,6 +85,9 @@ public class StoreServiceImpl implements StoreService {
      */
     private double calcAvgScore(int storeId, int newScore) {
         Store store = storeMapper.getStoreDetail(storeId);
+        if (store == null) {
+            throw new AdventureOfHeendyException(STORE_NOT_EXIST);
+        }
         int reviewCount = store.getReviewCount();
         float avgScore = store.getAvgScore();
         log.debug("별점 업데이트 => reviewCount : " + reviewCount + ", avgScore : " + avgScore);
@@ -149,7 +153,7 @@ public class StoreServiceImpl implements StoreService {
     private void validateIfHashtagIdExist(int hashtagId) {
         if (hashtagMapper.getHashtag(hashtagId) == null) {
             log.error("해시태그 id: " + hashtagId + "가 존재하지 않습니다.");
-            throw new AdventureOfHeendyException(HASHTAG_ID_INVALID);
+            throw new AdventureOfHeendyException(HASHTAG_NOT_EXIST);
         }
     }
 }

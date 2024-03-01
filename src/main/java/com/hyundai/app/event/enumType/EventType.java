@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import static com.hyundai.app.exception.ErrorCode.EVENT_TYPE_NOT_EXIST;
+import static com.hyundai.app.exception.ErrorCode.EVENT_TYPE_INVALID;
 
 /**
  * @author 엄상은
@@ -50,7 +50,7 @@ public enum EventType {
                 .filter(e -> e.equals(eventEnum))
                 .findFirst()
                 .map(EventType::getRandomEventType)
-                .orElseThrow(() -> new AdventureOfHeendyException(EVENT_TYPE_NOT_EXIST));
+                .orElseThrow(() -> new AdventureOfHeendyException(EVENT_TYPE_INVALID));
 
     }
 }

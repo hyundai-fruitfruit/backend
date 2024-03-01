@@ -1,5 +1,7 @@
 package com.hyundai.app.security;
 
+import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.mapper.MemberMapper;
 import com.hyundai.app.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +24,11 @@ public class AuthDetailsService implements UserDetailsService {
 
     @Override
     public AuthUserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Member member = memberMapper.findById(id);
-        log.debug("loadUserByUsername() => member : " + member);
-        return new AuthUserDetails(member);
+        Member findMember = memberMapper.findById(id);
+        log.debug("loadUserByUsername() => member : " + id);
+        if (findMember == null) {
+            throw new AdventureOfHeendyException(ErrorCode.MEMBER_NOT_EXIST);
+        }
+        return new AuthUserDetails(findMember);
     }
 }

@@ -54,7 +54,12 @@ public class KakaoOauthClient {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
         return getMemberInfoFromOAuth(request);
     }
-    
+
+    /**
+     * @author 황수영
+     * @since 2024/02/12
+     * Kakao에서 받아온 사용자 정보에서 email 추출
+     */
     private KakaoResDto getMemberInfoFromOAuth(HttpEntity<MultiValueMap<String, String>> request) {
         KakaoResDto kakaoResDto = null;
         try {

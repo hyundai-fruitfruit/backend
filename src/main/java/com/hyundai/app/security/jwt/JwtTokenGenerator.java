@@ -41,16 +41,12 @@ public class JwtTokenGenerator implements InitializingBean {
     public void afterPropertiesSet() {
         jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
     }
-
-    public Authentication getAuthentication(String accessToken) {
-        Claims claims = getClaims(accessToken);
-        AuthUserDetails userDetails = authDetailsService.loadUserByUsername(claims.getSubject());
-        log.debug("AuthTokenGenerator getAuthentication() userDetails : " + userDetails);
-
-        return new UsernamePasswordAuthenticationToken(
-                userDetails, accessToken, userDetails.getAuthorities());
-    }
-
+    
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * 로그인 Res Dto 생성
+     */
     public LoginResDto createLoginResDto(String id) {
         String accessToken = createJwtToken(id, accessValidity);
         String refreshToken = createJwtToken(id, refreshValidity);
@@ -61,6 +57,11 @@ public class JwtTokenGenerator implements InitializingBean {
                 .build();
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * JWT 생성
+     */
     public String createJwtToken(String id, long validity) {
         Date now = new Date();
         Claims claims = Jwts.claims()
@@ -74,6 +75,11 @@ public class JwtTokenGenerator implements InitializingBean {
                 .compact();
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * JWT 파싱
+     */
     public Claims getClaims(String accessToken) {
         try {
             return Jwts.parser()
@@ -84,7 +90,12 @@ public class JwtTokenGenerator implements InitializingBean {
             return e.getClaims();
         }
     }
-
+    
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * 토큰 유효성 검증
+     */
     public void isTokenValidate(String token) {
         try {
             Jwts.parser()

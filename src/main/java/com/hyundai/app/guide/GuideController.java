@@ -1,5 +1,7 @@
 package com.hyundai.app.guide;
 
+import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.guide.dto.GuideTypeResDto;
 import com.hyundai.app.guide.dto.HashtagListResDto;
 import com.hyundai.app.store.dto.StoreResDto;
@@ -51,6 +53,10 @@ public class GuideController {
     public ResponseEntity<List<StoreResDto>> findStoresByHashtags(@RequestParam("hashtagId")int hashtagId) {
         log.debug("해시 태그 선택 시, 관련 식당들 조회 => 해시 태그 : " + hashtagId);
         List<StoreResDto> stores = hashtagService.findStoresByMostSavedHashtags(hashtagId);
+        if (stores.isEmpty()) {
+            log.error("해당 해시 태그의 식당들이 존재하지 않습니다. => 해시 태그 : " + hashtagId);
+            throw new AdventureOfHeendyException(ErrorCode.STORE_NOT_EXIST);
+        }
         return new ResponseEntity<>(stores, HttpStatus.ACCEPTED);
     }
 }
