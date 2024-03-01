@@ -5,7 +5,6 @@ import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.member.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +27,11 @@ public class AuthController {
     @Qualifier("memberServiceImpl")
     private MemberService memberService;
 
+    /**
+     * @author 황수영
+     * @since 2024/02/12
+     * 회원가입/로그인(OAuth 로그인) API
+     */
     @PostMapping("/login")
     @ApiOperation("회원가입/로그인 API")
     public ResponseEntity<LoginResDto> login(@RequestBody LoginReqDto loginReqDto) {
