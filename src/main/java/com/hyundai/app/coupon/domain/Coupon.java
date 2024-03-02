@@ -23,6 +23,7 @@ public class Coupon {
     private CouponType couponType;
     private String content;
     private String code;
+    private String iconUrl;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startedAt;
     @JsonFormat(pattern = "yyyy-MM-dd")

@@ -35,16 +35,15 @@ public class EventService {
     private final MemberCouponMapper memberCouponMapper;
     private final CouponMapper couponMapper;
 
-    public EventDetailResDto findCurrentEventByEventType(EventType eventType) {
-        EventDetailResDto eventDetailResDto = eventMapper.findCurrentEventByEventType(eventType);
-        if (eventDetailResDto == null) {
-            log.error("해당 타입의 이벤트가 존재하지 않습니다.");
-            throw new AdventureOfHeendyException(ErrorCode.EVENT_NOT_EXIST);
+    public List<EventDetailResDto> findCurrentEventByEventType(EventType eventType) {
+        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findCurrentEventByEventType(eventType);
+        for (EventDetailResDto eventDetailResDto : eventDetailResDtoList) {
+            int eventId = eventDetailResDto.getId();
+            List<EventActiveTimeZoneDto> eventActiveTimeZoneDtoList = findEventActiveTime(eventId);
+            eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDtoList);
         }
-        int eventId = eventDetailResDto.getId();
-        List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
-        eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDto);
-        return eventDetailResDto;
+
+        return eventDetailResDtoList;
     }
 
     public EventListResDto findEventList(int storeId, int page, int size) {

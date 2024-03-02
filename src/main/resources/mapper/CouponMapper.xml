@@ -38,6 +38,7 @@
                 , minimum_amount
                 , started_at
                 , finished_at
+                , icon_url
         FROM    coupon
         WHERE   id IN (SELECT    coupon_id
                       FROM      member_coupon
