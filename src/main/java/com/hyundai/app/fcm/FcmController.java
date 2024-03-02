@@ -28,7 +28,6 @@ public class FcmController {
 
     private final FcmPushService fcmPushService;
 
-
     /**
      * @author 황수영
      * @since 2024/02/21
@@ -49,10 +48,12 @@ public class FcmController {
      * FCM 푸시 알림 테스트용 - 디바이스 토큰만
      */
     @ApiOperation("FCM 테스트용 API : 디바이스 토큰으로 푸시알림 발송")
-    @GetMapping("/random-spot/{deviceToken}")
-    public ResponseEntity<Void> pushByDeviceToken(@RequestParam("deviceToken") String deviceToken) throws ExecutionException, InterruptedException {
-        log.debug("랜덤 스팟 FCM 푸시 알림 바로 전송 => device token : " + deviceToken);
-        fcmPushService.testPush(deviceToken);
+    @PostMapping("/random-spot/device-token")
+    public ResponseEntity<Void> pushByDeviceToken(
+            @RequestBody PushReqDto pushReqDto) throws ExecutionException, InterruptedException
+    {
+        log.debug("랜덤 스팟 FCM 푸시 알림 바로 전송 => device token : " + pushReqDto.getDeviceToken());
+        fcmPushService.testPush(pushReqDto.getDeviceToken());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

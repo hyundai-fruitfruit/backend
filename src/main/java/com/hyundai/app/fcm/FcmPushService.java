@@ -45,7 +45,7 @@ public class FcmPushService {
      */
     public void testPush(String deviceToken) throws ExecutionException, InterruptedException {
         log.debug("알림 테스트 시작");
-        Notification notification = PushType.createNotification(PushMessageDto.from(PushType.WELCOME));
+        Notification notification = PushType.createNotification(createPushMessage(PushType.RANDOM_SPOT.getId()));
         Message message = PushType.createMessage(notification, deviceToken);
         FirebaseMessaging.getInstance(firebaseApp).sendAsync(message).get();
     }
@@ -67,7 +67,7 @@ public class FcmPushService {
      */
     public void createRandomSpotPushByMemberId(String memberId) throws ExecutionException, InterruptedException{
         log.debug("createRandomSpotPushSchedule => 랜덤 스팟 푸시 알림");
-        Notification notification = PushType.createNotification(createPushMessage(1));
+        Notification notification = PushType.createNotification(createPushMessage(PushType.RANDOM_SPOT.getId()));
 
         Member member = memberMapper.findById(memberId);
         if (member == null) {
