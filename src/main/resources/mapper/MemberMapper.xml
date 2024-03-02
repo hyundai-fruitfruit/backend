@@ -32,6 +32,7 @@
             , nickname AS nickname
             , role AS role
             , refresh_token AS refreshToken
+            , device_token AS deviceToken
             , oauth_id AS OAuthId
             , img_url AS imgUrl
             , qr_url AS qrUrl
@@ -45,8 +46,18 @@
             , nickname AS nickname
             , role AS role
             , refresh_token AS refreshToken
-            , oauth_id AS oauthId
+            , device_token AS deviceToken
+            , oauth_id AS OAuthId
+            , img_url AS imgUrl
+            , qr_url AS qrUrl
         FROM   MEMBER
         WHERE  oauth_id = #{oauthId}
     </select>
+
+    <update id="updateDeviceToken">
+        UPDATE member
+        SET device_token = #{token}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

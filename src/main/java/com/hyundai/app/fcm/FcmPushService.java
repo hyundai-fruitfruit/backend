@@ -3,6 +3,8 @@ package com.hyundai.app.fcm;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hyundai.app.fcm.dto.PushReqDto;
+import com.hyundai.app.member.domain.Member;
+import com.hyundai.app.member.mapper.MemberMapper;
 import com.hyundai.app.scheduler.PushScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -26,6 +28,8 @@ public class FcmPushService {
     private FirebaseApp firebaseApp;
     @Autowired
     private PushScheduler pushScheduler;
+    @Autowired
+    private MemberMapper memberMapper;
 
     /**
      * @author 황수영
@@ -47,5 +51,18 @@ public class FcmPushService {
     public void createRandomSpotPushSchedule(PushReqDto pushReqDto) {
         log.debug("createRandomSpotPushSchedule => 랜덤 스팟 푸시 알림");
         pushScheduler.schedulePushForRandomSpot(pushReqDto);
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/20
+     * 랜덤 스팟 FCM 푸시 알림 전송
+     */
+    public void createRandomSpotPushByMemberId(String memberId) throws ExecutionException, InterruptedException{
+        log.debug("createRandomSpotPushSchedule => 랜덤 스팟 푸시 알림");
+        Notification notification = PushType.createNotification(PushType.WELCOME);
+        Member member = memberMapper.findById(memberId);
+        Message message = PushType.createMessage(notification, member.getDeviceToken());
+        FirebaseMessaging.getInstance(firebaseApp).sendAsync(message).get();
     }
 }
