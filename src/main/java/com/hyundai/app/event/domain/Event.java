@@ -24,4 +24,5 @@ public class Event extends BaseEntity {
     private String reward;
     private int isDeleted;
     private int storeId;
+    private String iconUrl;
 }

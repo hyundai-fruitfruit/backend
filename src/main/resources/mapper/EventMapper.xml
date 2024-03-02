@@ -14,6 +14,7 @@
                 , store_id
                 , reward_type
                 , reward
+                , icon_url
         FROM    event
         WHERE   sysdate BETWEEN started_at AND finished_at
         AND     id  IN  (SELECT event_id
@@ -22,7 +23,6 @@
         AND     (#{eventType} IS NULL OR event_type = #{eventType})
         AND     max_count >= visited_count
         AND     is_deleted = 0
-        FETCH   FIRST 1 ROWS ONLY
     </select>
 
     <select id="findEventList" parameterType="idwithcriteria" resultType="eventdetailresdto">

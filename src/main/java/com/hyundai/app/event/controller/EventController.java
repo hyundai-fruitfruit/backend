@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -30,8 +31,8 @@ public class EventController {
     private static final Random random = new Random();
 
     @GetMapping
-    @ApiOperation("유저용 현재 열린 이벤트 조회 API")
-    public AdventureOfHeendyResponse<EventDetailResDto> findCurrentEventByEventType(@RequestParam EventType eventType) {
+    @ApiOperation("유저용 현재 열린 이벤트 전체 조회 API")
+    public AdventureOfHeendyResponse<List<EventDetailResDto>> findCurrentEventByEventType(@RequestParam EventType eventType) {
         return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.findCurrentEventByEventType(eventType));
     }
 
