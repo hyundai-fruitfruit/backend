@@ -1,6 +1,7 @@
 package com.hyundai.app.fcm.dto;
 
 import com.hyundai.app.fcm.PushType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -10,16 +11,17 @@ import lombok.Getter;
  */
 
 @Getter
+@AllArgsConstructor
 public class PushMessageDto {
     private String title;
     private String content;
     private String image;
 
-    public static PushMessageDto of(PushType pushType) {
-        PushMessageDto pushMessageDto = new PushMessageDto();
-        pushMessageDto.content = pushType.getContent();
-        pushMessageDto.title = pushType.getTitle();
-        pushMessageDto.image = pushType.getImage();
-        return pushMessageDto;
+    public static PushMessageDto from(PushType pushType) {
+        return new PushMessageDto(pushType.getTitle(), pushType.getContent(), pushType.getImage());
+    }
+
+    public static PushMessageDto of(String title, String content, String image) {
+        return new PushMessageDto(title, content, image);
     }
 }

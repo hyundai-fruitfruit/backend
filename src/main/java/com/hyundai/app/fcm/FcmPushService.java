@@ -2,6 +2,9 @@ package com.hyundai.app.fcm;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.exception.ErrorCode;
+import com.hyundai.app.fcm.dto.PushMessageDto;
 import com.hyundai.app.fcm.dto.PushReqDto;
 import com.hyundai.app.member.domain.Member;
 import com.hyundai.app.member.mapper.MemberMapper;
@@ -31,6 +34,10 @@ public class FcmPushService {
     @Autowired
     private MemberMapper memberMapper;
 
+    @Autowired
+    private PushAlarmMapper pushAlarmMapper;
+
+
     /**
      * @author 황수영
      * @since 2024/02/20
@@ -38,7 +45,7 @@ public class FcmPushService {
      */
     public void testPush(String deviceToken) throws ExecutionException, InterruptedException {
         log.debug("알림 테스트 시작");
-        Notification notification = PushType.createNotification(PushType.WELCOME);
+        Notification notification = PushType.createNotification(PushMessageDto.from(PushType.WELCOME));
         Message message = PushType.createMessage(notification, deviceToken);
         FirebaseMessaging.getInstance(firebaseApp).sendAsync(message).get();
     }
@@ -60,9 +67,24 @@ public class FcmPushService {
      */
     public void createRandomSpotPushByMemberId(String memberId) throws ExecutionException, InterruptedException{
         log.debug("createRandomSpotPushSchedule => 랜덤 스팟 푸시 알림");
-        Notification notification = PushType.createNotification(PushType.WELCOME);
+        Notification notification = PushType.createNotification(createPushMessage(1));
+
         Member member = memberMapper.findById(memberId);
+        if (member == null) {
+            log.debug("존재하는 회원 없습니다. memberId : " + memberId);
+            throw new AdventureOfHeendyException(ErrorCode.MEMBER_NOT_EXIST);
+        }
         Message message = PushType.createMessage(notification, member.getDeviceToken());
         FirebaseMessaging.getInstance(firebaseApp).sendAsync(message).get();
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/03/01
+     * 랜덤 스팟 FCM 푸시 알림 메시지 생성용
+     */
+    public PushMessageDto createPushMessage(int id){
+        PushAlarm pushAlarm = pushAlarmMapper.getPushAlarmById(id);
+        return PushMessageDto.of(pushAlarm.getTitle(), pushAlarm.getContent(), pushAlarm.getImage());
     }
 }
