@@ -49,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
     public LoginResDto login(LoginReqDto loginReqDto) {
         LoginStrategy loginStrategy = loginService.getOAuthLoginClient(loginReqDto);
         String email = loginStrategy.getEmail(loginReqDto);
-        OauthType oauthType = OauthType.valueOf(loginReqDto.getOauthType().toUpperCase());
+        OauthType oauthType = loginStrategy.oAuthType();
         String oauthId = oauthType.createOauthIdWithEmail(email);
         log.debug("로그인 OauthId : " + oauthId);
 
