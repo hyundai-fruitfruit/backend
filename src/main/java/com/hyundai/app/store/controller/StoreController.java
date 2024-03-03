@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author 황수영
@@ -45,15 +49,15 @@ public class StoreController {
      * @since 2024/02/14
      * 매장 리뷰 작성
      */
-    @PostMapping("/{storeId}/reviews")
+    @PostMapping(value = "/{storeId}/reviews", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation("매장 리뷰 작성 API")
     public ResponseEntity<Void> createReview(
             @PathVariable int storeId,
-            @RequestBody ReviewReqDto reviewReqDto,
+            @RequestPart(value = "reviewReqDto") ReviewReqDto reviewReqDto,
+            @RequestPart(value = "imageList", required = false) List<MultipartFile> imageList,
             @ApiIgnore @MemberId String memberId
     ) {
-        storeService.createReview(storeId, memberId, reviewReqDto);
+        storeService.createReview(storeId, memberId, reviewReqDto, imageList);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
 }

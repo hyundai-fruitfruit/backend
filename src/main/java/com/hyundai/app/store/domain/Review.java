@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
-    private int id;
+    private String id;
     private String memberId;
     private int storeId;
     private int isDeleted;
@@ -26,8 +26,9 @@ public class Review extends BaseEntity {
     private String content;
     private List<Integer> hashtags;
 
-    public static Review create(ReviewReqDto reviewReqDto, int storeId, String memberId) {
+    public static Review of(String id, ReviewReqDto reviewReqDto, int storeId, String memberId) {
         return Review.builder()
+                .id(id)
                 .score(reviewReqDto.getScore())
                 .content(reviewReqDto.getContent())
                 .memberId(memberId)

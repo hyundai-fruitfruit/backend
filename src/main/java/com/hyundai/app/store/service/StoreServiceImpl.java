@@ -1,6 +1,7 @@
 package com.hyundai.app.store.service;
 
 import com.hyundai.app.exception.AdventureOfHeendyException;
+import com.hyundai.app.member.service.AwsS3Config;
 import com.hyundai.app.store.domain.Hashtag;
 import com.hyundai.app.store.domain.Review;
 import com.hyundai.app.store.domain.Store;
@@ -12,9 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.text.DecimalFormat;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import static com.hyundai.app.exception.ErrorCode.*;
 
@@ -33,6 +36,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreMapper storeMapper;
     private final HashtagMapper hashtagMapper;
+    private final S3ImageUploadService s3ImageUploadService;
 
     /**
      * @author 황수영
@@ -65,18 +69,33 @@ public class StoreServiceImpl implements StoreService {
      * 리뷰 작성
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto) {
+    @Transactional
+    public void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto, List<MultipartFile> imagelist) {
         validateReviewRequest(reviewReqDto);
-        Review review = Review.create(reviewReqDto, storeId, memberId);
+        String reviewId = UUID.randomUUID().toString();
+        Review review = Review.of(reviewId, reviewReqDto, storeId, memberId);
         storeMapper.saveReview(review);
-        createStoreHashtag(storeId, reviewReqDto.getHashtagIds());
         log.debug("리뷰 작성" + review);
 
+        // 이미지 추가
+        List<String> imageUrlList = s3ImageUploadService.uploadReviewImages(imagelist);
+        for (String imageUrl :  imageUrlList) {
+            log.debug("이미지 추가 reviewId : " + reviewId + ", memberId : " + memberId
+                + ", storeId : " + storeId + ", imageUrl : " + imageUrl);
+            storeMapper.saveReviewImage(reviewId, memberId, storeId, imageUrl);
+        }
+
+        // 해시 태그 추가
+        createStoreHashtag(storeId, reviewReqDto.getHashtagIds());
+        // TODO: 리뷰별 해시태그 추가
+
+        //평점 업데이트
         double newAvgScore = calcAvgScore(storeId, reviewReqDto.getScore());
         storeMapper.updateAvgScore(storeId, newAvgScore);
         storeMapper.updateReviewCount(storeId);
     }
+
+
 
     /**
      * @author 황수영

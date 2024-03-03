@@ -14,5 +14,4 @@ public class ReviewReqDto {
     private int score;
     private String content;
     private List<Integer> hashtagIds;
-    // 이미지 이후에 추가
 }

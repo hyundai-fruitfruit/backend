@@ -20,4 +20,6 @@ public interface StoreMapper {
     void updateReviewCount(@Param("storeId") int storeId);
     List<Review> getReviews(@Param("storeId") int storeId);
     List<Store> getStoresByHashtagId(@Param("hashtagId") int hashtagId);
+    void saveReviewImage(@Param("reviewId") String reviewId, @Param("memberId") String memberId
+            , @Param("storeId") int storeId, @Param("image") String image);
 }
