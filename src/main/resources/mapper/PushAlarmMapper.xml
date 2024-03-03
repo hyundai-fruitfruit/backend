@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.fcm.PushAlarmMapper">
+
+    <!--    @author 황수영  -->
+    <!--    @since 2024/03/01  -->
+    <!--    푸시 알림 메시지 관련 mapper  -->
+    <select id="getPushAlarmById" resultType="com.hyundai.app.fcm.PushAlarm" >
+        SELECT id
+            , title
+            , content
+            , image
+        FROM push_alarm
+        WHERE id = #{id}
+    </select>
+
+</mapper>

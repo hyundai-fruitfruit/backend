@@ -3,6 +3,7 @@ package com.hyundai.app.member.service;
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.domain.Member;
+import com.hyundai.app.member.dto.DeviceTokenDto;
 import com.hyundai.app.member.dto.LoginReqDto;
 import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.member.dto.MemberResDto;
@@ -84,7 +85,7 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * @author 황수영
-     * @since 2024/02/13
+     * @since 2024/02/13mvn clean package
      * oauth id값으로 회원가입
      */
     public LoginResDto joinByOauthId(String email, OauthType oauthType) {
@@ -120,7 +121,23 @@ public class MemberServiceImpl implements MemberService {
         }
         return MemberResDto.of(member);
     }
-    
+
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * FCM 디바이스 토큰 업데이트
+     */
+    @Override
+    public void updateDeviceToken(String memberId, DeviceTokenDto deviceTokenDto) {
+        log.debug("FCM 디바이스 토큰 업데이트 : " + memberId);
+        Member member = memberMapper.findById(memberId);
+        if (member == null) {
+            log.error("회원 id가 존재하지 않습니다. : " + memberId);
+            throw new AdventureOfHeendyException(ErrorCode.MEMBER_NOT_EXIST);
+        }
+        memberMapper.updateDeviceToken(memberId, deviceTokenDto.getToken());
+    }
+
     /**
      * @author 엄상은
      * @since 2024/02/26

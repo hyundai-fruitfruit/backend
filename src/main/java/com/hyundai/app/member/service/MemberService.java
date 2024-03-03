@@ -1,5 +1,6 @@
 package com.hyundai.app.member.service;
 
+import com.hyundai.app.member.dto.DeviceTokenDto;
 import com.hyundai.app.member.dto.LoginReqDto;
 import com.hyundai.app.member.dto.LoginResDto;
 import com.hyundai.app.member.dto.MemberResDto;
@@ -13,6 +14,7 @@ import com.hyundai.app.member.enumType.OauthType;
 public interface MemberService {
 
     MemberResDto getMemberInfo(String id);
+    void updateDeviceToken(String memberId, DeviceTokenDto deviceTokenDto);
 
     LoginResDto login(LoginReqDto loginReqDto);
 

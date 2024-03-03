@@ -21,6 +21,7 @@ public class Member extends BaseEntity {
     private String nickname;
     private Role role;
     private String refreshToken;
+    private String deviceToken;
     private String oauthId;
     private String imgUrl;
     private String qrUrl;
