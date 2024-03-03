@@ -1,8 +1,11 @@
 package com.hyundai.app.coupon.service;
 
 import com.hyundai.app.coupon.domain.Coupon;
+import com.hyundai.app.coupon.domain.MemberCoupon;
+import com.hyundai.app.coupon.dto.CouponUsageRateDto;
 import com.hyundai.app.coupon.enumType.CouponType;
 import com.hyundai.app.coupon.mapper.CouponMapper;
+import com.hyundai.app.coupon.mapper.MemberCouponMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +40,9 @@ public class CouponService {
         }
         return couponList;
     }
+
+    public List<CouponUsageRateDto> findCouponUsageRates() {
+        return couponMapper.findCouponUsageRates();
+    }
+
 }

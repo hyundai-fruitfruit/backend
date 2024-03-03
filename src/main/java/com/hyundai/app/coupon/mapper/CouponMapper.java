@@ -1,6 +1,7 @@
 package com.hyundai.app.coupon.mapper;
 
 import com.hyundai.app.coupon.domain.Coupon;
+import com.hyundai.app.coupon.dto.CouponUsageRateDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface CouponMapper {
     Coupon findById(int couponId);
 
     List<Coupon> findMemberCouponList(String memberId);
+
+    List<CouponUsageRateDto> findCouponUsageRates();
 }

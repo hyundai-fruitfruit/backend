@@ -2,6 +2,7 @@ package com.hyundai.app.coupon.controller;
 
 import com.hyundai.app.common.AdventureOfHeendyResponse;
 import com.hyundai.app.coupon.domain.Coupon;
+import com.hyundai.app.coupon.dto.CouponUsageRateDto;
 import com.hyundai.app.coupon.service.CouponService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,5 +32,11 @@ public class AdminCouponController {
         // TODO: 지점 ID 받아오는 부분 수정
         int storeId = 1;
         return AdventureOfHeendyResponse.success("쿠폰 목록을 가져왔습니다.", couponService.findCouponList(storeId));
+    }
+
+    @ApiOperation("쿠폰 사용률 통계 조회 API")
+    @GetMapping("/statistics")
+    public AdventureOfHeendyResponse<List<CouponUsageRateDto>> findCouponUsageRates() {
+        return AdventureOfHeendyResponse.success("쿠폰 사용률 통계를 가져왔습니다.", couponService.findCouponUsageRates());
     }
 }
