@@ -12,7 +12,8 @@ import com.hyundai.app.member.enumType.Nickname;
 import com.hyundai.app.member.enumType.OauthType;
 import com.hyundai.app.member.enumType.Role;
 import com.hyundai.app.member.mapper.MemberMapper;
-import com.hyundai.app.member.oauth.kakao.KakaoOauthClient;
+import com.hyundai.app.member.oauth.LoginService;
+import com.hyundai.app.member.oauth.LoginStrategy;
 import com.hyundai.app.security.jwt.JwtTokenGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -35,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
     @Value("${jwt.access-validity}")
     private long accessValidity;
     private final MemberMapper memberMapper;
-    private final KakaoOauthClient oAuthClient;
+    private final LoginService loginService;
     private final JwtTokenGenerator authTokenGenerator;
     private final AwsS3Config awsS3Config;
     private final MemberQrService memberQrService;
@@ -46,7 +47,8 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입/로그인 기능
      */
     public LoginResDto login(LoginReqDto loginReqDto) {
-        String email = oAuthClient.getEmail(loginReqDto);
+        LoginStrategy loginStrategy = loginService.getOAuthLoginClient(loginReqDto);
+        String email = loginStrategy.getEmail(loginReqDto);
         OauthType oauthType = OauthType.valueOf(loginReqDto.getOauthType().toUpperCase());
         String oauthId = oauthType.createOauthIdWithEmail(email);
         log.debug("로그인 OauthId : " + oauthId);
