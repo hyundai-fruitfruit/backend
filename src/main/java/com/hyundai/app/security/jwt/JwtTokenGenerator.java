@@ -96,13 +96,15 @@ public class JwtTokenGenerator implements InitializingBean {
      * @since 2024/02/14
      * 토큰 유효성 검증
      */
-    public void isTokenValidate(String token) {
+    public boolean isTokenValidate(String token) {
         try {
             Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token);
+            return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new AdventureOfHeendyException(ErrorCode.ACCESS_TOKEN_INVALID);
+            log.error("isTokenValidate() 토큰 파싱 시, 에러 발생 ");
         }
+        return false;
     }
 }
