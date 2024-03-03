@@ -41,13 +41,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             log.debug("AuthTokenFilter : request " + request);
             String accessToken = resolveToken(request);
             log.debug("AuthTokenFilter : accessToken " + accessToken);
-            jwtTokenGenerator.isTokenValidate(accessToken);
+            if (!jwtTokenGenerator.isTokenValidate(accessToken)) {
+                log.error("AuthTokenFilter ERROR : accessToken 토큰이 유효하지 않습니다.");
+                throw new AdventureOfHeendyException(ErrorCode.ACCESS_TOKEN_INVALID);
+            }
 
             Authentication authentication = createAuthentication(accessToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
-            log.debug("AuthTokenFilter : accessToken 토큰이 유효하지 않습니다.");
-            throw new AdventureOfHeendyException(ErrorCode.ACCESS_TOKEN_INVALID);
+            log.error("AuthTokenFilter ERROR catch! accessToken 토큰이 유효하지 않습니다.");
         }
         filterChain.doFilter(request, response);
     }

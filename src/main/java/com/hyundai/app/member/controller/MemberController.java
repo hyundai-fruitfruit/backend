@@ -22,7 +22,6 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Log4j
 @Api("회원 관련 API")
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/members")
 public class MemberController {
