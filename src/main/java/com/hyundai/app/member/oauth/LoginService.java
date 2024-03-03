@@ -2,6 +2,7 @@ package com.hyundai.app.member.oauth;
 
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.member.dto.LoginReqDto;
+import com.hyundai.app.member.oauth.kakao.KakaoOauthLoginStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,7 @@ public class LoginService {
         return this.loginStrategies.stream()
                 .filter(s-> s.oAuthType().toString().equals(oAuthType))
                 .findFirst()
-                .orElseThrow(() -> new AdventureOfHeendyException(OAUTH_INVALID));
+                .orElse(new KakaoOauthLoginStrategy());
+                // .orElseThrow(() -> new AdventureOfHeendyException(OAUTH_INVALID));
     }
 }
