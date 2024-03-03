@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewResDto {
-    private int id;
+    private String id;
     private int score;
     private String content;
     private List<String> hashtags;
