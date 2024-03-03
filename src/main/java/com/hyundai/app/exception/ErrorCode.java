@@ -27,6 +27,7 @@ public enum ErrorCode {
     UNAUTHORIZED_ACCESS(UNAUTHORIZED, "인증되지 않은 사용자입니다."),
     FORBIDDEN_ACCESS(FORBIDDEN, "인가되지 않은 접근입니다."),
     MEMBER_NOT_EXIST(NOT_FOUND, "해당하는 회원 oauth id가 존재하지 않습니다."),
+    OAUTH_INVALID(NOT_FOUND, "해당 oauth는 지원하지 않습니다."),
 
     // 이벤트
     EVENT_NOT_EXIST(NOT_FOUND, "해당하는 이벤트가 존재하지 않습니다."),
