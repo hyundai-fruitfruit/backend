@@ -1,6 +1,7 @@
 package com.hyundai.app.member.mapper;
 
 import com.hyundai.app.member.domain.Member;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author 황수영
@@ -13,4 +14,5 @@ public interface MemberMapper {
     Member findById(String id);
     Member findByOauthId(String oauthId);
     void updateQrUrl(Member member);
+    void updateDeviceToken(@Param("id") String id, @Param("token")String token);
 }

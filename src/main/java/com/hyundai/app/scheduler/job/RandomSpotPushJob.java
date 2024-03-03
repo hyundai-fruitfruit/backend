@@ -7,6 +7,7 @@ import com.google.firebase.messaging.Notification;
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.fcm.FcmPushService;
 import com.hyundai.app.fcm.PushType;
+import com.hyundai.app.fcm.dto.PushMessageDto;
 import lombok.extern.log4j.Log4j;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class RandomSpotPushJob extends QuartzJobBean {
     private void createRandomSpotPushNotification(JobDataMap dataMap) {
         String deviceToken = dataMap.getString("deviceToken");
 
-        Notification notification = PushType.createNotification(PushType.RANDOM_SPOT);
+        Notification notification = PushType.createNotification(PushMessageDto.from(PushType.RANDOM_SPOT));
         Message message = PushType.createMessage(notification, deviceToken);
         try {
             FirebaseMessaging.getInstance(firebaseApp).sendAsync(message).get();

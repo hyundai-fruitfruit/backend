@@ -1,12 +1,12 @@
 package com.hyundai.app.member.controller;
 
 import com.hyundai.app.common.AdventureOfHeendyResponse;
+import com.hyundai.app.member.dto.DeviceTokenDto;
 import com.hyundai.app.member.dto.MemberResDto;
 import com.hyundai.app.member.service.MemberService;
 import com.hyundai.app.security.methodparam.MemberId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +22,6 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @Log4j
 @Api("회원 관련 API")
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/members")
 public class MemberController {
@@ -42,6 +41,22 @@ public class MemberController {
         log.debug("회원 정보 조회 : " + memberId);
         MemberResDto memberResDto = memberService.getMemberInfo(memberId);
         return new ResponseEntity<>(memberResDto, HttpStatus.ACCEPTED);
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * FCM 디바이스 토큰 업데이트
+     */
+    @PostMapping("/token")
+    @ApiOperation("FCM 디바이스 토큰 업데이트 API")
+    public ResponseEntity<Void> updateDeviceToken(
+            @ApiIgnore @MemberId String memberId,
+            @RequestBody DeviceTokenDto deviceTokenDto
+    ) {
+        log.debug("FCM 디바이스 토큰 업데이트 : " + memberId + " token : " + deviceTokenDto.getToken());
+        memberService.updateDeviceToken(memberId, deviceTokenDto);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     /**

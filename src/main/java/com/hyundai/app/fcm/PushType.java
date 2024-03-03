@@ -14,13 +14,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum PushType {
-    RANDOM_SPOT("흰디의 모험에 온 걸 환영해🎉",
-            "나는 대장 흰디야! 반가워",
-            "https://avatars.githubusercontent.com/u/158237286?s=400&u=db03152b8b64ca04183e918814f02316a5e8c4d9&v=4"),
-    WELCOME("'흰디의 모험' 랜덤 스팟이 열렸어🎁",
+    WELCOME(1, "'흰디의 모험' 랜덤 스팟이 열렸어🎁",
             "랜덤 스팟에서의 이벤트를 확인해봐",
+            "https://avatars.githubusercontent.com/u/158237286?s=400&u=db03152b8b64ca04183e918814f02316a5e8c4d9&v=4"),
+    RANDOM_SPOT(2, "흰디의 모험에 온 걸 환영해🎉",
+            "나는 대장 흰디야! 반가워",
             "https://avatars.githubusercontent.com/u/158237286?s=400&u=db03152b8b64ca04183e918814f02316a5e8c4d9&v=4");
 
+
+    private final int id;
     private final String title;
     private final String content;
     private final String image;
@@ -30,8 +32,7 @@ public enum PushType {
      * @since 2024/02/20
      * Notification 생성
      */
-    public static Notification createNotification(PushType pushType) {
-        PushMessageDto pushMessageDto = PushMessageDto.of(pushType);
+    public static Notification createNotification(PushMessageDto pushMessageDto) {
 
         return Notification.builder()
                 .setTitle(pushMessageDto.getTitle())
