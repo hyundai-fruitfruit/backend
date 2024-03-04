@@ -34,6 +34,7 @@ public class EventDetailResDto {
     private int visitedCount;
     private int couponId;
     private String iconUrl;
+    private int isParticipated; // 0: 참여 안함, 1: 참여함 (유저용)
     private List<EventActiveTimeZoneDto> eventActiveTimeZoneDto;
 
     public void setActiveTimeList(List<EventActiveTimeZoneDto> eventActiveTimeZoneDto) {

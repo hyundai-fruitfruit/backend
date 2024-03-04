@@ -32,8 +32,8 @@ public class EventController {
 
     @GetMapping
     @ApiOperation("유저용 현재 열린 이벤트 전체 조회 API")
-    public AdventureOfHeendyResponse<List<EventDetailResDto>> findCurrentEventByEventType(@RequestParam EventType eventType) {
-        return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.findCurrentEventByEventType(eventType));
+    public AdventureOfHeendyResponse<List<EventDetailResDto>> findCurrentEventByEventType(@ApiIgnore @MemberId String memberId) {
+        return AdventureOfHeendyResponse.success("이벤트 목록을 가져왔습니다.", eventService.findCurrentEventByEventType(memberId));
     }
 
     @PostMapping("{eventId}/participate")
