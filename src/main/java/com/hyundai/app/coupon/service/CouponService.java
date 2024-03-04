@@ -1,8 +1,10 @@
 package com.hyundai.app.coupon.service;
 
 import com.hyundai.app.coupon.domain.Coupon;
+import com.hyundai.app.coupon.domain.MemberCoupon;
 import com.hyundai.app.coupon.enumType.CouponType;
 import com.hyundai.app.coupon.mapper.CouponMapper;
+import com.hyundai.app.coupon.mapper.MemberCouponMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.util.List;
 public class CouponService {
 
     private final CouponMapper couponMapper;
+    private final MemberCouponMapper memberCouponMapper;
+
     public List<Coupon> findCouponList(int storeId) {
         List<Coupon> couponList = couponMapper.findCouponList(storeId);
         for (Coupon coupon: couponList) {
@@ -36,5 +40,11 @@ public class CouponService {
             coupon.updateContent(description);
         }
         return couponList;
+    }
+
+    public Void useCoupon(String memberId, int couponId) {
+        MemberCoupon memberCoupon = MemberCoupon.of(memberId, couponId);
+        memberCouponMapper.useCoupon(memberCoupon);
+        return null;
     }
 }

@@ -7,9 +7,7 @@ import com.hyundai.app.security.methodparam.MemberId;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
@@ -30,5 +28,12 @@ public class CouponController {
     @GetMapping
     public AdventureOfHeendyResponse<List<Coupon>> findCouponList(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("사용자의 쿠폰 목록을 가져왔습니다.", couponService.findMemberCouponList(memberId));
+    }
+
+    @ApiOperation("사용자용 쿠폰 사용 API")
+    @PostMapping("/{couponId}/use")
+    public AdventureOfHeendyResponse<Void> useCoupon(@ApiIgnore @MemberId String memberId,
+                                                     @PathVariable final int couponId) {
+        return AdventureOfHeendyResponse.success("쿠폰을 사용했습니다.", couponService.useCoupon(memberId, couponId));
     }
 }

@@ -14,4 +14,11 @@
                 , #{couponId}
                 , #{channelType})
     </insert>
+
+    <update id="useCoupon" parameterType="membercoupon">
+        UPDATE  member_coupon
+        SET     is_used = 1
+        WHERE   coupon_id = #{couponId}
+        AND     member_id = #{memberId}
+    </update>
 </mapper>

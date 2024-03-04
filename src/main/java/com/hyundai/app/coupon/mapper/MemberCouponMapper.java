@@ -9,4 +9,6 @@ import com.hyundai.app.coupon.domain.MemberCoupon;
  */
 public interface MemberCouponMapper {
     void saveMemberCoupon(MemberCoupon memberCoupon);
+
+    void useCoupon(MemberCoupon memberCoupon);
 }
