@@ -55,7 +55,7 @@
             , content
         )
         VALUES (
-            review_id_seq.nextval
+            #{review.id}
             , #{review.memberId}
             , #{review.storeId}
             , #{review.score}
@@ -92,4 +92,21 @@
         ORDER BY store_hashtag.count DESC
         FETCH FIRST 5 ROWS ONLY
     </select>
+
+    <insert id="saveReviewImage" >
+        INSERT INTO image (
+            id
+            , img_url
+            , store_id
+            , member_id
+            , review_id
+            )
+        VALUES (
+            image_id_seq.nextval
+            , #{image}
+            , #{storeId}
+            , #{memberId}
+            , #{reviewId}
+        )
+    </insert>
 </mapper>

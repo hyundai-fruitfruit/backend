@@ -12,5 +12,6 @@ import java.util.List;
  */
 public interface MemberCouponMapper {
     void saveMemberCoupon(MemberCoupon memberCoupon);
+    void useCoupon(MemberCoupon memberCoupon);
 
 }

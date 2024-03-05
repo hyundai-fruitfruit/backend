@@ -6,7 +6,7 @@
     <!--    @author 엄상은  -->
     <!--    @since 2024/02/18  -->
     <!--    이벤트 mapper  -->
-    <select id="findCurrentEventByEventType" parameterType="eventtype" resultType="eventdetailresdto">
+    <select id="findCurrentEventByEventType" parameterType="String" resultType="eventdetailresdto">
         SELECT  id
                 , title
                 , content
@@ -15,12 +15,18 @@
                 , reward_type
                 , reward
                 , icon_url
+                , CASE WHEN EXISTS (SELECT  1
+                                    FROM    member_event
+                                    WHERE   event_id = event.id
+                                    AND     member_id = #{memberId})
+                    THEN 1
+                    ELSE 0
+                    END AS isParticipated
         FROM    event
         WHERE   sysdate BETWEEN started_at AND finished_at
         AND     id  IN  (SELECT event_id
                         FROM    event_active_time
                         WHERE   TO_NUMBER(TO_CHAR(sysdate, 'HH24')) BETWEEN openned_at AND closed_at)
-        AND     (#{eventType} IS NULL OR event_type = #{eventType})
         AND     max_count >= visited_count
         AND     is_deleted = 0
     </select>

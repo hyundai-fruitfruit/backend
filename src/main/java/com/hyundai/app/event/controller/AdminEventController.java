@@ -74,7 +74,7 @@ public class AdminEventController {
      */
     @PostMapping("{eventId}/participate")
     @ApiOperation("어드민용 이벤트 참여 API")
-    public AdventureOfHeendyResponse<EventParticipateResDto> participateEvent(@PathVariable int eventId,
+    public AdventureOfHeendyResponse<EventParticipateResDto> participateEvent(@PathVariable final int eventId,
                                                                               @RequestParam String memberId){
         return AdventureOfHeendyResponse.success("이벤트 참여에 성공했습니다.", eventService.participateEvent(memberId, eventId));
     }

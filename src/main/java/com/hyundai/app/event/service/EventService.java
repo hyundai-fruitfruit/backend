@@ -35,8 +35,9 @@ public class EventService {
     private final MemberCouponMapper memberCouponMapper;
     private final CouponMapper couponMapper;
 
-    public List<EventDetailResDto> findCurrentEventByEventType(EventType eventType) {
-        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findCurrentEventByEventType(eventType);
+    public List<EventDetailResDto> findCurrentEventByEventType(String memberId) {
+
+        List<EventDetailResDto> eventDetailResDtoList = eventMapper.findCurrentEventByEventType(memberId);
         for (EventDetailResDto eventDetailResDto : eventDetailResDtoList) {
             int eventId = eventDetailResDto.getId();
             List<EventActiveTimeZoneDto> eventActiveTimeZoneDtoList = findEventActiveTime(eventId);

@@ -2,6 +2,7 @@ package com.hyundai.app.store.service;
 
 import com.hyundai.app.store.dto.ReviewReqDto;
 import com.hyundai.app.store.dto.StoreResDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ import java.util.List;
 public interface StoreService {
 
     StoreResDto getStoreDetail(int storeId);
-    void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto);
+    void createReview(int storeId, String memberId, ReviewReqDto reviewReqDto, List<MultipartFile> imagelist);
     void createStoreHashtag(int storeId, List<Integer> hashtagIds);
 }

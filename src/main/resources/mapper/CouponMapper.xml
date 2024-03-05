@@ -42,7 +42,8 @@
         FROM    coupon
         WHERE   id IN (SELECT    coupon_id
                       FROM      member_coupon
-                      WHERE     member_id = #{memberId})
+                      WHERE     member_id = #{memberId}
+                      AND       is_used = 0)
     </select>
 
     <select id="findCouponUsageRates" resultType="com.hyundai.app.coupon.dto.CouponUsageRateDto">

@@ -17,10 +17,19 @@ public class MemberCoupon extends BaseEntity {
     private String channelType;
     private LocalDate expiredAt;
 
+    public MemberCoupon(String memberId, int couponId) {
+        this.memberId = memberId;
+        this.couponId = couponId;
+    }
+
     public MemberCoupon(String memberId, int couponId, String channelType) {
         this.memberId = memberId;
         this.couponId = couponId;
         this.channelType = channelType;
+    }
+
+    public static MemberCoupon of(String memberId, int couponId) {
+        return new MemberCoupon(memberId, couponId);
     }
 
     public static MemberCoupon of(String memberId, int couponId, String channelType) {

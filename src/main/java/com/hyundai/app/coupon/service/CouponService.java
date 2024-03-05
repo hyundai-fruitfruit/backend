@@ -21,6 +21,8 @@ import java.util.List;
 public class CouponService {
 
     private final CouponMapper couponMapper;
+    private final MemberCouponMapper memberCouponMapper;
+
     public List<Coupon> findCouponList(int storeId) {
         List<Coupon> couponList = couponMapper.findCouponList(storeId);
         for (Coupon coupon: couponList) {
@@ -43,6 +45,13 @@ public class CouponService {
 
     public List<CouponUsageRateDto> findCouponUsageRates() {
         return couponMapper.findCouponUsageRates();
+    }
+
+
+    public Void useCoupon(String memberId, int couponId) {
+        MemberCoupon memberCoupon = MemberCoupon.of(memberId, couponId);
+        memberCouponMapper.useCoupon(memberCoupon);
+        return null;
     }
 
 }

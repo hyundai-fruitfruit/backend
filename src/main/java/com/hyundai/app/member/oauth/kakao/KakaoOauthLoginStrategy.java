@@ -4,6 +4,8 @@ import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.dto.LoginReqDto;
 import com.hyundai.app.member.enumType.Header;
+import com.hyundai.app.member.enumType.OauthType;
+import com.hyundai.app.member.oauth.LoginStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,17 +26,23 @@ import org.springframework.web.client.RestTemplate;
 @Log4j
 @Service
 @RequiredArgsConstructor
-public class KakaoOauthClient {
+public class KakaoOauthLoginStrategy implements LoginStrategy {
 
     @Value("${oauth.kakao.request-uri}")
     private String reqUri;
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Override
+    public OauthType oAuthType() {
+        return OauthType.KAKAO;
+    }
 
     /**
      * @author 황수영
      * @since 2024/02/12
      * OAuth로부터 사용자 정보 이메일 가져오기
      */
+    @Override
     public String getEmail(LoginReqDto loginRequestDto) {
         KakaoResDto kakaoResDto = getMemberInfoByLoginToken(loginRequestDto.getLoginToken());
         return kakaoResDto.getEmail();
