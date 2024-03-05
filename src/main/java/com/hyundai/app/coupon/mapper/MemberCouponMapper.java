@@ -1,6 +1,9 @@
 package com.hyundai.app.coupon.mapper;
 
 import com.hyundai.app.coupon.domain.MemberCoupon;
+import com.hyundai.app.coupon.dto.CouponUsageRateDto;
+
+import java.util.List;
 
 /**
  * @author 엄상은
@@ -9,6 +12,6 @@ import com.hyundai.app.coupon.domain.MemberCoupon;
  */
 public interface MemberCouponMapper {
     void saveMemberCoupon(MemberCoupon memberCoupon);
-
     void useCoupon(MemberCoupon memberCoupon);
+
 }

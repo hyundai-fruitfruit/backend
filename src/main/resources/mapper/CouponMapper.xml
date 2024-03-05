@@ -45,4 +45,19 @@
                       WHERE     member_id = #{memberId}
                       AND       is_used = 0)
     </select>
+
+    <select id="findCouponUsageRates" resultType="com.hyundai.app.coupon.dto.CouponUsageRateDto">
+        SELECT
+            C.COUPON_TYPE as "couponType",
+            COUNT(C.ID) as "totalIssued",
+            SUM(CASE WHEN MC.IS_USED = 1 THEN 1 ELSE 0 END) as "totalUsed",
+            (SUM(CASE WHEN MC.IS_USED = 1 THEN 1 ELSE 0 END) * 1.0 / COUNT(C.ID)) * 100 as "usageRate"
+        FROM
+            COUPON C
+                LEFT JOIN
+            MEMBER_COUPON MC ON C.ID = MC.COUPON_ID
+        GROUP BY
+            C.COUPON_TYPE
+    </select>
+
 </mapper>
