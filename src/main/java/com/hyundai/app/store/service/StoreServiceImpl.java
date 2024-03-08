@@ -1,8 +1,8 @@
 package com.hyundai.app.store.service;
 
 import com.hyundai.app.exception.AdventureOfHeendyException;
-import com.hyundai.app.member.service.AwsS3Config;
 import com.hyundai.app.store.domain.Hashtag;
+import com.hyundai.app.store.domain.Image;
 import com.hyundai.app.store.domain.Review;
 import com.hyundai.app.store.domain.Store;
 import com.hyundai.app.store.dto.ReviewReqDto;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +40,7 @@ public class StoreServiceImpl implements StoreService {
     /**
      * @author 황수영
      * @since 2024/02/14
-     * 매장 상세 정보/해시태그/이미지/리뷰 조회
+     * 매장 상세 정보/해시태그/이미지/리뷰(이미지 포함) 조회
      */
     @Override
     public StoreResDto getStoreDetail(int storeId) {
@@ -55,7 +54,14 @@ public class StoreServiceImpl implements StoreService {
         log.debug("가장 많이 선택된 해시태그들 5개 조회 : " + popularHashtags.toString());
 
         List<Review> reviews = storeMapper.getReviews(storeId);
-        log.debug("해당 매장의 전체 리뷰 조회 : " + reviews.toString());
+        for (Review review : reviews) {
+            List<Image> images = storeMapper.getImageByReviewId(review.getId());
+            review.updateImages(images);
+
+            List<Hashtag> hashtags = hashtagMapper.getHashtagByReviewId(review.getId());
+            review.updateHashtags(hashtags);
+        }
+        log.debug("해당 매장의 전체 리뷰 조회 : " + reviews);
 
         StoreResDto storeResDto = StoreResDto.of(store);
         storeResDto.updatePopularHashtags(popularHashtags);
@@ -75,6 +81,9 @@ public class StoreServiceImpl implements StoreService {
         String reviewId = UUID.randomUUID().toString();
         Review review = Review.of(reviewId, reviewReqDto, storeId, memberId);
         storeMapper.saveReview(review);
+        for (Hashtag hashtag : review.getHashtags()) {
+            hashtagMapper.createReviewHashtag(review.getId(), hashtag.getId());
+        }
         log.debug("리뷰 작성" + review);
 
         // 이미지 추가
@@ -87,15 +96,12 @@ public class StoreServiceImpl implements StoreService {
 
         // 해시 태그 추가
         createStoreHashtag(storeId, reviewReqDto.getHashtagIds());
-        // TODO: 리뷰별 해시태그 추가
 
         //평점 업데이트
         double newAvgScore = calcAvgScore(storeId, reviewReqDto.getScore());
         storeMapper.updateAvgScore(storeId, newAvgScore);
         storeMapper.updateReviewCount(storeId);
     }
-
-
 
     /**
      * @author 황수영

@@ -1,6 +1,7 @@
 package com.hyundai.app.store.mapper;
 
 import com.hyundai.app.store.domain.Hashtag;
+import com.hyundai.app.store.domain.Image;
 import com.hyundai.app.store.domain.Review;
 import com.hyundai.app.store.domain.Store;
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,7 @@ public interface StoreMapper {
     List<Store> getStoresByHashtagId(@Param("hashtagId") int hashtagId);
     void saveReviewImage(@Param("reviewId") String reviewId, @Param("memberId") String memberId
             , @Param("storeId") int storeId, @Param("image") String image);
+
+    List<Image> getImageByReviewId(@Param("reviewId") String reviewId);
+
 }

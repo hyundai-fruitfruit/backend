@@ -1,5 +1,7 @@
 package com.hyundai.app.store.dto;
 
+import com.hyundai.app.store.domain.Hashtag;
+import com.hyundai.app.store.domain.Image;
 import com.hyundai.app.store.domain.Review;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,12 +23,15 @@ public class ReviewResDto {
     private String id;
     private int score;
     private String content;
-    private List<String> hashtags;
+    private List<Hashtag> hashtags;
+    private List<Image> images;
     public static ReviewResDto of(Review review) {
         return ReviewResDto.builder()
                 .id(review.getId())
                 .score(review.getScore())
                 .content(review.getContent())
+                .images(review.getImageList())
+                .hashtags(review.getHashtags())
                 .build();
     }
 }

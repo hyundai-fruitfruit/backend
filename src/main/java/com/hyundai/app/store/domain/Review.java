@@ -3,7 +3,9 @@ package com.hyundai.app.store.domain;
 import com.hyundai.app.common.entity.BaseEntity;
 import com.hyundai.app.store.dto.ReviewReqDto;
 import lombok.*;
+import lombok.extern.log4j.Log4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +17,7 @@ import java.util.List;
 @Builder
 @ToString
 @AllArgsConstructor
+@Log4j
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review extends BaseEntity {
 
@@ -24,16 +27,30 @@ public class Review extends BaseEntity {
     private int isDeleted;
     private int score;
     private String content;
-    private List<Integer> hashtags;
+    private List<Hashtag> hashtags;
+    private List<Image> imageList;
 
     public static Review of(String id, ReviewReqDto reviewReqDto, int storeId, String memberId) {
+        log.debug("Review id " + id);
+        List<Hashtag> hashtags = new ArrayList<>();
+        for (int hashtagId : reviewReqDto.getHashtagIds()) {
+            hashtags.add(Hashtag.from(hashtagId));
+        }
         return Review.builder()
                 .id(id)
                 .score(reviewReqDto.getScore())
                 .content(reviewReqDto.getContent())
                 .memberId(memberId)
                 .storeId(storeId)
-                .hashtags(reviewReqDto.getHashtagIds())
+                .hashtags(hashtags)
                 .build();
+    }
+
+    public void updateImages(List<Image> imageList) {
+        this.imageList = imageList;
+    }
+
+    public void updateHashtags(List<Hashtag> hashtags) {
+        this.hashtags = hashtags;
     }
 }
