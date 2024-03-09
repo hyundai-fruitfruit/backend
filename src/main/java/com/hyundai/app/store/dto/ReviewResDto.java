@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.time.LocalDate;
 
 /**
  * @author 황수영
@@ -23,6 +24,7 @@ public class ReviewResDto {
     private String id;
     private int score;
     private String content;
+    private LocalDate createdAt;
     private List<Hashtag> hashtags;
     private List<Image> images;
     public static ReviewResDto of(Review review) {
@@ -32,6 +34,7 @@ public class ReviewResDto {
                 .content(review.getContent())
                 .images(review.getImageList())
                 .hashtags(review.getHashtags())
+                .createdAt(review.getCreatedAt())
                 .build();
     }
 }
