@@ -32,7 +32,26 @@
                 , content
         FROM review
         WHERE store_id = #{storeId}
+        ORDER BY created_at DESC
     </select>
+
+<!--    <resultMap id="getReviewResultMap" type="com.hyundai.app.store.domain.Review">-->
+<!--        <id property="id" column="id" />-->
+<!--        <result property="memberId" column="member_id"/>-->
+<!--        <result property="storeId" column="store_id"/>-->
+<!--        <result property="isDeleted" column="is_deleted"/>-->
+<!--        <result property="createdAt" column="created_at"/>-->
+<!--        <result property="updatedAt" column="updated_at"/>-->
+<!--        <result property="score" column="score"/>-->
+<!--        <result property="content" column="content"/>-->
+
+<!--        &lt;!&ndash; image 엔티티와의 일대다 관계 설정 &ndash;&gt;-->
+<!--        <collection property="images" ofType="com.hyundai.app.store.domain.Image">-->
+<!--            <id property="id" column="id" />-->
+<!--            <result property="imgUrl" column="img_url"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
 
     <select id="getPopularHashtagsOfStore" resultType="com.hyundai.app.store.domain.Hashtag">
         SELECT hashtag.id AS id
@@ -109,4 +128,16 @@
             , #{reviewId}
         )
     </insert>
+
+    <select id="getImageByReviewId">
+        SELECT  image.id AS id
+                , review.id AS reviewId
+                , review.member_id AS memberId
+                , review.store_id AS storeId
+                , image.img_url AS imgUrl
+        FROM review, image
+        WHERE review.id = image.review_id
+        AND review.id = #{reviewId}
+    </select>
+
 </mapper>

@@ -31,6 +31,19 @@
         )
     </insert>
 
+    <insert id="createReviewHashtag">
+        INSERT INTO review_hashtag (
+            id
+            , hashtag_id
+            , review_id
+        )
+        VALUES (
+        review_hashtag_id_seq.nextval
+        , #{hashtagId}
+        , #{reviewId}
+        )
+    </insert>
+
     <select id="getStoreHashtag" resultType="com.hyundai.app.store.domain.StoreHashtag" >
         SELECT
             id AS id
@@ -51,8 +64,17 @@
 
     <select id="getHashtagByCategory" >
         SELECT id AS id
-            , name AS name
+                , name AS name
         FROM hashtag
         WHERE category = #{category}
+    </select>
+
+    <select id="getHashtagByReviewId">
+        SELECT hashtag.id AS id
+            , hashtag.name AS name
+            , hashtag.category AS category
+        FROM hashtag, review_hashtag
+        WHERE review_hashtag.review_id = #{reviewId}
+        AND hashtag.id = review_hashtag.hashtag_id
     </select>
 </mapper>

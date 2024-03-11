@@ -21,9 +21,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * The type Event service.
+ *
  * @author 엄상은
- * @since 2024/02/18
- * 사용자용 + 어드민용 이벤트 서비스
+ * @since 2024 /02/18 사용자용 + 어드민용 이벤트 서비스
  */
 @Log4j
 @RequiredArgsConstructor
@@ -35,6 +36,10 @@ public class EventService {
     private final MemberCouponMapper memberCouponMapper;
     private final CouponMapper couponMapper;
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public List<EventDetailResDto> findCurrentEventByEventType(String memberId) {
 
         List<EventDetailResDto> eventDetailResDtoList = eventMapper.findCurrentEventByEventType(memberId);
@@ -47,6 +52,10 @@ public class EventService {
         return eventDetailResDtoList;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventListResDto findEventList(int storeId, int page, int size) {
         IdWithCriteria idWithCriteria = IdWithCriteria.of(storeId, page, size);
         List<EventDetailResDto> eventDetailResDtoList = eventMapper.findEventList(idWithCriteria);
@@ -61,6 +70,10 @@ public class EventService {
         return eventListResDto;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventDetailResDto find(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = findEventAndValidate(storeId, eventId);
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = findEventActiveTime(eventId);
@@ -68,6 +81,10 @@ public class EventService {
         return eventDetailResDto;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventDetailResDto findEventAndValidate(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
         if (eventDetailResDto == null) {
@@ -97,6 +114,10 @@ public class EventService {
         return eventActiveTimeZoneDto;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventDetailResDto save(int storeId, EventSaveReqDto eventSaveReqDto) {
         int eventId = saveEvent(storeId, eventSaveReqDto);
         saveEventActiveTime(eventId, eventSaveReqDto);
@@ -118,6 +139,10 @@ public class EventService {
         });
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventSaveReqDto update(int storeId, int eventId, EventSaveReqDto eventSaveReqDto) {
         findEventAndValidate(storeId, eventId);
         eventSaveReqDto.setId(eventId);
@@ -125,12 +150,20 @@ public class EventService {
         return eventSaveReqDto;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public Void delete(int storeId, int eventId) {
         findEventAndValidate(storeId, eventId);
         eventMapper.delete(eventId);
         return null;
     }
 
+    /**
+     * @author
+     * @since 2024 /02/  (설명)
+     */
     public EventParticipateResDto participateEvent(String memberId, int eventId) {
         EventDetailResDto eventDetailResDto = findAvailableEvent(eventId);
         EventParticipateResDto eventVisitResDto = EventParticipateResDto.of(eventDetailResDto);
@@ -184,12 +217,13 @@ public class EventService {
         return eventDetailResDto;
     }
 
+
+
     /**
      * @author 최성혁
      * @since 2024/02/27
      * 특정 이벤트에 참여중인 회원 목록
      */
-
     public List<MemberEventDetailsResDto> findEventParticipants(int eventId, int id) {
         List<MemberEventDetailsResDto> participants = memberEventMapper.getMemberEventDetails(eventId);
 

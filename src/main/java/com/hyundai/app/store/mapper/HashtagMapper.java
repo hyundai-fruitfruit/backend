@@ -18,4 +18,8 @@ public interface HashtagMapper {
     StoreHashtag getStoreHashtag(@Param("storeId") int storeId, @Param("hashtagId") int hashtagId);
     void updateStoreHashtag(@Param("storeId") int storeId, @Param("hashtagId") int hashtagId);
     List<Hashtag> getHashtagByCategory(@Param("category") String category);
+    void createReviewHashtag(@Param("reviewId") String reviewId, @Param("hashtagId") int hashtagId);
+    List<Hashtag> getHashtagByReviewId(@Param("reviewId") String reviewId);
+
+
 }

@@ -17,4 +17,11 @@ public class Hashtag {
     private int id;
     private String name;
     private String category;
+
+    public static Hashtag from(int id) {
+        Hashtag hashtag = new Hashtag();
+        hashtag.id = id;
+        return hashtag;
+    }
+
 }

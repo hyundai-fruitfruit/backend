@@ -32,10 +32,13 @@ public class GuideController {
     @Qualifier("hashtagServiceImpl")
     private HashtagService hashtagService;
 
+    @Autowired
+    private GuideService guideService;
+
     @GetMapping
     @ApiOperation("전체 가이드 조회")
     public ResponseEntity<List<GuideTypeResDto>> getGuideAll() {
-        List<GuideTypeResDto> guideTypeList = GuideType.getGuideResDtoAll();
+        List<GuideTypeResDto> guideTypeList = guideService.getGuideAll();
         log.debug("전체 가이드 조회 : " + guideTypeList);
         return new ResponseEntity<>(guideTypeList, HttpStatus.ACCEPTED);
     }
@@ -44,7 +47,7 @@ public class GuideController {
     @ApiOperation("분류별 해시태그 조회 - 해당 분류의 모든 해시태그 조회하기 - 식당/쇼핑 매장")
     public ResponseEntity<List<HashtagListResDto>> getGuideByCategory(@PathVariable("guideType") String guideType) {
         log.debug("분류별 해시태그 조회 =>  guideType : " + guideType);
-        List<HashtagListResDto> hashtagListResDto = hashtagService.getHashtagAllByGuideType(guideType);
+        List<HashtagListResDto> hashtagListResDto = guideService.getHashtagCategoryAll(guideType);
         return new ResponseEntity<>(hashtagListResDto, HttpStatus.ACCEPTED);
     }
 
