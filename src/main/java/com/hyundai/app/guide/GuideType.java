@@ -1,5 +1,6 @@
 package com.hyundai.app.guide;
 
+import com.hyundai.app.guide.domain.Guide;
 import com.hyundai.app.guide.dto.GuideTypeResDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +25,18 @@ public enum GuideType {
 
     private final int id;
     private final String korean;
-    private final List<String> category;
+    private final List<String> hashtagType;
 
     public static List<GuideTypeResDto> getGuideResDtoAll() {
         return Arrays.stream(GuideType.values())
-                .map(g -> new GuideTypeResDto(g, g.korean, g.category))
+                .map(g -> new GuideTypeResDto(g, g.korean, g.hashtagType))
+                .collect(Collectors.toList());
+    }
+
+    public static List<GuideTypeResDto> of(List<Guide> guides) {
+
+        return guides.stream()
+                .map(g -> new GuideTypeResDto(GuideType.valueOf(g.getGuideType()), g.getKorean(), GuideType.valueOf(g.getGuideType()).getHashtagType()))
                 .collect(Collectors.toList());
     }
 }

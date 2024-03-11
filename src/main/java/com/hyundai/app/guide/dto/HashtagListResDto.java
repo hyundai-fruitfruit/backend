@@ -16,5 +16,6 @@ import java.util.List;
 public class HashtagListResDto {
 
     private String title;
+    // private String korean;
     private List<Hashtag> hashtags;
 }
