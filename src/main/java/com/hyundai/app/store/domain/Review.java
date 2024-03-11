@@ -33,8 +33,10 @@ public class Review extends BaseEntity {
     public static Review of(String id, ReviewReqDto reviewReqDto, int storeId, String memberId) {
         log.debug("Review id " + id);
         List<Hashtag> hashtags = new ArrayList<>();
-        for (int hashtagId : reviewReqDto.getHashtagIds()) {
-            hashtags.add(Hashtag.from(hashtagId));
+        if (reviewReqDto.getHashtagIds() != null) {
+            for (int hashtagId : reviewReqDto.getHashtagIds()) {
+                hashtags.add(Hashtag.from(hashtagId));
+            }
         }
         return Review.builder()
                 .id(id)

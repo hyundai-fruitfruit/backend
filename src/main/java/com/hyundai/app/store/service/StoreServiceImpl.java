@@ -87,11 +87,13 @@ public class StoreServiceImpl implements StoreService {
         log.debug("리뷰 작성" + review);
 
         // 이미지 추가
-        List<String> imageUrlList = s3ImageUploadService.uploadReviewImages(imagelist);
-        for (String imageUrl :  imageUrlList) {
-            log.debug("이미지 추가 reviewId : " + reviewId + ", memberId : " + memberId
-                + ", storeId : " + storeId + ", imageUrl : " + imageUrl);
-            storeMapper.saveReviewImage(reviewId, memberId, storeId, imageUrl);
+        if (imagelist != null) {
+            List<String> imageUrlList = s3ImageUploadService.uploadReviewImages(imagelist);
+            for (String imageUrl :  imageUrlList) {
+                log.debug("이미지 추가 reviewId : " + reviewId + ", memberId : " + memberId
+                       + ", storeId : " + storeId + ", imageUrl : " + imageUrl);
+                storeMapper.saveReviewImage(reviewId, memberId, storeId, imageUrl);
+            }
         }
 
         // 해시 태그 추가
