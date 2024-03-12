@@ -1,10 +1,5 @@
 package com.hyundai.app.config;
 
-/**
- * @author 황수영
- * @since 2024/03/13
- * Redis 설정
- */
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +10,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * @author 황수영
+ * @since 2024/03/13
+ * (설명)
+ */
 @Configuration
 @EnableRedisRepositories
 public class RedisConfig {
