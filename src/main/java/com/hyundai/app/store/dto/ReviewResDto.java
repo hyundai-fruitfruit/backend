@@ -22,6 +22,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ReviewResDto {
     private String id;
+    private String nickname;
+    private String profile;
     private int score;
     private String content;
     private LocalDate createdAt;
@@ -30,6 +32,8 @@ public class ReviewResDto {
     public static ReviewResDto of(Review review) {
         return ReviewResDto.builder()
                 .id(review.getId())
+                .nickname(review.getNickname())
+                .profile(review.getImgUrl())
                 .score(review.getScore())
                 .content(review.getContent())
                 .images(review.getImageList())

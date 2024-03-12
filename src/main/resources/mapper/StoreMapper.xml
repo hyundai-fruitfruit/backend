@@ -22,16 +22,19 @@
     </select>
 
     <select id="getReviews" resultType="com.hyundai.app.store.domain.Review" >
-        SELECT  id
-                , member_id
-                , store_id
-                , is_deleted
-                , created_at
-                , updated_at
-                , score
-                , content
-        FROM review
+        SELECT  review.id
+                , review.member_id
+                , member.nickname
+                , member.img_url
+                , review.store_id
+                , review.is_deleted
+                , review.created_at
+                , review.updated_at
+                , review.score
+                , review.content
+        FROM review, member
         WHERE store_id = #{storeId}
+        AND review.member_id = member.id
         ORDER BY created_at DESC
     </select>
 

@@ -46,7 +46,6 @@ public class HashtagServiceImpl implements HashtagService{
 
         List<HashtagCategory> hashtagCategories =  guideMapper.getHashtagCategoryAll();
 
-        // TODO: 캐싱 필요!
         List<HashtagListResDto> result = new ArrayList<>();
 
         for (String category : guideTypeEnum.getHashtagType()) {
@@ -71,7 +70,6 @@ public class HashtagServiceImpl implements HashtagService{
      */
     @Override
     public List<StoreResDto> findStoresByMostSavedHashtags(int hashtagId) {
-        // TODO: 캐싱 필요!
         List<Store> stores = storeMapper.getStoresByHashtagId(hashtagId);
         return stores.stream().map(StoreResDto::of)
                 .collect(Collectors.toList());

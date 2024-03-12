@@ -23,6 +23,8 @@ public class Review extends BaseEntity {
 
     private String id;
     private String memberId;
+    private String nickname;
+    private String imgUrl;
     private int storeId;
     private int isDeleted;
     private int score;

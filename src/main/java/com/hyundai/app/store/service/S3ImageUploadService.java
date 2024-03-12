@@ -1,12 +1,11 @@
 package com.hyundai.app.store.service;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
-import com.hyundai.app.member.service.AwsS3Config;
+import com.hyundai.app.config.AwsS3Config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;

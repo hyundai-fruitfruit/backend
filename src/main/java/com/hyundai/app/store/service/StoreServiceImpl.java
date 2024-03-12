@@ -84,13 +84,15 @@ public class StoreServiceImpl implements StoreService {
         for (Hashtag hashtag : review.getHashtags()) {
             hashtagMapper.createReviewHashtag(review.getId(), hashtag.getId());
         }
-        log.debug("리뷰 작성" + review);
+        log.info("리뷰 작성 review" + review);
+        log.info("리뷰 작성 imagelist" + imagelist);
+
 
         // 이미지 추가
         if (imagelist != null) {
             List<String> imageUrlList = s3ImageUploadService.uploadReviewImages(imagelist);
             for (String imageUrl :  imageUrlList) {
-                log.debug("이미지 추가 reviewId : " + reviewId + ", memberId : " + memberId
+                log.info("이미지 추가 reviewId : " + reviewId + ", memberId : " + memberId
                        + ", storeId : " + storeId + ", imageUrl : " + imageUrl);
                 storeMapper.saveReviewImage(reviewId, memberId, storeId, imageUrl);
             }
