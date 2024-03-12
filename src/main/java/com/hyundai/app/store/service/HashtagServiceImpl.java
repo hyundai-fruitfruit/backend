@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * @author 황수영
  * @since 2024/02/26
- * (설명)
+ * 해시태그 관련 서비스단
  */
 @Log4j
 @Service

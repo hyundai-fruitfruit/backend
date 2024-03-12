@@ -5,6 +5,7 @@ import com.hyundai.app.security.filter.AuthTokenFilterConfigurer;
 import com.hyundai.app.security.handler.AuthTokenAccessDeniedHandler;
 import com.hyundai.app.security.handler.AuthTokenAuthenticationEntryPoint;
 import com.hyundai.app.security.jwt.JwtTokenGenerator;
+import com.hyundai.app.util.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
@@ -28,8 +29,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenGenerator authTokenGenerator;
+    private final JwtTokenGenerator jwtTokenGenerator;
     private final AuthDetailsService authUserDetailsService;
+    private final RedisService redisService;
     private final AuthTokenAccessDeniedHandler authTokenAccessDeniedHandler;
     private final AuthTokenAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -73,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/v1/members/**").authenticated()
                     .anyRequest().permitAll()
                 .and()
-                    .apply(new AuthTokenFilterConfigurer(authTokenGenerator, authUserDetailsService));
+                    .apply(new AuthTokenFilterConfigurer(jwtTokenGenerator, authUserDetailsService, redisService));
     }
 
     @Bean

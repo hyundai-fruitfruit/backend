@@ -35,6 +35,11 @@ public class GuideController {
     @Autowired
     private GuideService guideService;
 
+    /**
+     * @author 황수영
+     * @since 2024/02/26
+     * 챗봇 전체 가이드 - 전체 가이드 종류 조회
+     */
     @GetMapping
     @ApiOperation("전체 가이드 조회")
     public ResponseEntity<List<GuideTypeResDto>> getGuideAll() {
@@ -43,6 +48,11 @@ public class GuideController {
         return new ResponseEntity<>(guideTypeList, HttpStatus.ACCEPTED);
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/26
+     * 챗봇 전체 가이드 - 분류별 해시태그 조회
+     */
     @GetMapping("/{guideType}")
     @ApiOperation("분류별 해시태그 조회 - 해당 분류의 모든 해시태그 조회하기 - 식당/쇼핑 매장")
     public ResponseEntity<List<HashtagListResDto>> getGuideByCategory(@PathVariable("guideType") String guideType) {
@@ -51,6 +61,11 @@ public class GuideController {
         return new ResponseEntity<>(hashtagListResDto, HttpStatus.ACCEPTED);
     }
 
+    /**
+     * @author 황수영
+     * @since 2024/02/26
+     * 챗봇 전체 가이드 - 해시 태그 선택 시, 관련 식당들 조회
+     */
     @GetMapping("/hashtag")
     @ApiOperation("해시 태그 선택 시, 관련 식당들 조회")
     public ResponseEntity<List<StoreResDto>> findStoresByHashtags(@RequestParam("hashtagId")int hashtagId) {

@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * @author 황수영
  * @since 2024/03/09
- * (설명)
+ * 리뷰와 해시태그 매핑 테이블 도메인
  */
 @Getter
 @Builder

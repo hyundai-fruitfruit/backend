@@ -3,7 +3,7 @@ package com.hyundai.app.config;
 /**
  * @author 황수영
  * @since 2024/03/13
- * (설명)
+ * Redis 설정
  */
 
 import org.springframework.beans.factory.annotation.Value;

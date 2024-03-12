@@ -5,7 +5,7 @@ import lombok.*;
 /**
  * @author 황수영
  * @since 2024/03/04
- * (설명)
+ * 이미지 도메인
  */
 
 @Getter

@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 /**
  * @author 황수영
  * @since 2024/03/09
- * (설명)
+ * 챗봇 가이드 서비스단
  */
 @Log4j
 @Service
@@ -27,6 +27,11 @@ public class GuideService {
     private final GuideMapper guideMapper;
     private final HashtagMapper hashtagMapper;
 
+    /**
+     * @author 황수영
+     * @since 2024/02/26
+     * 전체 가이드 조회
+     */
     public List<GuideTypeResDto> getGuideAll() {
         List<Guide> guideList = guideMapper.getGuideAll();
         List<GuideTypeResDto> guideTypeList = GuideType.of(guideList);
@@ -45,8 +50,6 @@ public class GuideService {
         log.debug("분류별 해시태그 조회 분류 : " + guideTypeEnum);
 
         List<HashtagCategory> hashtagCategories =  guideMapper.getHashtagCategoryAll();
-
-        // TODO: 캐싱 필요!
         List<HashtagListResDto> result = new ArrayList<>();
 
         for (String category : guideTypeEnum.getHashtagType()) {
@@ -56,7 +59,6 @@ public class GuideService {
                     .findFirst()
                     .map(HashtagCategory::getKorean)
                     .orElseThrow(NoSuchElementException::new);
-            // 한글로 변경
             HashtagListResDto hashtagListResDto = new HashtagListResDto(korean, hashtags);
             result.add(hashtagListResDto);
             log.debug("분류별 해시태그 조회 => category : " + category + " : " + hashtagListResDto);

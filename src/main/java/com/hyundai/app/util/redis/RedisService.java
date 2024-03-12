@@ -3,7 +3,7 @@ package com.hyundai.app.util.redis;
 /**
  * @author 황수영
  * @since 2024/03/13
- * (설명)
+ * Redis 관련 기능
  */
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
