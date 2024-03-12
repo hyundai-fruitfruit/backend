@@ -2,10 +2,10 @@ package com.hyundai.app.security.filter;
 
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
-import com.hyundai.app.member.enumType.Header;
 import com.hyundai.app.security.AuthDetailsService;
 import com.hyundai.app.security.AuthUserDetails;
 import com.hyundai.app.security.jwt.JwtTokenGenerator;
+import com.hyundai.app.util.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +32,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenGenerator jwtTokenGenerator;
     private final AuthDetailsService authUserDetailsService;
+    private final RedisService redisService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -39,8 +40,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         try {
             log.debug("AuthTokenFilter : request " + request);
-            String accessToken = resolveToken(request);
+            String bearerToken = request.getHeader(com.hyundai.app.member.enumType.Header.AUTH.getValue());
+            String accessToken = jwtTokenGenerator.resolveToken(bearerToken);
             log.debug("AuthTokenFilter : accessToken " + accessToken);
+            validateBlackList(accessToken);
             if (!jwtTokenGenerator.isTokenValidate(accessToken)) {
                 log.error("AuthTokenFilter ERROR : accessToken 토큰이 유효하지 않습니다.");
                 throw new AdventureOfHeendyException(ErrorCode.ACCESS_TOKEN_INVALID);
@@ -64,12 +67,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 authUserDetails.getAuthorities());
     }
 
-
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(Header.AUTH.getValue());
-        if (bearerToken != null && bearerToken.startsWith(Header.BEARER.getValue())) {
-            return bearerToken.substring(Header.BEARER.getValue().length());
+    private void validateBlackList(String accessToken) {
+        if (redisService.isTokenBlackList(accessToken)) {
+            throw new AdventureOfHeendyException(ErrorCode.MEMBER_LOGOUT);
         }
-        return null;
     }
 }

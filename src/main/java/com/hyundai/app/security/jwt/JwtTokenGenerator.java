@@ -1,19 +1,16 @@
 package com.hyundai.app.security.jwt;
 
-import com.hyundai.app.exception.AdventureOfHeendyException;
-import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.dto.LoginResDto;
+import com.hyundai.app.member.enumType.Header;
 import com.hyundai.app.security.AuthDetailsService;
-import com.hyundai.app.security.AuthUserDetails;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
@@ -106,5 +103,36 @@ public class JwtTokenGenerator implements InitializingBean {
             log.error("isTokenValidate() 토큰 파싱 시, 에러 발생 ");
         }
         return false;
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * 토큰 유효성 검증
+     */
+    public Long getExpirationTime(String accessToken) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(accessToken)
+                .getBody();
+
+        long expirationTimestamp = claims.getExpiration().getTime();
+        log.debug("JWT Expiration Timestamp: " + expirationTimestamp);
+
+        long now = new Date().getTime();
+        return expirationTimestamp - now;
+    }
+
+
+    /**
+     * @author 황수영
+     * @since 2024/02/14
+     * JWT 토큰 파싱
+     */
+    public String resolveToken(String bearerToken) {
+        if (bearerToken != null && bearerToken.startsWith(com.hyundai.app.member.enumType.Header.BEARER.getValue())) {
+            return bearerToken.substring(Header.BEARER.getValue().length());
+        }
+        return null;
     }
 }

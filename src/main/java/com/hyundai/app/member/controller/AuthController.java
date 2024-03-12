@@ -39,4 +39,15 @@ public class AuthController {
         LoginResDto loginResDto = memberService.login(loginReqDto);
         return new ResponseEntity<>(loginResDto, HttpStatus.ACCEPTED);
     }
+
+
+    /**
+     * @author 황수영
+     * @since 2024/02/12
+     * 로그아웃 API
+     */
+    public ResponseEntity logout(@RequestBody LoginReqDto loginReqDto) {
+        memberService.logout(loginReqDto);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

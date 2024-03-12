@@ -23,4 +23,5 @@ public interface MemberService {
     String generateQrCodeAndUploadToS3(String memberId);
 
     String findQrUrl(String memberId);
+    void logout(LoginReqDto loginReqDto);
 }

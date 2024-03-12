@@ -1,5 +1,6 @@
 package com.hyundai.app.member.service;
 
+import com.hyundai.app.config.AwsS3Config;
 import com.hyundai.app.exception.AdventureOfHeendyException;
 import com.hyundai.app.exception.ErrorCode;
 import com.hyundai.app.member.domain.Member;
@@ -15,6 +16,7 @@ import com.hyundai.app.member.mapper.MemberMapper;
 import com.hyundai.app.member.oauth.LoginService;
 import com.hyundai.app.member.oauth.LoginStrategy;
 import com.hyundai.app.security.jwt.JwtTokenGenerator;
+import com.hyundai.app.util.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +42,9 @@ public class MemberServiceImpl implements MemberService {
     private final JwtTokenGenerator authTokenGenerator;
     private final AwsS3Config awsS3Config;
     private final MemberQrService memberQrService;
+    private final RedisService redisUtil;
+    private static final String LOGOUT_BLACKLIST = "logout";
+
 
     /**
      * @author 황수영
@@ -138,6 +143,19 @@ public class MemberServiceImpl implements MemberService {
             throw new AdventureOfHeendyException(ErrorCode.MEMBER_NOT_EXIST);
         }
         memberMapper.updateDeviceToken(memberId, deviceTokenDto.getToken());
+    }
+
+    /**
+     * @author 황수영
+     * @since 2024/02/13
+     * 로그아웃
+     */
+    public void logout(LoginReqDto loginReqDto) {
+        String bearerToken = loginReqDto.getLoginToken();
+        String accessToken = authTokenGenerator.resolveToken(bearerToken);
+        Long expirationTime = authTokenGenerator.getExpirationTime(accessToken);
+
+        redisUtil.setBlackList(accessToken, LOGOUT_BLACKLIST, expirationTime);
     }
 
     /**

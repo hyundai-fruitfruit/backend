@@ -2,6 +2,7 @@ package com.hyundai.app.security.filter;
 
 import com.hyundai.app.security.AuthDetailsService;
 import com.hyundai.app.security.jwt.JwtTokenGenerator;
+import com.hyundai.app.util.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
@@ -22,10 +23,11 @@ public class AuthTokenFilterConfigurer extends SecurityConfigurerAdapter<Default
 
     private final JwtTokenGenerator jwtTokenGenerator;
     private final AuthDetailsService authUserDetailsService;
+    private final RedisService redisService;
 
     @Override
     public void configure(HttpSecurity httpSecurity) {
-        AuthTokenFilter customFilter = new AuthTokenFilter(jwtTokenGenerator, authUserDetailsService);
+        AuthTokenFilter customFilter = new AuthTokenFilter(jwtTokenGenerator, authUserDetailsService, redisService);
         httpSecurity.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
