@@ -41,7 +41,6 @@ public class StoreResDto {
                 .build();
     }
 
-    // TODO: 해당 매장의 리뷰들 조회
     public void updateReviews(List<Review> reviews) {
         List<ReviewResDto> reviewResDtos = new ArrayList<>();
         for (Review review : reviews) {

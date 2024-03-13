@@ -32,7 +32,7 @@ public class S3ImageUploadService {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-    private final AwsS3Config awsS3Config; // TODO: AmazonS3 싱글톤으로 정의하기
+    private final AwsS3Config awsS3Config;
     
     /**
      * @author 황수영

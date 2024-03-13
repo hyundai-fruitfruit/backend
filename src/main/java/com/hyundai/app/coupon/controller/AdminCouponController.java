@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,9 +34,7 @@ public class AdminCouponController {
      */
     @ApiOperation("어드민용 해당 지점 쿠폰 전체 조회 API")
     @GetMapping
-    public AdventureOfHeendyResponse<List<Coupon>> findCouponList() {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<List<Coupon>> findCouponList(@RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("쿠폰 목록을 가져왔습니다.", couponService.findCouponList(storeId));
     }
 

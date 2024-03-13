@@ -34,9 +34,8 @@ public class AdminEventController {
     @GetMapping
     @ApiOperation("어드민용 해당 지점 이벤트 전체 조회 API")
     public AdventureOfHeendyResponse<EventListResDto> findEventList(@RequestParam(value = "page", defaultValue = "1") int page,
-                                                                    @RequestParam(value = "size", defaultValue = "10") int size) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+                                                                    @RequestParam(value = "size", defaultValue = "10") int size,
+                                                                    @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("지점의 이벤트 목록을 가져왔습니다.", eventService.findEventList(storeId, page, size));
     }
 
@@ -47,9 +46,8 @@ public class AdminEventController {
      */
     @PostMapping
     @ApiOperation("어드민용 이벤트 작성 API")
-    public AdventureOfHeendyResponse<EventDetailResDto> save(@RequestBody EventSaveReqDto eventSaveReqDto) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<EventDetailResDto> save(@RequestBody EventSaveReqDto eventSaveReqDto,
+                                                             @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("이벤트를 저장했습니다.", eventService.save(storeId, eventSaveReqDto));
     }
 
@@ -60,9 +58,8 @@ public class AdminEventController {
      */
     @GetMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 상세조회 API")
-    public AdventureOfHeendyResponse<EventDetailResDto> findEvent(@PathVariable final int eventId) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<EventDetailResDto> findEvent(@PathVariable final int eventId,
+                                                                  @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.find(storeId, eventId));
     }
 
@@ -73,9 +70,9 @@ public class AdminEventController {
      */
     @PatchMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 수정 API")
-    public AdventureOfHeendyResponse<EventSaveReqDto> update(@PathVariable final int eventId, @RequestBody EventSaveReqDto eventSaveReqDto) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<EventSaveReqDto> update(@PathVariable final int eventId,
+                                                             @RequestBody EventSaveReqDto eventSaveReqDto,
+                                                             @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("이벤트를 수정했습니다.", eventService.update(storeId, eventId, eventSaveReqDto));
     }
 
@@ -86,9 +83,8 @@ public class AdminEventController {
      */
     @DeleteMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 삭제 API")
-    public AdventureOfHeendyResponse<Void> delete(@PathVariable final int eventId) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<Void> delete(@PathVariable final int eventId,
+                                                  @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("이벤트를 삭제했습니다.", eventService.delete(storeId, eventId));
     }
 
@@ -111,9 +107,8 @@ public class AdminEventController {
      */
     @GetMapping("/{eventId}/participants")
     @ApiOperation("어드민용 이벤트 참여자 상세정보 조회 API")
-    public AdventureOfHeendyResponse<List<MemberEventDetailsResDto>> findEventParticipants(@PathVariable final int eventId) {
-        // TODO: 지점 ID 받아오는 부분 수정
-        int storeId = 1;
+    public AdventureOfHeendyResponse<List<MemberEventDetailsResDto>> findEventParticipants(@PathVariable final int eventId,
+                                                                                           @RequestParam int storeId) {
         return AdventureOfHeendyResponse.success("이벤트의 참여자 상세 정보를 가져왔습니다.", eventService.findEventParticipants(eventId,storeId));
     }
 }
