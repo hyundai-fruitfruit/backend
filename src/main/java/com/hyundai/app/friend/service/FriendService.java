@@ -31,12 +31,22 @@ public class FriendService {
     private final MbtiMapper mbtiMapper;
     private final GameMapper gameMapper;
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 리스트 조회
+     */
     public FriendListResDto findFriendList(String memberId) {
         List<FriendDetailResDto> friendDetailResDto = friendMapper.findFriendList(memberId);
         FriendListResDto friendListResDto = new FriendListResDto(friendDetailResDto);
         return friendListResDto;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 한 명 조회
+     */
     public FriendDetailResDto findFriend(String memberId, String friendId) {
         FriendDto friendDto = new FriendDto(memberId, friendId);
         if (!isFriend(friendDto)) {
@@ -54,10 +64,20 @@ public class FriendService {
                 .build();
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 관계 조회
+     */
     private MemberConnection findConnection(FriendDto friendDto) {
         return friendMapper.findConnection(friendDto);
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 관계 저장
+     */
     private void saveConnection(FriendDto friendDto) {
         MemberConnection originMemberConnection = new MemberConnection(
                 friendDto.getMemberId(),
@@ -75,6 +95,11 @@ public class FriendService {
         }
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 여부 확인
+     */
     private Boolean isFriend(FriendDto friendDto) {
         if (memberMapper.findById(friendDto.getFriendId()) == null) {
             throw new IllegalArgumentException("존재하지 않는 사용자입니다.");
@@ -85,10 +110,20 @@ public class FriendService {
         return true;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 친구 관계로 MBTI 조회
+     */
     private String findMbtiByFriend(FriendDto friendDto) {
         return mbtiMapper.findMbtiByFriend(friendDto);
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * MBTI 업데이트
+     */
     public String updateMbti(String memberId, String friendId, MbtiSaveReqDto mbtiSaveReqDto) {
         String mbtiId = mbtiMapper.findIdByMbtiScore(mbtiSaveReqDto);
         MemberConnection savedMemberConnection = new MemberConnection(
@@ -102,6 +137,11 @@ public class FriendService {
         return findMbtiByFriend(new FriendDto(memberId, friendId));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/15
+     * 게임 정보 조회
+     */
     private GameStatus findGameStatus(FriendDto friendDto){
         GameStatus gameStatus = gameMapper.findGameStatus(friendDto);
         return gameStatus;

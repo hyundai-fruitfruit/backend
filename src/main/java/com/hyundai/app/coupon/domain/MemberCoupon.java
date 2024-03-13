@@ -7,7 +7,7 @@ import java.time.LocalDate;
 /**
  * @author 엄상은
  * @since 2024/02/22
- * 유저가 가지고 있는 쿠폰 엔티티
+ * 유저가 가지고 있는 쿠폰 엔티티, 정적 팩토리 메서드 사용
  */
 public class MemberCoupon extends BaseEntity {
     private int id;

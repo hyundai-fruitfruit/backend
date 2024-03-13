@@ -24,12 +24,22 @@ import java.util.List;
 public class CouponController {
     private final CouponService couponService;
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/23
+     * 사용자용 쿠폰 전체 조회 API
+     */
     @ApiOperation("사용자용 쿠폰 전체 조회 API")
     @GetMapping
     public AdventureOfHeendyResponse<List<Coupon>> findCouponList(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("사용자의 쿠폰 목록을 가져왔습니다.", couponService.findMemberCouponList(memberId));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/03/05
+     * 사용자용 쿠폰 사용 API
+     */
     @ApiOperation("사용자용 쿠폰 사용 API")
     @PostMapping("/{couponId}/use")
     public AdventureOfHeendyResponse<Void> useCoupon(@ApiIgnore @MemberId String memberId,

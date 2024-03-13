@@ -7,7 +7,7 @@ import java.util.function.Function;
 /**
  * @author 엄상은
  * @since 2024/02/20
- * 쿠폰 종류
+ * 쿠폰 종류 enum 타입으로 설명 해결
  */
 public enum CouponType {
     PERCENT(coupon -> "주문 금액 " + coupon.getMinimumAmount() + "원 이상 구매시 " + coupon.getDiscountRate() + "% 할인"),

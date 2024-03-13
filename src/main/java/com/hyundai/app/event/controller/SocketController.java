@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 /**
  * @author 엄상은
  * @since 2024/02/27
- * 소켓 테스트용 컨트롤러
+ * 소켓 컨트롤러
  */
 @Log4j
 @Controller

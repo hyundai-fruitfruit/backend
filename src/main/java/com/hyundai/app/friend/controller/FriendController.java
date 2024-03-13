@@ -27,12 +27,22 @@ public class FriendController {
 
     private final FriendService friendService;
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/09
+     * 전체 친구 리스트 조회 API
+     */
     @GetMapping
     @ApiOperation("전체 친구 리스트 조회 API")
     public AdventureOfHeendyResponse<FriendListResDto> findFriendList(@ApiIgnore @MemberId String memberId) {
         return AdventureOfHeendyResponse.success("친구 목록을 가져왔습니다.", friendService.findFriendList(memberId));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/09
+     * 특정 친구 조회 API
+     */
     @GetMapping("/{friendId}")
     @ApiOperation("특정 친구 조회 API")
     public AdventureOfHeendyResponse<FriendDetailResDto> find(@ApiIgnore @MemberId String memberId,
@@ -40,8 +50,13 @@ public class FriendController {
         return AdventureOfHeendyResponse.success("친구 흰디에 방문했습니다.", friendService.findFriend(memberId, friendId));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/09
+     * 특정 친구 조회 API
+     */
     @PostMapping("/{friendId}/mbti")
-    @ApiOperation("친구 MBTI 작성 API")
+    @ApiOperation("특정 친구 조회 API")
     public AdventureOfHeendyResponse<String> saveMbti(@ApiIgnore @MemberId String memberId,
                                                       @PathVariable final String friendId,
                                                       @Valid @RequestBody final MbtiSaveReqDto mbtiSaveReqDto) {

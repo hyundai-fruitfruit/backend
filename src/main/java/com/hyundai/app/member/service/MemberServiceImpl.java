@@ -30,6 +30,11 @@ import java.util.UUID;
  * @since 2024/02/13
  * 회원 관련 서비스단
  */
+/**
+ * @author 엄상은
+ * @since 2024/02/26
+ * 회원 QR 코드 관련 서비스단
+ */
 @Log4j
 @Service
 @RequiredArgsConstructor

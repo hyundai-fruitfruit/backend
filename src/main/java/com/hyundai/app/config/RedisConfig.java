@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @author 황수영
  * @since 2024/03/13
- * (설명)
+ * redig 설정
  */
 @Configuration
 @EnableRedisRepositories
