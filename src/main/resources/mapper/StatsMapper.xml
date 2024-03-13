@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hyundai.app.stats.mapper.StatsMapper">
+
+
+    <!--* @author : 오수영
+    * @since : 2024/03/11
+    * 통계 관련 mapper-->
+
+
+    <select id="findAllStoreUsageStats" resultType="com.hyundai.app.stats.dto.StoreUsageStatsDTO">
+        SELECT
+            store_id AS storeId,
+            stats_date AS statsDate,
+            time_9_to_11 AS time9To11,
+            time_11_to_13 AS time11To13,
+            time_13_to_15 AS time13To15,
+            time_15_to_17 AS time15To17,
+            time_17_to_19 AS time17To19
+        FROM
+            admin.mv_store_usage_stats
+    </select>
+
+    <select id="findAllStoreAgeGenderStats" resultType="com.hyundai.app.stats.dto.StoreAgeGenderStatsDTO">
+        SELECT
+            store_id AS storeId,
+            age_group AS ageGroup,
+            gender,
+            visit_count AS visitCount
+        FROM
+            admin.mv_store_age_gender_stats
+    </select>
+
+    <select id="findAllRevisitRates" resultType="com.hyundai.app.stats.dto.RevisitRateDTO">
+        SELECT
+            store_id AS storeId,
+            event_participation AS eventParticipation,
+            total_visitors AS totalVisitors,
+            repeat_visitors AS repeatVisitors,
+            revisit_rate AS revisitRate
+        FROM
+            admin.mv_revisit_rate
+    </select>
+
+    <select id="findAllPromotionEffectStats" resultType="com.hyundai.app.stats.dto.PromotionEffectStatsDTO">
+        SELECT
+            store_id AS storeId,
+            member_id AS memberId,
+            coupon_id AS couponId,
+            gender,
+            age_group AS ageGroup,
+            usage_count AS usageCount
+        FROM
+            admin.mv_stats_promotion_effect
+    </select>
+
+</mapper>
