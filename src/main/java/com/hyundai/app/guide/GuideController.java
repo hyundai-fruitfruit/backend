@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author 황수영
  * @since 2024/02/26
- * (설명)
+ * 챗봇 가이드 컨트롤러
  */
 @Log4j
 @Api("대장 흰디 가이드용 API")

@@ -26,6 +26,11 @@ public class AdminCouponController {
 
     private final CouponService couponService;
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/20
+     * 어드민용 해당 지점 쿠폰 전체 조회 API
+     */
     @ApiOperation("어드민용 해당 지점 쿠폰 전체 조회 API")
     @GetMapping
     public AdventureOfHeendyResponse<List<Coupon>> findCouponList() {
@@ -34,6 +39,11 @@ public class AdminCouponController {
         return AdventureOfHeendyResponse.success("쿠폰 목록을 가져왔습니다.", couponService.findCouponList(storeId));
     }
 
+    /**
+     * @author 최성혁
+     * @since 2024/03/04
+     * 쿠폰 사용률 통계 조회 API
+     */
     @ApiOperation("쿠폰 사용률 통계 조회 API")
     @GetMapping("/statistics")
     public AdventureOfHeendyResponse<List<CouponUsageRateDto>> findCouponUsageRates() {

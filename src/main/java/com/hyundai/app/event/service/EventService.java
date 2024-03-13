@@ -24,10 +24,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * The type Event service.
- *
  * @author 엄상은
- * @since 2024 /02/18 사용자용 + 어드민용 이벤트 서비스
+ * @since 2024/02/18
+ * 사용자용 + 어드민용 이벤트 서비스
  */
 @Log4j
 @RequiredArgsConstructor
@@ -41,8 +40,9 @@ public class EventService {
     private final RedisService redisService;
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/03/04
+     * 사용자용 현재 사용 가능한 랜덤스팟 모두 조회
      */
     public List<EventDetailResDto> findCurrentEventByEventType(String memberId) {
 
@@ -52,13 +52,13 @@ public class EventService {
             List<EventActiveTimeZoneDto> eventActiveTimeZoneDtoList = findEventActiveTime(eventId);
             eventDetailResDto.setActiveTimeList(eventActiveTimeZoneDtoList);
         }
-
         return eventDetailResDtoList;
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/21
+     * 어드민용 랜덤스팟 모두 조회 (페이지네이션)
      */
     public EventListResDto findEventList(int storeId, int page, int size) {
         IdWithCriteria idWithCriteria = IdWithCriteria.of(storeId, page, size);
@@ -75,8 +75,9 @@ public class EventService {
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 지점 이벤트 상세 조회
      */
     public EventDetailResDto find(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = findEventAndValidate(storeId, eventId);
@@ -86,8 +87,9 @@ public class EventService {
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 조회
      */
     public EventDetailResDto findEventAndValidate(int storeId, int eventId) {
         EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
@@ -102,6 +104,11 @@ public class EventService {
         return eventDetailResDto;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/23
+     * 유저용 가능한 이벤트 한 건 조회
+     */
     private EventDetailResDto findAvailableEvent(int eventId) {
         EventDetailResDto eventDetailResDto = eventMapper.findById(eventId);
         if (eventDetailResDto == null) {
@@ -113,14 +120,20 @@ public class EventService {
         return eventDetailResDto;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 이벤트 하나 당 가능한 시간대 조회
+     */
     private List<EventActiveTimeZoneDto> findEventActiveTime(int eventId) {
         List<EventActiveTimeZoneDto> eventActiveTimeZoneDto = eventActiveTimeMapper.findByEventId(eventId);
         return eventActiveTimeZoneDto;
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 저장 후 리턴
      */
     public EventDetailResDto save(int storeId, EventSaveReqDto eventSaveReqDto) {
         int eventId = saveEvent(storeId, eventSaveReqDto);
@@ -128,6 +141,11 @@ public class EventService {
         return find(storeId, eventId);
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 저장
+     */
     private int saveEvent(int storeId, EventSaveReqDto eventSaveReqDto) {
         eventSaveReqDto.setStoreId(storeId);
         eventMapper.save(eventSaveReqDto);
@@ -135,6 +153,11 @@ public class EventService {
         return eventId;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 이벤트 활성화 시간대만 저장
+     */
     private void saveEventActiveTime(int eventId, EventSaveReqDto eventSaveReqDto) {
         eventSaveReqDto.setDefaultActiveTimeIfEmpty();
         eventSaveReqDto.getActiveTimeList().forEach(eventActiveTime -> {
@@ -144,8 +167,9 @@ public class EventService {
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 수정
      */
     public EventSaveReqDto update(int storeId, int eventId, EventSaveReqDto eventSaveReqDto) {
         findEventAndValidate(storeId, eventId);
@@ -155,8 +179,9 @@ public class EventService {
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 삭제
      */
     public Void delete(int storeId, int eventId) {
         findEventAndValidate(storeId, eventId);
@@ -165,8 +190,9 @@ public class EventService {
     }
 
     /**
-     * @author
-     * @since 2024 /02/  (설명)
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 유저를 이벤트에 참여시킴
      */
     public EventParticipateResDto participateEvent(String memberId, int eventId) {
         EventDetailResDto eventDetailResDto = findAvailableEvent(eventId);
@@ -181,6 +207,11 @@ public class EventService {
         return eventVisitResDto;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/23
+     * 쿠폰 조회
+     */
     private Coupon findCoupon(int couponId) {
         Coupon coupon = couponMapper.findById(couponId);
         if (coupon == null) {
@@ -189,11 +220,21 @@ public class EventService {
         return coupon;
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/23
+     * 멤버 쿠폰 저장 (멤버가 쿠폰을 얻음)
+     */
     private void saveMemberCoupon(String memberId, int couponId, String channelType) {
         MemberCoupon memberCoupon = MemberCoupon.of(memberId, couponId, channelType);
         memberCouponMapper.saveMemberCoupon(memberCoupon);
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/23
+     * 멤버 이벤트 참여
+     */
     private void visitEvent(String memberId, int eventId) {
         MemberEvent memberEvent = MemberEvent.of(eventId, memberId);
         memberEventMapper.saveMemberEvent(memberEvent);
@@ -236,8 +277,6 @@ public class EventService {
         log.debug("랜덤 스팟 상세 정보 조회 : " + eventDetailResDto);
         return eventDetailResDto;
     }
-
-
 
     /**
      * @author 최성혁

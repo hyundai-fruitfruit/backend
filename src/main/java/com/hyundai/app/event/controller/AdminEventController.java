@@ -26,6 +26,11 @@ import java.util.List;
 public class AdminEventController {
     private final EventService eventService;
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 해당 지점 이벤트 전체 조회 API
+     */
     @GetMapping
     @ApiOperation("어드민용 해당 지점 이벤트 전체 조회 API")
     public AdventureOfHeendyResponse<EventListResDto> findEventList(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -35,6 +40,11 @@ public class AdminEventController {
         return AdventureOfHeendyResponse.success("지점의 이벤트 목록을 가져왔습니다.", eventService.findEventList(storeId, page, size));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 작성 API
+     */
     @PostMapping
     @ApiOperation("어드민용 이벤트 작성 API")
     public AdventureOfHeendyResponse<EventDetailResDto> save(@RequestBody EventSaveReqDto eventSaveReqDto) {
@@ -43,6 +53,11 @@ public class AdminEventController {
         return AdventureOfHeendyResponse.success("이벤트를 저장했습니다.", eventService.save(storeId, eventSaveReqDto));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 상세조회 API
+     */
     @GetMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 상세조회 API")
     public AdventureOfHeendyResponse<EventDetailResDto> findEvent(@PathVariable final int eventId) {
@@ -51,6 +66,11 @@ public class AdminEventController {
         return AdventureOfHeendyResponse.success("지점의 이벤트 상세 정보를 가져왔습니다.", eventService.find(storeId, eventId));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 수정 API
+     */
     @PatchMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 수정 API")
     public AdventureOfHeendyResponse<EventSaveReqDto> update(@PathVariable final int eventId, @RequestBody EventSaveReqDto eventSaveReqDto) {
@@ -59,6 +79,11 @@ public class AdminEventController {
         return AdventureOfHeendyResponse.success("이벤트를 수정했습니다.", eventService.update(storeId, eventId, eventSaveReqDto));
     }
 
+    /**
+     * @author 엄상은
+     * @since 2024/02/19
+     * 어드민용 이벤트 삭제 API
+     */
     @DeleteMapping("/{eventId}")
     @ApiOperation("어드민용 이벤트 삭제 API")
     public AdventureOfHeendyResponse<Void> delete(@PathVariable final int eventId) {

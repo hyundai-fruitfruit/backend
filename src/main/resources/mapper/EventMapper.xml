@@ -32,7 +32,7 @@
     </select>
 
     <select id="findEventList" parameterType="idwithcriteria" resultType="eventdetailresdto">
-        SELECT  *
+        SELECT  p.*
         FROM    (SELECT  ROWNUM AS rnum
                         , id
                         , title
@@ -56,7 +56,7 @@
                         ORDER BY id DESC
                         )
                 WHERE   #{pageNum} * #{amount} >= ROWNUM
-                )
+                ) p
         WHERE   rnum > (#{pageNum} - 1) * #{amount}
     </select>
 
